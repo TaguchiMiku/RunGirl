@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
@@ -32,8 +32,8 @@
 #include <utility>
 #include "ResultScene.h"
 
-//zOrder‚Ì”Ô†‚ğ“®“I‚É•Ï‚¦‚éÛ‚É‡”Ô‚ª•ª‚©‚ç‚È‚­‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é‚½‚ß‚É
-//enum‚Å‡”Ô‚ğì‚Á‚Ä‚¨‚«A‚»‚ê‚Åw’è‚·‚é
+//zOrderã®ç•ªå·ã‚’å‹•çš„ã«å¤‰ãˆã‚‹éš›ã«é †ç•ªãŒåˆ†ã‹ã‚‰ãªããªã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã«
+//enumã§é †ç•ªã‚’ä½œã£ã¦ãŠãã€ãã‚Œã§æŒ‡å®šã™ã‚‹
 enum SceneZoder
 {
 	BG_BACK,
@@ -48,6 +48,8 @@ class Player;
 class Enemy;
 class NormalItem;
 class Score;
+class BackScroll;
+class Attack;
 class GameScene : public cocos2d::Scene
 {
 public:
@@ -66,34 +68,33 @@ public:
 				 uint32_t parentFlags);
 private:
 	efk::EffectManager* manager;
-	cocos2d::Sprite* background;
-	cocos2d::Sprite* background2;
-	cocos2d::TMXTiledMap* tilemap;
 	Player* player;
 	Enemy* enemy;
+	Score* score;
 	efk::EffectEmitter* effect;
-	efk::EffectEmitter* ef;
+	efk::EffectEmitter* tapEffect;
 
-	std::vector<cocos2d::Vec2> sponeList;			//“GƒXƒ|[ƒ“À•WƒŠƒXƒg
-	std::vector<cocos2d::Sprite*> sponeSpList;		//“GƒXƒ|[ƒ“À•WƒŠƒXƒg
-	std::vector<cocos2d::Vec2> normalItemList;		//’ÊíƒAƒCƒeƒ€À•WƒŠƒXƒg
-	std::vector<cocos2d::Sprite*> nItemSpList;		//’ÊíƒAƒCƒeƒ€ƒŠƒXƒg
-	std::vector<cocos2d::Vec2> hpItemList;			//HP‰ñ•œƒAƒCƒeƒ€À•WƒŠƒXƒg
-	std::vector<cocos2d::Sprite*> hpItemSpList;		//HP‰ñ•œƒAƒCƒeƒ€ƒŠƒXƒg
-	std::vector<std::pair<cocos2d::Sprite*, cocos2d::Action*>> fxActList;		//ƒGƒtƒFƒNƒg‚ÌƒAƒNƒVƒ‡ƒ“ƒŠƒXƒg
+	std::vector<cocos2d::Vec2> sponeList;			//æ•µã‚¹ãƒãƒ¼ãƒ³åº§æ¨™ãƒªã‚¹ãƒˆ
+	std::vector<cocos2d::Sprite*> sponeSpList;		//æ•µã‚¹ãƒãƒ¼ãƒ³åº§æ¨™ãƒªã‚¹ãƒˆ
+	std::vector<cocos2d::Vec2> normalItemList;		//é€šå¸¸ã‚¢ã‚¤ãƒ†ãƒ åº§æ¨™ãƒªã‚¹ãƒˆ
+	std::vector<cocos2d::Sprite*> nItemSpList;		//é€šå¸¸ã‚¢ã‚¤ãƒ†ãƒ ãƒªã‚¹ãƒˆ
+	std::vector<cocos2d::Vec2> hpItemList;			//HPå›å¾©ã‚¢ã‚¤ãƒ†ãƒ åº§æ¨™ãƒªã‚¹ãƒˆ
+	std::vector<cocos2d::Sprite*> hpItemSpList;		//HPå›å¾©ã‚¢ã‚¤ãƒ†ãƒ ãƒªã‚¹ãƒˆ
+	std::vector<std::pair<cocos2d::Sprite*, cocos2d::Action*>> fxActList;		//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒªã‚¹ãƒˆ
 
 	cocos2d::Sprite* collSpr;
-	cocos2d::Layer* uiLayer;
 	cocos2d::Rect plRect;
 	cocos2d::Rect eneRect;
 	cocos2d::Rect nItemRect;
 	cocos2d::Rect hpItemRect;
+	cocos2d::Rect atkRect;
 	cocos2d::Node* hpBar;
+	BackScroll* backSrl;
+	Attack* attack;
 	float after;
 	float before;
 	//CkSound* sound;
 	bool onceFlag;
-	Score* score;
 	float scaleX;
 	int listCnt;
 };

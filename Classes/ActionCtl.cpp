@@ -132,6 +132,7 @@ void ActionCtl::MoveModule(input_data data)
 					if (map.first == "攻撃")
 					{
 						map.second.animName = "player-idle";
+						player->SetAttackFlag(true);
 						plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, 1);
 					}
 					else

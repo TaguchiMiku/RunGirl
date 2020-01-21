@@ -24,7 +24,18 @@ EffectEmitter* EffectMng::Play(std::string  name, Vec2 position, int scale, floa
 	layer->addChild(emitter, 0);
 	emitter->setName(name);
 	emitter->play();
+	mapEffect[name] = emitter;
 	return emitter;
+}
+
+void EffectMng::Play(std::string name, cocos2d::Vec2 position)
+{
+	if (mapEffect[name] == nullptr)
+	{
+		return;
+	}
+	mapEffect[name]->setPosition(position);
+	mapEffect[name]->play();
 }
 
 efk::EffectEmitter * EffectMng::PlayAgain(std::string name, cocos2d::Vec2 position, int scale, float speed, bool looping)

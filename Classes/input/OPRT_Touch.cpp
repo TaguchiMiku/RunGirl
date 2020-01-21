@@ -1,5 +1,7 @@
 #include "OPRT_Touch.h"
 #include "base/CCDirector.h"
+#include "effect/EffectMng.h"
+
 //#include "sound/SoundMng.h"
 
 USING_NS_CC;
@@ -23,19 +25,19 @@ OPRT_Touch::OPRT_Touch(Node * nd)
 	listener->onTouchBegan = [this](Touch* touch, Event* event) {
 		//lpSoundMng.OnceSoundPlay("Resources/sound/jump2.ckb");
 		touchPos = touch->getLocation();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-		key = EventKeyboard::KeyCode::KEY_ENTER;
-#else
-		key = EventKeyboard::KeyCode::KEY_SPACE;
-#endif
+		//lpEffectMng.Play("starTap", touchPos);
+		if (touchPos.x <= Director::getInstance()->getVisibleSize().width / 2)
+		{
+			key = EventKeyboard::KeyCode::KEY_SPACE;
+		}
+		if (touchPos.x >= Director::getInstance()->getVisibleSize().width / 2)
+		{
+			key = EventKeyboard::KeyCode::KEY_ENTER;
+		}
 		pushFlag = true;
 		return true;
 	};
 	listener->onTouchMoved = [this](Touch* touch, Event* event) {
-		/*if ((touch->getLocation().x - touchPos.x) > 10 && (touch->getLocation().y - touchPos.y) > 10)
-		{
-			key = EventKeyboard::KeyCode::KEY_ENTER;
-		}*/
 	};
 	listener->onTouchEnded = [this](Touch* touch, Event* event) {
 		touchPos = touch->getLocation();

@@ -2,6 +2,8 @@
 #include "cocos2d.h"
 #include "TitleScene.h"
 
+class clickUI;
+class Score;
 class ResultScene : public cocos2d::Scene
 {
 public:
@@ -15,6 +17,8 @@ public:
 
 private:
 	std::unique_ptr<OPRT_State> oprt_state;
+	clickUI* click;
+	Score* score;
 	//CkSound* sound;
 };
 

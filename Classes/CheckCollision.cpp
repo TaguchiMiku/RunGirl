@@ -19,7 +19,7 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 	lay = (cocos2d::TMXLayer*)map->getLayer("ground");
 
 	player = static_cast<Player*>(module.sprite);
-	std::array<Vec2, 2> colList;// ******************************
+	std::array<Vec2, 2> colList;
 	pos = sp.getPosition() + module.offset;
 	visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
@@ -27,31 +27,31 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 	if (module.action == ACT::RIGHT)
 	{
 		colList[0] = sp.getPosition() + module.offset;
-		colList[1] = sp.getPosition() + Vec2(25, -20); // ******************************
+		colList[1] = sp.getPosition() + Vec2(25, -20);
 
 		for (auto col : colList)
 		{
 			//画面の範囲外まで移動していたら進まないようにする
-			if (col.x < 0 || col.x >(map->getMapSize().width * map->getTileSize().width)// ******************************
-				|| col.y < -map->getTileSize().height - 1 || col.y >(map->getMapSize().height * map->getTileSize().height))// ******************************
+			if (col.x < 0 || col.x >(map->getMapSize().width * map->getTileSize().width)
+				|| col.y < -map->getTileSize().height - 1 || col.y >(map->getMapSize().height * map->getTileSize().height))
 			{
 				player->SetActState(ACT::DIE);
 				return false;
 			}
 			//現在の座標をマス目単位になおす
 			tileX = col.x / map->getTileSize().width;
-			tileY = (map->getMapSize().height - 1) - (col.y / map->getTileSize().height);// ******************************
+			tileY = (map->getMapSize().height - 1) - (col.y / map->getTileSize().height);
 			//引数で指定したマス目の情報をtileに入れる
 			tile = lay->getTileGIDAt(cocos2d::Vec2((int)tileX, (int)tileY));
 			if (tile)
 			{
 				properties = map->getPropertiesForGID(tile).asValueMap();
-				if (properties.at("col").asInt() == 1)// ******************************
+				if (properties.at("col").asInt() == 1)
 				{
 					//タイルのcolの情報が1(矩形判定用)であればtrueを返す
 					return false;
 				}
-				if (properties.at("col").asInt() == 10)// ******************************
+				if (properties.at("col").asInt() == 10)
 				{
 					//タイルのcolの情報が1(矩形判定用)であればtrueを返す
 					player->SetGoalFlag(true);
@@ -64,8 +64,8 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 	else
 	{
 		//画面の範囲外まで移動していたら進まないようにする
-		if (pos.x < 0 || pos.x >(map->getMapSize().width * map->getTileSize().width)// ******************************
-			|| pos.y < -map->getTileSize().height - 1 || pos.y >(map->getMapSize().height * map->getTileSize().height))// ******************************
+		if (pos.x < 0 || pos.x >(map->getMapSize().width * map->getTileSize().width)
+			|| pos.y < -map->getTileSize().height - 1 || pos.y >(map->getMapSize().height * map->getTileSize().height))
 		{
 			player->SetActState(ACT::DIE);
 			return true;
@@ -78,12 +78,12 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 		if (tile)
 		{
 			properties = map->getPropertiesForGID(tile).asValueMap();
-			if (properties.at("col").asInt() == 1)// ******************************
+			if (properties.at("col").asInt() == 1)
 			{
 				//タイルのcolの情報が1(矩形判定用)であればtrueを返す
 				return false;
 			}
-			if (properties.at("col").asInt() == 10)// ******************************
+			if (properties.at("col").asInt() == 10)
 			{
 				//ゴール
 				player->SetGoalFlag(true);

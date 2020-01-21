@@ -14,6 +14,7 @@ public:
 	}
 	void Init(cocos2d::Layer& layer, efk::EffectManager* manager);
 	efk::EffectEmitter* Play(std::string name, cocos2d::Vec2 position, int scale, float speed, bool looping);
+	void Play(std::string name, cocos2d::Vec2 position);
 	efk::EffectEmitter* PlayAgain(std::string name, cocos2d::Vec2 position, int scale, float speed, bool looping);
 	efk::Effect * GetEffect(efk::EffectEmitter* emitter);
 

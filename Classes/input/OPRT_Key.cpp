@@ -58,7 +58,7 @@ OPRT_Key::OPRT_Key(Node * nd)
 		return true;
 	};
 	listener_mouse->onTouchEnded = [this](Touch* touch, Event* event) {
-		//key = EventKeyboard::KeyCode::KEY_ENTER;
+		key = EventKeyboard::KeyCode::KEY_NONE;
 		clickFlag = false;
 	};
 	nd->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener_mouse, nd);

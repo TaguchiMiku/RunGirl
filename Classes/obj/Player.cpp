@@ -24,7 +24,7 @@ Player::Player()
 	//画面サイズと原点を取得
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin		 = Director::getInstance()->getVisibleOrigin();
-	setPosition(Vec2(visibleSize.width / 2 + origin.x, 400/*visibleSize.height / 2*/ + origin.y));
+	setPosition(Vec2(visibleSize.width / 2 + origin.x, 400 + origin.y));
 
 	//アニメーションの初期化
 	lpAnimCtl.AddAnimation("player", "idle", 0.05f);
@@ -42,6 +42,7 @@ Player::Player()
 	goalFlag = false;
 	onceFlag = true;
 	accelFlag = false;
+	attackFlag = false;
 	time = 0;
 	this->setName("Player");
 	//lpSoundMng.Init();
@@ -59,7 +60,7 @@ Player::~Player()
 }
 
 //毎フレーム更新関数
-void Player::update(float frame)
+void Player::update(float delta)
 {
 	if (Director::getInstance()->getRunningScene()->getName() != "Game")
 	{
@@ -68,25 +69,18 @@ void Player::update(float frame)
 	if (accelFlag)
 	{
 		time++;
-		if ((time * (1 - frame)) >= 90)
+		if ((time * (1 - delta)) >= 90)
 		{
 			time = 0;
 			accelFlag = false;
 		}
 	}
 
-	if (nowAction == ACT::DIE)
-	{
-		//return;
-	}
 	if (onceFlag && goalFlag)
 	{
 		//ゴールした
 		onceFlag = false;
 		//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-
-		//一定時間過ぎたらリザルトに遷移(～（引数：秒）で遷移)
-		//scheduleOnce：引数で指定した時間の遅延が確認されたら実行される
 		this->scheduleOnce(schedule_selector(Player::NextScene), 2.0f);
 	}
 	data = oprt_state->GetData();
@@ -144,6 +138,16 @@ bool Player::GetAccelFlag()
 	return accelFlag;
 }
 
+void Player::SetAttackFlag(bool flag)
+{
+	attackFlag = flag;
+}
+
+bool Player::GetAttackFlag()
+{
+	return attackFlag;
+}
+
 void Player::AddActData()
 {
 	cameraCtl.reset(new CameraCtl());
@@ -170,7 +174,7 @@ void Player::AddActData()
 		actFall.keyCode  = EventKeyboard::KeyCode::KEY_NONE;
 		actFall.animName = "player-run";
 		actFall.sprite   = this;
-		actFall.offset   = Vec2(-25, -120);
+		actFall.offset   = Vec2(-25, -(getContentSize().height / 2));
 		actFall.blackList.emplace_back(ACT::JUMP);
 		actFall.blackList.emplace_back(ACT::JUMPING);
 		actFall.blackList.emplace_back(ACT::FALLING);
@@ -186,7 +190,7 @@ void Player::AddActData()
 		actFalling.keyCode = EventKeyboard::KeyCode::KEY_NONE;
 		actFalling.animName = "player-run";
 		actFalling.sprite = this;
-		actFalling.offset = Vec2(-25, -120);
+		actFalling.offset = Vec2(-25, -(getContentSize().height / 2));
 		actFalling.blackList.emplace_back(ACT::JUMP);
 		actFalling.blackList.emplace_back(ACT::JUMPING);
 		actFalling.whiteList.emplace_back(ACT::FALL);

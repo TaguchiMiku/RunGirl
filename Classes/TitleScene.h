@@ -1,8 +1,11 @@
 #pragma once
 #include "cocos2d.h"
 #include "input/OPRT_State.h"
+
 //#include "sound/SoundMng.h"
 
+class clickUI;
+class TitleNameMove;
 class TitleScene : public cocos2d::Scene
 {
 public:
@@ -16,8 +19,8 @@ public:
 
 private:
 	std::unique_ptr<OPRT_State> oprt_state;
-	cocos2d::Sprite* clickUI;
-	float time;
+	clickUI* click;
+	TitleNameMove* titleName;
 	//CkSound* sound;
 };
 

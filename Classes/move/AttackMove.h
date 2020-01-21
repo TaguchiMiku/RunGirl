@@ -8,3 +8,5 @@ struct AttackMove
 	bool operator()(cocos2d::Sprite& sp, actModule& module);
 };
 
+
+

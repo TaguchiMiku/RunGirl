@@ -28,6 +28,8 @@
 #include "item/HpItem.h"
 #include "item/NormalItem.h"
 #include "Score.h"
+#include "ui/BackScroll.h"
+#include "ui/Attack.h"
 //#include "sound/SoundMng.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
@@ -42,10 +44,6 @@ GameScene::~GameScene()
 {
 	//sound->stop();
 	//sound->destroy();
-
-	//Releseの際にデータが壊れているっぽい
-	//delete background;
-	//delete background2;
 }
 
 Scene* GameScene::createScene()
@@ -67,13 +65,13 @@ bool GameScene::init()
 	_DebugConOut::GetInstance();
 #else
 #endif
-	this->setName("Game");
     //////////////////////////////
     // 1. super init first
     if ( !Scene::init() )
     {
         return false;
     }
+	this->setName("Game");
 
 	cocos2d::Size visibleSize = Director::getInstance()->getVisibleSize();
 	cocos2d::Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -81,15 +79,15 @@ bool GameScene::init()
 	//レイヤー作成（bgBackLayer、bgFrontLayer, plLayer）
 	auto bgBackLayer = Layer::create();
 	bgBackLayer->setName("BG_BACKGROUND");
-	this->addChild(bgBackLayer, BG_BACK);
+	this->addChild(bgBackLayer, 0);
 
 	auto bgFrontLayer = Layer::create();
 	bgFrontLayer->setName("BG_BACKGROUND");
-	this->addChild(bgFrontLayer, BG_FRONT);
+	this->addChild(bgFrontLayer, 2);
 
 	auto plLayer = Layer::create();
 	plLayer->setName("BG_BACKGROUND");
-	this->addChild(plLayer, PLAYER);
+	this->addChild(plLayer, 1);
 
 	//UI用カメラ追加
 	auto screenSize = Director::getInstance()->getWinSize();
@@ -100,7 +98,7 @@ bool GameScene::init()
 	camera->setRotation3D(Vec3(0.0f, 0.0f, 0.0f));
 	camera->setDepth(0.0f);
 	//UIレイヤー
-	uiLayer = Layer::create();
+	auto uiLayer = Layer::create();
 	this->addChild(uiLayer, UI);
 	uiLayer->setName("UI_LAYER");
 	//UI追加
@@ -109,14 +107,26 @@ bool GameScene::init()
 	hp->setPosition(cocos2d::Vec2(300, 520));
 	uiLayer->addChild(hp, 0);
 
+	//スコア表示初期化
+	score = Score::createScore();
+	score->setPosition(Vec2(origin.x + visibleSize.width - 200, 40));
+	score->ResetScore();
+	this->addChild(score, 0);
+	score->Init(uiLayer);
+	score->DrawScore();
+
+	//UIレイヤーにUI用カメラを適用
+	uiLayer->setCameraMask(static_cast<int>(CameraFlag::USER1));
+
 	//背景追加
-	background = Sprite::create("image/Environment/back_sky.png");
-	background->setName("back1");
-	background->setAnchorPoint(cocos2d::Vec2(0, 0));
-	bgBackLayer->addChild(background, BG_BACK);
+	backSrl = BackScroll::create();
+	if (backSrl != nullptr)
+	{
+		backSrl->Init(Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer);
+	}
 
 	//map描画
-	tilemap = TMXTiledMap::create("image/Environment/test2.tmx");
+	auto tilemap = TMXTiledMap::create("image/Environment/test2.tmx");
 	tilemap->setName("map");
 	tilemap->setPosition(0, 0);
 	bgBackLayer->addChild(tilemap, BG_BACK);
@@ -171,6 +181,7 @@ bool GameScene::init()
 		hpItemSpList.push_back(hpItem);
 	}
 	
+	//敵の追加
 	for (auto list : sponeList)
 	{
 		//Enemy追加
@@ -180,154 +191,159 @@ bool GameScene::init()
 		sponeSpList.push_back(enemy);
 	}
 
-	////Player追加
+	//Player追加
 	player = Player::createPlayer();
 	plLayer->addChild(player, PLAYER);
+
+	attack = Attack::createAttack();
+	if (attack != nullptr)
+	{
+		attack->Init(Vec2(player->getPosition().x + 10, player->getPosition().y), Vec2(1.0f, 1.0f), plLayer);
+	}
 
 	manager = efk::EffectManager::create(Director::getInstance()->getVisibleSize());
 	lpEffectMng.Init(*plLayer, manager);
 	effect = lpEffectMng.Play("drill", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, true);
-	effect->setRotation3D(Vec3(0, -90.0f, 0));
+	lpEffectMng.Play("starTap", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, false);
+
+	if (effect != nullptr)
+	{
+		effect->setRotation3D(Vec3(0, -90.0f, 0));
+	}
 	//sound = lpSoundMng.SoundLoopPlay("Resources/sound/bgm1.ckb");
 
-	//lpAnimCtl.AddAnimation("Fx", "glow", 0.05f);
-	//ef = lpEffectMng.Play("Laser01", Vec2(player->getPosition().x, player->getPosition().y - 110), 5, 1.0f, true);
+	lpAnimCtl.AddAnimation("Fx", "glow", 0.05f);
 
 	scaleX = 1;
-	score = Score::createScore();
-	this->addChild(score, 0);
-
-	//スコア表示初期化
-	/*auto scoreLabel = Label::createWithTTF("Score", "../Resources/fonts/Molot.otf", 24);
-	scoreLabel->setPosition(Vec2(origin.x + visibleSize.width - visibleSize.width / 4, label->getContentSize().height));
-	uiLayer->addChild(scoreLabel, LABEL);
-
-	auto scoreNum = score->DrawScore();
-	scoreNum->setPosition(Vec2(origin.x + visibleSize.width - 100, label->getContentSize().height));
-	scoreNum->setName("scoreNum");
-	uiLayer->addChild(scoreNum, LABEL);*/
-
 	onceFlag = true;
-	//UIレイヤーにUI用カメラを適用
-	uiLayer->setCameraMask(static_cast<int>(CameraFlag::USER1));
 
-	//this->scheduleUpdate();
+	this->scheduleUpdate();
     return true;
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)
 {
-    //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
 
 void GameScene::update(float delta)
 {
 	//lpSoundMng.Update();
-	manager->update();
-	/*auto scoreNum = uiLayer->getChildByName("scoreNum");
-	static_cast<Label*>(scoreNum)->setString(std::to_string(score->GetScore()));*/
+	if (manager != nullptr)
+	{
+		manager->update();
+	}
+	auto uiLayer = getChildByName("UI_LAYER");
+	score->DrawScore();
 	plRect = player->getBoundingBox();
-
+	listCnt = 0;
 	if (player != nullptr && enemy != nullptr)
 	{
 		onceFlag = true;
-		//for (auto ene : sponeSpList)
-		//{
-		//	eneRect = ene->getBoundingBox();
-		//	if (plRect.intersectsRect(eneRect))
-		//	{
-		//		if (ene == collSpr)
-		//		{
-		//			//敵と当たり続けていたらfalseにしてHPの減らしをなくす
-		//			onceFlag = false;
-		//		}
-		//		if (onceFlag && player->GetActState() != ACT::ATTACK)
-		//		{
-		//			collSpr = ene;
-		//			scaleX -= 0.2f;
-		//			hpBar = uiLayer->getChildByName("HP");
-		//			before = hpBar->getBoundingBox().size.width;
-		//			hpBar->setScale(scaleX, 1);
-		//			after = hpBar->getBoundingBox().size.width;
-		//			hpBar->setPosition(hpBar->getPosition().x - (before - after) / 2, hpBar->getPosition().y);
-		//			//lpSoundMng.OnceSoundPlay("Resources/sound/die.ckb");
-		//			onceFlag = false;
-		//			//score->AddScore(-10);
-		//		}
-		//		else
-		//		{
-		//			//score->AddScore(100);
-		//		}
-		//		player->SetActState(ACT::DIE);
-		//		break;
-		//	}
-		//}
+		for (auto ene : sponeSpList)
+		{
+			eneRect = ene->getBoundingBox();
+			atkRect = attack->getBoundingBox();
+			if (plRect.intersectsRect(eneRect))
+			{
+				if(player->GetAttackFlag())
+				{
+					//攻撃時に敵に当たったら消す
+					ene->removeFromParentAndCleanup(true);
+					sponeSpList.erase(sponeSpList.begin() + listCnt);
+					score->AddScore(100);
+					attack->setPosition(Vec2(player->getPosition().x + 50, player->getPosition().y));
+					lpAnimCtl.RunAnimation(attack, "Fx-impact", 1);
+					player->SetAttackFlag(false);
+					break;
+				}
+				if (ene == collSpr)
+				{
+					//敵と当たり続けていたらfalseにしてHPの減らしをなくす
+					onceFlag = false;
+				}
+				if (onceFlag && player->GetActState() != ACT::ATTACK)
+				{
+					collSpr = ene;
+					scaleX -= 0.2f;
+					hpBar = uiLayer->getChildByName("HP");
+					before = hpBar->getBoundingBox().size.width;
+					hpBar->setScale(scaleX, 1);
+					after = hpBar->getBoundingBox().size.width;
+					hpBar->setPosition(hpBar->getPosition().x - (before - after) / 2, hpBar->getPosition().y);
+					//lpSoundMng.OnceSoundPlay("Resources/sound/die.ckb");
+					onceFlag = false;
+					score->AddScore(-10);
+					player->SetActState(ACT::DIE);
+				}
+				break;
+			}			
+			listCnt++;
+		}
 	}
 
 	if (player != nullptr)
 	{
-		/*if(player->GetAccelFlag())
+		if (effect != nullptr)
 		{
-			effect->setScale(20);
+			if (player->GetAccelFlag())
+			{
+				effect->setScale(20);
+			}
+			else
+			{
+				effect->setScale(0);
+			}
 		}
-		else
-		{
-			effect->setScale(0);
-		}*/
 		listCnt = 0;
 		//アイテム取得
-	//	for (auto item1 : nItemSpList)
-	//	{
-	//		nItemRect = item1->getBoundingBox();
-	//		if (plRect.intersectsRect(nItemRect))
-	//		{		
-	//			//fxActList.push_back(std::make_pair(item1, lpAnimCtl.RunAnimation(item1, "Fx-glow", 4)));
-	//			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-	//			if (nItemSpList[listCnt] != nullptr)
-	//			{
-	//				player->SetAccelFlag(true);
-	//				nItemSpList.erase(nItemSpList.begin() + listCnt);
-	//			}
-	//			//score->AddScore(30);
-	//			break;
-	//		}
-	//		listCnt++;
-	//	}
-	//	listCnt = 0;
-	//	for (auto item2 : hpItemSpList)
-	//	{
-	//		hpItemRect = item2->getBoundingBox();
-	//		if (plRect.intersectsRect(hpItemRect))
-	//		{
-	//			//fxActList.push_back(std::make_pair(item2, lpAnimCtl.RunAnimation(item2, "Fx-glow", 4)));
-	//			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-	//			if (hpItemSpList[listCnt] != nullptr)
-	//			{
-	//				player->SetAccelFlag(true);
-	//				hpItemSpList.erase(hpItemSpList.begin() + listCnt);
-	//				//score->AddScore(50);
-	//			}
-	//			break;
-	//		}
-	//		listCnt++;
-	//	}
-	//	listCnt = 0;
-	//	for (auto fx : fxActList)
-	//	{
-	//		//エフェクト（アニメーション）の再生が終わったらspriteと配列の要素を消す。
-	//		/*if (fx.second->isDone())
-	//		{
-	//			fx.first->removeFromParentAndCleanup(true);
-	//			fx.second->release();
-	//			fxActList.erase(fxActList.begin() + listCnt);
-	//		}
-	//		listCnt++;*/
-	//	}
+		for (auto item1 : nItemSpList)
+		{
+			nItemRect = item1->getBoundingBox();
+			if (plRect.intersectsRect(nItemRect))
+			{		
+				fxActList.push_back(std::make_pair(item1, lpAnimCtl.RunAnimation(item1, "Fx-glow", 4)));
+				//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
+				if (nItemSpList[listCnt] != nullptr)
+				{
+					player->SetAccelFlag(true);
+					nItemSpList.erase(nItemSpList.begin() + listCnt);
+					score->AddScore(30);
+				}
+				break;
+			}
+			listCnt++;
+		}
+		listCnt = 0;
+		for (auto item2 : hpItemSpList)
+		{
+			hpItemRect = item2->getBoundingBox();
+			if (plRect.intersectsRect(hpItemRect))
+			{
+				fxActList.push_back(std::make_pair(item2, lpAnimCtl.RunAnimation(item2, "Fx-glow", 4)));
+				//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
+				if (hpItemSpList[listCnt] != nullptr)
+				{
+					player->SetAccelFlag(true);
+					hpItemSpList.erase(hpItemSpList.begin() + listCnt);
+					score->AddScore(50);
+				}
+				break;
+			}
+			listCnt++;
+		}
+		listCnt = 0;
+		for (auto fx : fxActList)
+		{
+			//エフェクト（アニメーション）の再生が終わったらspriteと配列の要素を消す。
+			if (fx.second->isDone())
+			{
+				fx.first->removeFromParentAndCleanup(true);
+				fx.second->release();
+				fxActList.erase(fxActList.begin() + listCnt);
+			}
+			listCnt++;
+		}
 	}
 }
 
