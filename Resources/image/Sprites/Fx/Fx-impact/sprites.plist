@@ -4,60 +4,60 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>player-run-1.png</key>
+			<key>Fx-impact-1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{128,0},{60,111}}</string>
+				<string>{{0,37},{36,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{60,111}}</string>
+				<string>{{0,0},{36,36}}</string>
 				<key>sourceSize</key>
-				<string>{60,111}</string>
+				<string>{36,36}</string>
 			</dict>
 
-			<key>player-run-2.png</key>
+			<key>Fx-impact-2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{64,0},{63,108}}</string>
+				<string>{{0,74},{36,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{63,108}}</string>
+				<string>{{0,0},{36,36}}</string>
 				<key>sourceSize</key>
-				<string>{63,108}</string>
+				<string>{36,36}</string>
 			</dict>
 
-			<key>player-run-3.png</key>
+			<key>Fx-impact-3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{128,0},{60,111}}</string>
+				<string>{{37,0},{36,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{60,111}}</string>
+				<string>{{0,0},{36,36}}</string>
 				<key>sourceSize</key>
-				<string>{60,111}</string>
+				<string>{36,36}</string>
 			</dict>
 
-			<key>player-run-4.png</key>
+			<key>Fx-impact-4.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{63,108}}</string>
+				<string>{{0,0},{36,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{63,108}}</string>
+				<string>{{0,0},{36,36}}</string>
 				<key>sourceSize</key>
-				<string>{63,108}</string>
+				<string>{36,36}</string>
 			</dict>
 
 		</dict>
@@ -67,7 +67,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{256,128}</string>
+			<string>{128,128}</string>
 			<key>textureFileName</key>
 			<string>sprites.png</string>
 			</dict>

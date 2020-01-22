@@ -30,6 +30,9 @@
 #include "Score.h"
 #include "ui/BackScroll.h"
 #include "ui/Attack.h"
+#include "ui/CountDown.h"
+#include "ui/TimerMng.h"
+#include "MapCreate.h"
 //#include "sound/SoundMng.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
@@ -115,6 +118,12 @@ bool GameScene::init()
 	score->Init(uiLayer);
 	score->DrawScore();
 
+	timer = TimerMng::createTimer();
+	timer->Init(uiLayer);
+
+	cntDwn = CountDown::createCntDwn();
+	cntDwn->Init(uiLayer);
+
 	//UIレイヤーにUI用カメラを適用
 	uiLayer->setCameraMask(static_cast<int>(CameraFlag::USER1));
 
@@ -126,10 +135,15 @@ bool GameScene::init()
 	}
 
 	//map描画
-	auto tilemap = TMXTiledMap::create("image/Environment/test2.tmx");
+	/*auto tilemap = TMXTiledMap::create("image/Environment/test.tmx");
 	tilemap->setName("map");
 	tilemap->setPosition(0, 0);
-	bgBackLayer->addChild(tilemap, BG_BACK);
+	bgBackLayer->addChild(tilemap, BG_BACK);*/
+
+	auto map = MapCreate::create();
+	map->Init(bgBackLayer);
+	bgBackLayer->addChild(map, BG_BACK);
+	auto tilemap = map->GetMap();
 
 	//map内のタイル全検索
 	for (int y = 0; y < tilemap->getMapSize().height; y++)
@@ -235,6 +249,11 @@ void GameScene::update(float delta)
 	}
 	auto uiLayer = getChildByName("UI_LAYER");
 	score->DrawScore();
+	timer->DrawTimer();
+	if (timer->GetTimerCnt() <= 0)
+	{
+		player->SetGoalFlag(true);
+	}
 	plRect = player->getBoundingBox();
 	listCnt = 0;
 	if (player != nullptr && enemy != nullptr)

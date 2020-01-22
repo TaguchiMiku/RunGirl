@@ -32,10 +32,12 @@ public:
 	bool GetAccelFlag();
 	void SetAttackFlag(bool flag);
 	bool GetAttackFlag();
+	bool GetGameFlag();
 	CREATE_FUNC(Player);
 
 private:
 	void AddActData();
+
 	std::unique_ptr<CameraCtl> cameraCtl;
 	std::unique_ptr<OPRT_State> oprt_state;	//入力クラスのメンバーを呼ぶ用のポインター
 	std::unique_ptr<ActionCtl> actCtl;
@@ -43,10 +45,11 @@ private:
 	ACT nowAction;
 	float jumpSpeed;
 	cocos2d::Vec2 velocity;
-	bool goalFlag;
+	bool timeUpFlag;
 	bool onceFlag;
 	bool accelFlag;
 	bool attackFlag;
+	bool gameFlag;
 	cocos2d::Action* action;//アニメーション情報を入れる
 	float time;
 };

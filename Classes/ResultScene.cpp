@@ -38,7 +38,7 @@ void ResultScene::Init()
 	score = Score::createScore();
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	score->setScale(1.5f, 1.5f);
-	score->setPosition(Vec2(visibleSize.width / 2 - score->getScaleX(), visibleSize.height));
+	score->setPosition(Vec2(visibleSize.width / 2 - 100, visibleSize.height - 200));
 	this->addChild(score, 0);
 	score->Init(bgBackLayer);
 	score->DrawScore();

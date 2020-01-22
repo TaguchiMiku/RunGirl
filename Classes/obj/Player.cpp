@@ -1,6 +1,7 @@
 ﻿#include "Player.h"
 #include "effect/EffectMng.h"
 #include "../ResultScene.h"
+#include "ui/CountDown.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
 #include "sound/SoundMng.h"
@@ -39,10 +40,11 @@ Player::Player()
 	jumpSpeed = 0;
 	nowAction = ACT::IDLE;
 	velocity = Vec2(5, 0);
-	goalFlag = false;
+	timeUpFlag = false;
 	onceFlag = true;
 	accelFlag = false;
 	attackFlag = false;
+	gameFlag = false;
 	time = 0;
 	this->setName("Player");
 	//lpSoundMng.Init();
@@ -66,6 +68,29 @@ void Player::update(float delta)
 	{
 		return;
 	}
+	else if(!gameFlag)
+	{
+		time++;
+		if ((time * (1 - delta)) >= 180)
+		{
+			time = 0;
+			gameFlag = true;
+		}
+		return;
+	}
+	else if (timeUpFlag)
+	{
+		if (onceFlag && timeUpFlag)
+		{
+			//ゴールした
+			onceFlag = false;
+			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
+			this->scheduleOnce(schedule_selector(Player::NextScene), 2.0f);
+		}
+		return;
+	}
+
+	//加速する時間
 	if (accelFlag)
 	{
 		time++;
@@ -76,13 +101,7 @@ void Player::update(float delta)
 		}
 	}
 
-	if (onceFlag && goalFlag)
-	{
-		//ゴールした
-		onceFlag = false;
-		//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-		this->scheduleOnce(schedule_selector(Player::NextScene), 2.0f);
-	}
+	//input処理とaction処理
 	data = oprt_state->GetData();
 	oprt_state->Update();
 	actCtl->MoveModule(data);
@@ -119,12 +138,12 @@ ACT Player::GetActState()
 
 void Player::SetGoalFlag(bool flag)
 {
-	goalFlag = flag;
+	timeUpFlag = flag;
 }
 
 bool Player::GetGoalFlag()
 {
-	return goalFlag;
+	return timeUpFlag;
 }
 
 void Player::SetAccelFlag(bool flag)
@@ -146,6 +165,11 @@ void Player::SetAttackFlag(bool flag)
 bool Player::GetAttackFlag()
 {
 	return attackFlag;
+}
+
+bool Player::GetGameFlag()
+{
+	return gameFlag;
 }
 
 void Player::AddActData()

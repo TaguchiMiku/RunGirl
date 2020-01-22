@@ -74,7 +74,7 @@ void OPRT_Key::Update()
 	//TRACE("%f\n", key);
 	data.key.second = data.key.first;
 	data.key.first = key;
-	if (!pushFlag && !clickFlag)
+	if (!pushFlag/* && !clickFlag*/)
 	{
 		key = EventKeyboard::KeyCode::KEY_NONE;
 	}

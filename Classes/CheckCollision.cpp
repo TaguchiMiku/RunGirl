@@ -51,13 +51,6 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 					//タイルのcolの情報が1(矩形判定用)であればtrueを返す
 					return false;
 				}
-				if (properties.at("col").asInt() == 10)
-				{
-					//タイルのcolの情報が1(矩形判定用)であればtrueを返す
-					player->SetGoalFlag(true);
-					//ゴール
-					return false;
-				}
 			}
 		}
 	}
@@ -81,12 +74,6 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 			if (properties.at("col").asInt() == 1)
 			{
 				//タイルのcolの情報が1(矩形判定用)であればtrueを返す
-				return false;
-			}
-			if (properties.at("col").asInt() == 10)
-			{
-				//ゴール
-				player->SetGoalFlag(true);
 				return false;
 			}
 		}

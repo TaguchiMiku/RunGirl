@@ -50,6 +50,8 @@ class NormalItem;
 class Score;
 class BackScroll;
 class Attack;
+class CountDown;
+class TimerMng;
 class GameScene : public cocos2d::Scene
 {
 public:
@@ -71,6 +73,8 @@ private:
 	Player* player;
 	Enemy* enemy;
 	Score* score;
+	CountDown* cntDwn;
+	TimerMng* timer;
 	efk::EffectEmitter* effect;
 	efk::EffectEmitter* tapEffect;
 
