@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scene">
+      <UniqueIdentifier>{fccce424-e0cd-4161-972a-14b064bf5857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\action">
+      <UniqueIdentifier>{14f0fedd-3703-4a82-8eef-56e27291dad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\camera">
+      <UniqueIdentifier>{19467a87-e77f-4798-a221-8371b186430d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\check">
+      <UniqueIdentifier>{b9ae4b39-78eb-4d62-af2a-dd097505525a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\mapCreate">
+      <UniqueIdentifier>{3ea7e621-d255-4b57-982b-715411cf1184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\UI">
+      <UniqueIdentifier>{55f8384f-41e7-40a1-badd-5d6b4f17ee7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\animation">
+      <UniqueIdentifier>{1f5026ec-3db6-4e44-aa0e-b8d8fa7ca440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input">
+      <UniqueIdentifier>{fd5dc5a8-b805-4fe9-bd18-bdac3ad3b4c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\effect">
+      <UniqueIdentifier>{d50b1e38-95ce-4376-911e-443a753e97c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\debug">
+      <UniqueIdentifier>{0198b929-f660-4b37-bee5-64be32dc5ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\item">
+      <UniqueIdentifier>{7f0def31-893c-4b42-9889-da8df097f082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\obj">
+      <UniqueIdentifier>{dfe969e3-37a4-4196-9152-cc7de03a6558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sound">
+      <UniqueIdentifier>{95cf12b9-31f1-4bdb-bffd-ea19473f3978}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ActionCtl.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CameraCtl.cpp">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CheckCollision.cpp">
+      <Filter>src\check</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CheckKey.cpp">
+      <Filter>src\check</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CheckList.cpp">
+      <Filter>src\check</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TitleScene.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ResultScene.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\actData.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EnemyCreate.cpp">
+      <Filter>src\mapCreate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ItemCreate.cpp">
+      <Filter>src\mapCreate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MapCreate.cpp">
+      <Filter>src\mapCreate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Score.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\actModule.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\move\AttackMove.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\move\Falling.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\move\FallMove.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\move\Jumping.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\move\JumpMove.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\move\MoveLR.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Animation\AnimCtl.cpp">
+      <Filter>src\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\effect\EffectMng.cpp">
+      <Filter>src\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\effect\Effekseer.cpp">
+      <Filter>src\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\effect\EffekseerNative.cpp">
+      <Filter>src\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\effect\EffekseerRendererNative.cpp">
+      <Filter>src\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\debug\_DebugConOut.cpp">
+      <Filter>src\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\debug\_DebugDispOut.cpp">
+      <Filter>src\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\input\OPRT_Key.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\input\OPRT_State.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\input\OPRT_Touch.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\item\HpItem.cpp">
+      <Filter>src\item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\item\NormalItem.cpp">
+      <Filter>src\item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\obj\Enemy.cpp">
+      <Filter>src\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\obj\Player.cpp">
+      <Filter>src\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\Attack.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\BackScroll.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\clickUI.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\CountDown.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\TimerMng.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\TitleNameMove.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\sound\SoundMng.cpp">
+      <Filter>src\sound</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActionCtl.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CameraCtl.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CheckCollision.h">
+      <Filter>src\check</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CheckKey.h">
+      <Filter>src\check</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CheckList.h">
+      <Filter>src\check</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TitleScene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResultScene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\actData.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EnemyCreate.h">
+      <Filter>src\mapCreate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ItemCreate.h">
+      <Filter>src\mapCreate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MapCreate.h">
+      <Filter>src\mapCreate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Score.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\actModule.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\move\AttackMove.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\move\Falling.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\move\FallMove.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\move\Jumping.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\move\JumpMove.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\move\MoveLR.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Animation\AnimCtl.h">
+      <Filter>src\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\effect\EffectMng.h">
+      <Filter>src\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\effect\Effekseer.h">
+      <Filter>src\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\effect\EffekseerNative.h">
+      <Filter>src\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\effect\EffekseerRendererNative.h">
+      <Filter>src\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\debug\_DebugConOut.h">
+      <Filter>src\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\debug\_DebugDispOut.h">
+      <Filter>src\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\input\OPRT_Key.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\input\OPRT_State.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\input\OPRT_Touch.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\item\HpItem.h">
+      <Filter>src\item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\item\NormalItem.h">
+      <Filter>src\item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\obj\Enemy.h">
+      <Filter>src\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\obj\Player.h">
+      <Filter>src\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\Attack.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\BackScroll.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\clickUI.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\CountDown.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\TimerMng.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\TitleNameMove.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\sound\SoundMng.h">
+      <Filter>src\sound</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
