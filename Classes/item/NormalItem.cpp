@@ -2,13 +2,14 @@
 
 USING_NS_CC;
 
-Sprite * NormalItem::createNItem(const char* fileName)
+NormalItem * NormalItem::createNItem()
 {
-	return NormalItem::create(fileName);
+	return NormalItem::create();
 }
 
 NormalItem::NormalItem()
 {
+	deathFlag = false;
 }
 
 
@@ -16,6 +17,12 @@ NormalItem::~NormalItem()
 {
 }
 
-void NormalItem::Init()
+void NormalItem::SetDeathFlag(bool flag)
 {
+	deathFlag = flag;
+}
+
+bool NormalItem::GetDeathFlag()
+{
+	return deathFlag;
 }

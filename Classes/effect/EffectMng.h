@@ -1,37 +1,36 @@
-#pragma once
+ï»¿#pragma once
 #include "cocos2d.h"
 #include <memory>
 #include <map>
+#include <string>
 #include "effect/Players/Cocos2d-x_v3/Effekseer.h"
 
-#define lpEffectMng EffectMng::GetInstance()//EffectMng‚ğŠO•”‚©‚çQÆ‚·‚éÛ‚É’Z‚¢ƒR[ƒh‚Å‘‚­‚½‚ß‚Ì’è‹`
+#define lpEffectMng EffectMng::GetInstance()//EffectMngã‚’å¤–éƒ¨ã‹ã‚‰å‚ç…§ã™ã‚‹éš›ã«çŸ­ã„ã‚³ãƒ¼ãƒ‰ã§æ›¸ããŸã‚ã®å®šç¾©
 class EffectMng
 {
 public:
-	static EffectMng& GetInstance()	//ŠO•”‚©‚çpublic‚ÈŠÖ”‚ğŒÄ‚Ño‚·—p‚ÌƒQƒbƒ^[
+	static EffectMng& GetInstance()	//å¤–éƒ¨ã‹ã‚‰publicãªé–¢æ•°ã‚’å‘¼ã³å‡ºã™ç”¨ã®ã‚²ãƒƒã‚¿ãƒ¼
 	{
-		return *s_instance;			//©g‚ÌƒNƒ‰ƒX‚Ìƒ|ƒCƒ“ƒ^[‚ğ•Ô‚·
+		return *s_instance;			//è‡ªèº«ã®ã‚¯ãƒ©ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã‚’è¿”ã™
 	}
-	void Init(cocos2d::Layer& layer, efk::EffectManager* manager);
+	void Init(void);
+	void AddEffect(std::string name);
+	efk::Effect* GetEffect(std::string name);
+	efk::EffectManager* GetEffectManager();
 	efk::EffectEmitter* Play(std::string name, cocos2d::Vec2 position, int scale, float speed, bool looping);
-	void Play(std::string name, cocos2d::Vec2 position);
-	efk::EffectEmitter* PlayAgain(std::string name, cocos2d::Vec2 position, int scale, float speed, bool looping);
-	efk::Effect * GetEffect(efk::EffectEmitter* emitter);
-
 private:
-	struct EffectMngDeleter	//unique_ptr—p‚Ì©ìƒfƒXƒgƒ‰ƒNƒ^[
+	struct EffectMngDeleter	//unique_ptrç”¨ã®è‡ªä½œãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ¼
 	{
 		void operator()(EffectMng* efkMng) const
 		{
-			//ŒÄ‚Î‚ê‚½‚çEffectMngƒV[ƒ“‚ğ”jŠü‚·‚é
+			//å‘¼ã°ã‚ŒãŸã‚‰EffectMngã‚·ãƒ¼ãƒ³ã‚’ç ´æ£„ã™ã‚‹
 			delete efkMng;
 		}
 	};
 	EffectMng();
 	~EffectMng();
 	static std::unique_ptr<EffectMng, EffectMngDeleter> s_instance;
-	std::map<std::string, efk::EffectEmitter*> mapEffect;
+	std::map<std::string, efk::Effect*> mapEffect;
 	efk::EffectManager* manager;
-	cocos2d::Layer* layer;
 };
 

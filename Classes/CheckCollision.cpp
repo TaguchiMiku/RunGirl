@@ -1,6 +1,7 @@
 #include "CheckCollision.h"
 #include "obj/Player.h"
 #include "obj/Enemy.h"
+#include "MapCreate.h"
 //#include "debug/_DebugConOut.h"
 #include <array>
 
@@ -14,21 +15,31 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 	{
 		return false;
 	}
-	map = (cocos2d::TMXTiledMap*)director->getRunningScene()->getChildByName("BG_BACKGROUND")->getChildByName("map");
+	auto mapMng = (MapCreate*)director->getRunningScene()->getChildByName("BG_BACKGROUND")->getChildByName("mapMng");
+	map = mapMng->GetMap();
+	/*if (map->getMapSize().width >= 165)
+	{
+		TRACE("mapA\n");
+	}
+	if (map->getMapSize().width <= 165)
+	{
+		TRACE("mapB\n");
+	}*/
+	
 	//取得したTMXTiledMapの情報内のTMXLayer型のレイヤー情報を取得
 	lay = (cocos2d::TMXLayer*)map->getLayer("ground");
 
 	player = static_cast<Player*>(module.sprite);
 	std::array<Vec2, 2> colList;
-	pos = sp.getPosition() + module.offset;
+	pos = Vec2((sp.getPosition().x - mapMng->GetMapSize().width * map->getTileSize().width) + module.offset.x, sp.getPosition().y + module.offset.y);
 	visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
 	uint32_t tile;
 	if (module.action == ACT::RIGHT)
 	{
-		colList[0] = sp.getPosition() + module.offset;
-		colList[1] = sp.getPosition() + Vec2(25, -20);
-
+		colList[0] = Vec2((sp.getPosition().x - mapMng->GetMapSize().width * map->getTileSize().width) + module.offset.x, sp.getPosition().y + module.offset.y);
+		colList[1] = Vec2((sp.getPosition().x - mapMng->GetMapSize().width * map->getTileSize().width) + 25, sp.getPosition().y + 20);
+		
 		for (auto col : colList)
 		{
 			//画面の範囲外まで移動していたら進まないようにする

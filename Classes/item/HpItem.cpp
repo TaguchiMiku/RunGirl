@@ -2,13 +2,14 @@
 
 USING_NS_CC;
 
-Sprite * HpItem::createHpItem(const char* fileName)
+HpItem * HpItem::createHpItem()
 {
-	return HpItem::create(fileName);
+	return HpItem::create();
 }
 
 HpItem::HpItem()
 {
+	deathFlag = false;
 }
 
 
@@ -16,6 +17,12 @@ HpItem::~HpItem()
 {
 }
 
-void HpItem::Init()
+void HpItem::SetDeathFlag(bool flag)
 {
+	deathFlag = flag;
+}
+
+bool HpItem::GetDeathFlag()
+{
+	return deathFlag;
 }

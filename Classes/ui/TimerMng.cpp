@@ -25,6 +25,17 @@ TimerMng::~TimerMng()
 
 void TimerMng::Init(cocos2d::Layer * layer)
 {
+	auto timerBack = Sprite::create("image/Environment/timerBack.png");
+	timerBack->setScale(0.2f, 0.12f);
+	timerBack->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+	timerBack->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2 - STRING_SIZE * 2 - 8, Director::getInstance()->getVisibleSize().height + 3));
+	layer->addChild(timerBack, 1);
+	auto time = Sprite::create("image/Environment/time.png");
+	time->setScale(0.5f, 0.5f);
+	time->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+	time->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2 - STRING_SIZE - 10, Director::getInstance()->getVisibleSize().height + 10));
+	layer->addChild(time, 1);
+
 	//画像読み込み（数字画像リスト）
 	for (int num = 0; num < 10; num++)
 	{
@@ -33,13 +44,13 @@ void TimerMng::Init(cocos2d::Layer * layer)
 	//表示する座標リスト
 	for (int j = 0; j < 3; j++)
 	{
-		timePos[j] = Vec2((Director::getInstance()->getVisibleSize().width / 2 - STRING_SIZE) + STRING_SIZE * j, Director::getInstance()->getVisibleSize().height - STRING_SIZE);
+		timePos[j] = Vec2((Director::getInstance()->getVisibleSize().width / 2 - STRING_SIZE) + STRING_SIZE * j, Director::getInstance()->getVisibleSize().height - STRING_SIZE - 10);
 	}
 	//描画するスプライト情報リスト(1の位から順に)
 	for (int rank = 0; rank < 3; rank++)
 	{
 		numberSpList[rank] = Sprite::create("image/Sprites/numberA/_number_00.png");
-		numberSpList[rank]->setScale(0.3f, 0.3f);
+		numberSpList[rank]->setScale(0.2f, 0.2f);
 		numberSpList[rank]->setPosition(timePos[2 - rank]);
 		layer->addChild(numberSpList[rank], 1);
 	}
@@ -54,11 +65,6 @@ void TimerMng::DrawTimer()
 	{
 		if (anser < 0)
 		{
-			break;
-		}
-		if (anser <= 9 && cnt > 1)
-		{
-			numSp->setTexture(numList[anser]);
 			break;
 		}
 		number = anser % TEN;

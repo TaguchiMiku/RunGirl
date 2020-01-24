@@ -52,6 +52,9 @@ class BackScroll;
 class Attack;
 class CountDown;
 class TimerMng;
+class MapCreate;
+class EnemyCreate;
+class ItemCreate;
 class GameScene : public cocos2d::Scene
 {
 public:
@@ -69,28 +72,20 @@ public:
 				 const cocos2d::Mat4& parentTransform,
 				 uint32_t parentFlags);
 private:
-	efk::EffectManager* manager;
 	Player* player;
 	Enemy* enemy;
 	Score* score;
 	CountDown* cntDwn;
+	MapCreate* map;
 	TimerMng* timer;
+	EnemyCreate* enemyCt;
+	ItemCreate* itemCt;
 	efk::EffectEmitter* effect;
 	efk::EffectEmitter* tapEffect;
-
-	std::vector<cocos2d::Vec2> sponeList;			//敵スポーン座標リスト
-	std::vector<cocos2d::Sprite*> sponeSpList;		//敵スポーン座標リスト
-	std::vector<cocos2d::Vec2> normalItemList;		//通常アイテム座標リスト
-	std::vector<cocos2d::Sprite*> nItemSpList;		//通常アイテムリスト
-	std::vector<cocos2d::Vec2> hpItemList;			//HP回復アイテム座標リスト
-	std::vector<cocos2d::Sprite*> hpItemSpList;		//HP回復アイテムリスト
-	std::vector<std::pair<cocos2d::Sprite*, cocos2d::Action*>> fxActList;		//エフェクトのアクションリスト
 
 	cocos2d::Sprite* collSpr;
 	cocos2d::Rect plRect;
 	cocos2d::Rect eneRect;
-	cocos2d::Rect nItemRect;
-	cocos2d::Rect hpItemRect;
 	cocos2d::Rect atkRect;
 	cocos2d::Node* hpBar;
 	BackScroll* backSrl;

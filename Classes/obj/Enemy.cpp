@@ -22,7 +22,7 @@ Enemy::Enemy()
 	lpAnimCtl.AddAnimation("enemy", "run", 0.05f);
 	lpAnimCtl.AddAnimation("enemy", "jump", 0.05f);
 	lpAnimCtl.RunAnimation(this, "player-idle", -1);
-
+	deathFlag = false;
 	this->setName("Enemy");
 	jumpSpeed = 0;
 	nowAction = ACT::IDLE;
@@ -71,6 +71,16 @@ void Enemy::SetActState(ACT action)
 ACT Enemy::GetActState()
 {
 	return nowAction;
+}
+
+void Enemy::SetDeathFlag(bool flag)
+{
+	deathFlag = flag;
+}
+
+bool Enemy::GetDeathFlag()
+{
+	return deathFlag;
 }
 
 void Enemy::AddActData()

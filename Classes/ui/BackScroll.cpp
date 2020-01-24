@@ -1,5 +1,5 @@
 ﻿#include "BackScroll.h"
-
+#include "obj/Player.h"
 USING_NS_CC;
 
 BackScroll * BackScroll::BackSrlCreate()
@@ -9,6 +9,8 @@ BackScroll * BackScroll::BackSrlCreate()
 
 BackScroll::BackScroll()
 {
+	scrSetFlag = false;
+	visibleSize = Director::getInstance()->getVisibleSize();
 }
 
 BackScroll::~BackScroll()
@@ -36,6 +38,7 @@ void BackScroll::Init(Vec2 position, Vec2 scale, Layer * layer)
 	backB->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 	backB->setPosition(backA->getContentSize().width, 0);
 	layer->addChild(backB, 0);
+
 	this->scheduleUpdate();
 }
 
@@ -44,7 +47,7 @@ void BackScroll::update(float delta)
 	backA->setPositionX(backA->getPositionX() - 0.5f);
 	backB->setPositionX(backB->getPositionX() - 0.5f);
 
-	if (backB->getPositionX() < 0) {
+	if (scrSetFlag) {
 		// 背景Aが画面左外に出きった場合、背景Aを背景Bの右隣に移す
 		backA->setPositionX(backB->getPositionX() + backB->getContentSize().width);
 
@@ -52,5 +55,14 @@ void BackScroll::update(float delta)
 		auto s = backB;
 		backB = backA;
 		backA = s;
+		scrSetFlag = false;
+	}
+}
+
+void BackScroll::ScrBackSet(Player * player)
+{
+	if (backB->getPositionX() < player->getPosition().x - visibleSize.x / 2)
+	{
+		scrSetFlag = true;
 	}
 }

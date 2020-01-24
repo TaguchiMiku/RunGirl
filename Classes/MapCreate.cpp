@@ -1,5 +1,9 @@
 #include "MapCreate.h"
-
+#include "obj/Enemy.h"
+#include "item/HpItem.h"
+#include "item/NormalItem.h"
+#include "EnemyCreate.h"
+#include "ItemCreate.h"
 USING_NS_CC;
 
 cocos2d::Node * MapCreate::createMap()
@@ -9,6 +13,8 @@ cocos2d::Node * MapCreate::createMap()
 
 MapCreate::MapCreate()
 {
+	mapSize = Vec2(0, 0);
+	setMapFlag = true;
 }
 
 MapCreate::~MapCreate()
@@ -17,40 +23,113 @@ MapCreate::~MapCreate()
 
 void MapCreate::Init(cocos2d::Layer * layer)
 {
-	mapA = TMXTiledMap::create("image/Environment/test.tmx");
+	director = Director::getInstance();
+	auto mapA = TMXTiledMap::create("image/Environment/test.tmx");
 	mapA->setName("map");
 	mapA->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 	mapA->setPosition(0, 0);
 	layer->addChild(mapA, 1);
-	mapB = TMXTiledMap::create("image/Environment/test2.tmx");
+	map.push_back(mapA);
+	auto mapB = TMXTiledMap::create("image/Environment/test2.tmx");
 	mapB->setName("map");
 	mapB->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 	mapB->setPosition(mapA->getContentSize().width, 0);
 	layer->addChild(mapB, 1);
+	map.push_back(mapB);
+
+	nowMap = mapA;
+	nextMap = mapB;
+
+	enemyCt = EnemyCreate::create();
+	layer->addChild(enemyCt, 2);
+	itemCt = ItemCreate::create();
+	layer->addChild(itemCt, 2);
+	this->layer = layer;
 	this->scheduleUpdate();
 }
 
 void MapCreate::update(float flam)
 {
-	if (Director::getInstance()->getRunningScene()->getName() != "Game")
+	if (director->getRunningScene()->getName() != "Game")
 	{
 		return;
 	}
 	
-	if (Director::getInstance()->getRunningScene()->getDefaultCamera()->getPosition().x + mapB->getTileSize().width > mapB->getPosition().x)
+	if (director->getRunningScene()->getDefaultCamera()->getPosition().x + nextMap->getTileSize().width > nextMap->getPosition().x && setMapFlag)
 	{
-		//”wŒiA‚ª‰æ–Ê¶ŠO‚Éo‚«‚Á‚½ê‡A”wŒiA‚ð”wŒiB‚Ì‰E—×‚ÉˆÚ‚·
-		mapA->setPositionX(mapB->getPositionX() + mapB->getContentSize().width);
-
+		//ŽŸ‚Ìƒ}ƒbƒv‚ÌƒAƒCƒeƒ€“™”z’u‚µ‚È‚¨‚µ
+		ReCreate(nextMap, layer);
+		//Collision—pƒIƒtƒZƒbƒg
+		mapSize.width += nowMap->getMapSize().width;
 		//”wŒiA‚ÆB‚Ì•Ï”‚ð“ü‚ê‘Ö‚¦‚é
-		auto s = mapB;
-		mapB = mapA;
-		mapA = s;
-		mapA->setName("map");
+		auto s = nextMap;
+		nextMap = nowMap;
+		nowMap = s;
+		setMapFlag = false;
+	}
+	if (director->getRunningScene()->getDefaultCamera()->getPosition().x > nowMap->getPosition().x + director->getVisibleSize().width / 2)
+	{
+		//ƒJƒƒ‰‚ª”wŒiA‚ðŠ®‘S‚Éo‚½‚çA”wŒiA‚ð”wŒiB‚Ì‰E—×‚ÉˆÚ‚·
+		while (10)
+		{
+			nextMap = map[cocos2d::random(0, (int)(map.size() - 1))];
+			if (nowMap != nextMap)
+			{
+				break;
+			}
+		}
+		nextMap->setPositionX(nowMap->getPositionX() + nowMap->getContentSize().width);
+		setMapFlag = true;
 	}
 }
 
 cocos2d::TMXTiledMap * MapCreate::GetMap()
 {
-	return mapA;
+	nowMap->setName("map");
+	return nowMap;
+}
+
+cocos2d::Size MapCreate::GetMapSize()
+{
+	return mapSize;
+}
+
+EnemyCreate * MapCreate::GetEnemyCt()
+{
+	return enemyCt;
+}
+
+ItemCreate * MapCreate::GetItemCt()
+{
+	return itemCt;
+}
+
+void MapCreate::ReCreate(cocos2d::TMXTiledMap * map, cocos2d::Layer* layer)
+{
+	enemyCt->ClearList();
+	itemCt->ClearList();
+	for (int y = 0; y < map->getMapSize().height; y++)
+	{
+		for (int x = 0; x < map->getMapSize().width; x++)
+		{
+			auto lay = map->getLayer("ground");
+			auto tile = lay->getTileGIDAt(cocos2d::Vec2(x, y));
+			if (tile)
+			{
+				auto properties = map->getPropertiesForGID(tile).asValueMap();
+				if (properties.at("col").asInt() == 2)
+				{
+					//“GƒXƒ|[ƒ“À•W
+					enemyCt->AddCreateList(map, Vec2(x, y));
+				}
+				else
+				{
+					itemCt->AddCreateList(map, Vec2(x, y), properties.at("col").asInt());
+				}
+			}
+		}
+	}
+	//ƒŠƒXƒg‚ð‚à‚Æ‚É”z’u
+	enemyCt->Push(layer);
+	itemCt->Push(layer);
 }

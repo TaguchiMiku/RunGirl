@@ -103,6 +103,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
     register_all_packages();
 
+	lpEffectMng.Init();
     // create a scene. it's an autorelease object
     auto scene = TitleScene::createScene();
     // run

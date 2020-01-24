@@ -7,57 +7,43 @@
 			<key>enemy-run-1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{122,0},{60,123}}</string>
+				<string>{{0,30},{30,29}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{60,123}}</string>
+				<string>{{0,0},{30,29}}</string>
 				<key>sourceSize</key>
-				<string>{60,123}</string>
+				<string>{30,29}</string>
 			</dict>
 
 			<key>enemy-run-2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{61,0},{60,120}}</string>
+				<string>{{0,0},{30,29}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{60,120}}</string>
+				<string>{{0,0},{30,29}}</string>
 				<key>sourceSize</key>
-				<string>{60,120}</string>
+				<string>{30,29}</string>
 			</dict>
 
 			<key>enemy-run-3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{122,0},{60,123}}</string>
+				<string>{{31,0},{30,29}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{60,123}}</string>
+				<string>{{0,0},{30,29}}</string>
 				<key>sourceSize</key>
-				<string>{60,123}</string>
-			</dict>
-
-			<key>enemy-run-4.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{0,0},{60,120}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{60,120}}</string>
-				<key>sourceSize</key>
-				<string>{60,120}</string>
+				<string>{30,29}</string>
 			</dict>
 
 		</dict>
@@ -67,7 +53,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{256,128}</string>
+			<string>{64,64}</string>
 			<key>textureFileName</key>
 			<string>sprites.png</string>
 			</dict>

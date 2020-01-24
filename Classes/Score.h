@@ -18,6 +18,7 @@ public:
 
 private:
 	float time;
+	float waitTime;
 	std::array<cocos2d::Sprite*, 6> numberSpList;
 	std::array<std::string, 10> numList;
 	std::array<cocos2d::Vec2, 6> rankPos;

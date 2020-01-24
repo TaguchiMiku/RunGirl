@@ -4,9 +4,13 @@
 class NormalItem : public cocos2d::Sprite
 {
 public:
-	static cocos2d::Sprite* createNItem(const char* fileName);			//クラスを生成
+	static NormalItem* createNItem();			//クラスを生成
 	NormalItem();
 	~NormalItem();
-	void Init();
+	void SetDeathFlag(bool flag);
+	bool GetDeathFlag();
+	CREATE_FUNC(NormalItem);
+private:
+	bool deathFlag;
 };
 

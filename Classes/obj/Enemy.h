@@ -16,6 +16,8 @@ public:
 	float GetJumpSpeed();
 	void SetActState(ACT action);
 	ACT GetActState();
+	void SetDeathFlag(bool flag);
+	bool GetDeathFlag();
 	CREATE_FUNC(Enemy);
 
 private:
@@ -25,6 +27,7 @@ private:
 	std::unique_ptr<ActionCtl> actCtl;
 	ACT nowAction;
 	float jumpSpeed;
+	bool deathFlag;
 
 };
 

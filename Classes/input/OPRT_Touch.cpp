@@ -25,7 +25,7 @@ OPRT_Touch::OPRT_Touch(Node * nd)
 	listener->onTouchBegan = [this](Touch* touch, Event* event) {
 		//lpSoundMng.OnceSoundPlay("Resources/sound/jump2.ckb");
 		touchPos = touch->getLocation();
-		//lpEffectMng.Play("starTap", touchPos);
+		lpEffectMng.Play("starTap", touchPos, 1.0f, 2, false);
 		if (touchPos.x <= Director::getInstance()->getVisibleSize().width / 2)
 		{
 			key = EventKeyboard::KeyCode::KEY_SPACE;

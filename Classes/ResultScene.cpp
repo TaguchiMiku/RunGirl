@@ -21,8 +21,9 @@ void ResultScene::Init()
 	auto bgBackLayer = Layer::create();
 	bgBackLayer->setName("BG_BACKGROUND");
 	this->addChild(bgBackLayer, BG_BACK);
-	cocos2d::Sprite* background = Sprite::create("image/Environment/middleground.png");
+	Sprite* background = Sprite::create("image/Environment/school.png");
 	background->setName("ResultBack");
+	background->setScale(1.05f, 1.02f);
 	background->setAnchorPoint(cocos2d::Vec2(0, 0));
 	bgBackLayer->addChild(background, BG_BACK);
 
@@ -81,6 +82,9 @@ void ResultScene::NextScene()
 {
 	auto scene = TitleScene::createScene();
 	TransitionFade* fade = TransitionFade::create(1.0f, scene, Color3B::WHITE);
-	auto director = cocos2d::Director::getInstance();
-	director->replaceScene(fade);
+	if (scene != nullptr)
+	{
+		auto director = cocos2d::Director::getInstance();
+		director->replaceScene(fade);
+	}
 }

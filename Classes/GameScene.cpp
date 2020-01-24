@@ -33,10 +33,11 @@
 #include "ui/CountDown.h"
 #include "ui/TimerMng.h"
 #include "MapCreate.h"
+#include "EnemyCreate.h"
+#include "ItemCreate.h"
 //#include "sound/SoundMng.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
-//#include "../debug/_DebugDispOut.h"//
 #endif
 
 #pragma execution_charactor_set("utf-8");
@@ -89,7 +90,7 @@ bool GameScene::init()
 	this->addChild(bgFrontLayer, 2);
 
 	auto plLayer = Layer::create();
-	plLayer->setName("BG_BACKGROUND");
+	plLayer->setName("plLayer");
 	this->addChild(plLayer, 1);
 
 	//UI用カメラ追加
@@ -107,7 +108,7 @@ bool GameScene::init()
 	//UI追加
 	auto hp = Sprite::create("image/Environment/gree_bar.jpg");
 	hp->setName("HP");
-	hp->setPosition(cocos2d::Vec2(300, 520));
+	hp->setPosition(cocos2d::Vec2(260, 30));
 	uiLayer->addChild(hp, 0);
 
 	//スコア表示初期化
@@ -127,99 +128,34 @@ bool GameScene::init()
 	//UIレイヤーにUI用カメラを適用
 	uiLayer->setCameraMask(static_cast<int>(CameraFlag::USER1));
 
-	//背景追加
-	backSrl = BackScroll::create();
-	if (backSrl != nullptr)
-	{
-		backSrl->Init(Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer);
-	}
-
-	//map描画
-	/*auto tilemap = TMXTiledMap::create("image/Environment/test.tmx");
-	tilemap->setName("map");
-	tilemap->setPosition(0, 0);
-	bgBackLayer->addChild(tilemap, BG_BACK);*/
-
-	auto map = MapCreate::create();
+	map = MapCreate::create();
 	map->Init(bgBackLayer);
+	map->setName("mapMng");
 	bgBackLayer->addChild(map, BG_BACK);
 	auto tilemap = map->GetMap();
-
-	//map内のタイル全検索
-	for (int y = 0; y < tilemap->getMapSize().height; y++)
-	{
-		for (int x = 0; x < tilemap->getMapSize().width; x++)
-		{
-			auto lay = tilemap->getLayer("ground");
-			auto tile = lay->getTileGIDAt(cocos2d::Vec2(x, y));
-			if (tile)
-			{
-				auto properties = tilemap->getPropertiesForGID(tile).asValueMap();
-				if (properties.at("col").asInt() == 2)
-				{
-					//敵スポーン座標
-					sponeList.push_back(Vec2(x * tilemap->getTileSize().width, (tilemap->getMapSize().height - 1 - y) * tilemap->getTileSize().height + 100));
-				}
-				else if (properties.at("col").asInt() == 3)
-				{
-					//通常アイテム座標
-					normalItemList.push_back(Vec2(x * tilemap->getTileSize().width, (tilemap->getMapSize().height - 1 - y) * tilemap->getTileSize().height));
-				}
-				else if (properties.at("col").asInt() == 4)
-				{
-					//HP回復アイテム座標
-					hpItemList.push_back(Vec2(x * tilemap->getTileSize().width, (tilemap->getMapSize().height - 1 - y) * tilemap->getTileSize().height));
-				}
-			}
-		}
-	}
-
-	for (auto item1 : normalItemList)
-	{
-		//通常アイテム追加
-		auto nItem = NormalItem::createNItem("image/Sprites/item/coin.png");
-		nItem->setPosition(item1);
-		nItem->setName("normalItem");
-		nItem->setScale(0.5f, 0.5f);
-		plLayer->addChild(nItem, 2);
-		nItemSpList.push_back(nItem);
-	}
-	for (auto item2 : hpItemList)
-	{
-		//HP回復アイテム追加
-		auto hpItem = HpItem::createHpItem("image/Sprites/item/n_item.png");
-		hpItem->setPosition(item2);
-		hpItem->setName("normalItem");
-		hpItem->setScale(0.5f, 0.5f);
-		plLayer->addChild(hpItem, 2);
-		hpItemSpList.push_back(hpItem);
-	}
-	
-	//敵の追加
-	for (auto list : sponeList)
-	{
-		//Enemy追加
-		enemy = Enemy::createEnemy();
-		enemy->setPosition(list);
-		plLayer->addChild(enemy, PLAYER);
-		sponeSpList.push_back(enemy);
-	}
+	map->ReCreate(tilemap, plLayer);
 
 	//Player追加
 	player = Player::createPlayer();
 	plLayer->addChild(player, PLAYER);
+
+	//背景追加
+	backSrl = BackScroll::create();
+	if (backSrl != nullptr)
+	{
+		backSrl->Init(Vec2(0, 0), Vec2(1.0f, 1.5f), bgBackLayer);
+	}
 
 	attack = Attack::createAttack();
 	if (attack != nullptr)
 	{
 		attack->Init(Vec2(player->getPosition().x + 10, player->getPosition().y), Vec2(1.0f, 1.0f), plLayer);
 	}
-
-	manager = efk::EffectManager::create(Director::getInstance()->getVisibleSize());
-	lpEffectMng.Init(*plLayer, manager);
+	
 	effect = lpEffectMng.Play("drill", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, true);
-	lpEffectMng.Play("starTap", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, false);
-
+	plLayer->addChild(effect, 0);
+	/*auto tapEfk = lpEffectMng.Play("starTap", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, false);
+	plLayer->addChild(tapEfk, 1);*/
 	if (effect != nullptr)
 	{
 		effect->setRotation3D(Vec3(0, -90.0f, 0));
@@ -243,66 +179,28 @@ void GameScene::menuCloseCallback(Ref* pSender)
 void GameScene::update(float delta)
 {
 	//lpSoundMng.Update();
-	if (manager != nullptr)
+	if (lpEffectMng.GetEffectManager() != nullptr)
 	{
-		manager->update();
+		lpEffectMng.GetEffectManager()->update();
 	}
-	auto uiLayer = getChildByName("UI_LAYER");
+	if (player == nullptr)
+	{
+		return;
+	}
+	backSrl->ScrBackSet(player);
+	//auto uiLayer = getChildByName("UI_LAYER");
 	score->DrawScore();
 	timer->DrawTimer();
 	if (timer->GetTimerCnt() <= 0)
 	{
 		player->SetGoalFlag(true);
 	}
-	plRect = player->getBoundingBox();
 	listCnt = 0;
-	if (player != nullptr && enemy != nullptr)
+	if (attack != nullptr && score != nullptr)
 	{
-		onceFlag = true;
-		for (auto ene : sponeSpList)
-		{
-			eneRect = ene->getBoundingBox();
-			atkRect = attack->getBoundingBox();
-			if (plRect.intersectsRect(eneRect))
-			{
-				if(player->GetAttackFlag())
-				{
-					//攻撃時に敵に当たったら消す
-					ene->removeFromParentAndCleanup(true);
-					sponeSpList.erase(sponeSpList.begin() + listCnt);
-					score->AddScore(100);
-					attack->setPosition(Vec2(player->getPosition().x + 50, player->getPosition().y));
-					lpAnimCtl.RunAnimation(attack, "Fx-impact", 1);
-					player->SetAttackFlag(false);
-					break;
-				}
-				if (ene == collSpr)
-				{
-					//敵と当たり続けていたらfalseにしてHPの減らしをなくす
-					onceFlag = false;
-				}
-				if (onceFlag && player->GetActState() != ACT::ATTACK)
-				{
-					collSpr = ene;
-					scaleX -= 0.2f;
-					hpBar = uiLayer->getChildByName("HP");
-					before = hpBar->getBoundingBox().size.width;
-					hpBar->setScale(scaleX, 1);
-					after = hpBar->getBoundingBox().size.width;
-					hpBar->setPosition(hpBar->getPosition().x - (before - after) / 2, hpBar->getPosition().y);
-					//lpSoundMng.OnceSoundPlay("Resources/sound/die.ckb");
-					onceFlag = false;
-					score->AddScore(-10);
-					player->SetActState(ACT::DIE);
-				}
-				break;
-			}			
-			listCnt++;
-		}
-	}
-
-	if (player != nullptr)
-	{
+		enemyCt = map->GetEnemyCt();
+		itemCt = map->GetItemCt();
+		//走るエフェクトのON・OFF
 		if (effect != nullptr)
 		{
 			if (player->GetAccelFlag())
@@ -314,62 +212,16 @@ void GameScene::update(float delta)
 				effect->setScale(0);
 			}
 		}
-		listCnt = 0;
-		//アイテム取得
-		for (auto item1 : nItemSpList)
-		{
-			nItemRect = item1->getBoundingBox();
-			if (plRect.intersectsRect(nItemRect))
-			{		
-				fxActList.push_back(std::make_pair(item1, lpAnimCtl.RunAnimation(item1, "Fx-glow", 4)));
-				//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-				if (nItemSpList[listCnt] != nullptr)
-				{
-					player->SetAccelFlag(true);
-					nItemSpList.erase(nItemSpList.begin() + listCnt);
-					score->AddScore(30);
-				}
-				break;
-			}
-			listCnt++;
-		}
-		listCnt = 0;
-		for (auto item2 : hpItemSpList)
-		{
-			hpItemRect = item2->getBoundingBox();
-			if (plRect.intersectsRect(hpItemRect))
-			{
-				fxActList.push_back(std::make_pair(item2, lpAnimCtl.RunAnimation(item2, "Fx-glow", 4)));
-				//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-				if (hpItemSpList[listCnt] != nullptr)
-				{
-					player->SetAccelFlag(true);
-					hpItemSpList.erase(hpItemSpList.begin() + listCnt);
-					score->AddScore(50);
-				}
-				break;
-			}
-			listCnt++;
-		}
-		listCnt = 0;
-		for (auto fx : fxActList)
-		{
-			//エフェクト（アニメーション）の再生が終わったらspriteと配列の要素を消す。
-			if (fx.second->isDone())
-			{
-				fx.first->removeFromParentAndCleanup(true);
-				fx.second->release();
-				fxActList.erase(fxActList.begin() + listCnt);
-			}
-			listCnt++;
-		}
+		//プレイヤーとの判定
+		enemyCt->Update(delta, player, attack, score);
+		itemCt->Update(delta, player, score);
 	}
 }
 
 void GameScene::visitor(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
 {
-	manager->begin(renderer, _globalZOrder);
+	lpEffectMng.GetEffectManager()->begin(renderer, _globalZOrder);
 	Scene::visit(renderer, parentTransform, parentFlags);
-	manager->end(renderer, _globalZOrder);
+	lpEffectMng.GetEffectManager()->end(renderer, _globalZOrder);
 }
 

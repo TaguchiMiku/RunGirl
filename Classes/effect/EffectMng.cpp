@@ -5,48 +5,43 @@ using namespace efk;
 
 std::unique_ptr<EffectMng, EffectMng::EffectMngDeleter> EffectMng::s_instance(new EffectMng());
 
-void EffectMng::Init(cocos2d::Layer & layer, efk::EffectManager * manager)
+void EffectMng::Init(void)
 {
-	this->manager = manager;
-	this->layer = &layer;
+	manager = EffectManager::create(Director::getInstance()->getVisibleSize());
+}
+
+void EffectMng::AddEffect(std::string name)
+{
+	if (mapEffect.find(name) == mapEffect.end())
+	{
+		mapEffect.emplace(name, Effect::create("effect/" + name + ".efk"));
+		mapEffect[name]->retain();
+	}
+}
+
+efk::Effect * EffectMng::GetEffect(std::string name)
+{
+	AddEffect(name);
+	return mapEffect[name];
+}
+
+efk::EffectManager * EffectMng::GetEffectManager()
+{
+	return manager;
 }
 
 EffectEmitter* EffectMng::Play(std::string  name, Vec2 position, int scale, float speed, bool looping)
 {
 	//何回も生成されてしまう
-	auto effect = Effect::create("effect/" + name + ".efk");
 	auto emitter = EffectEmitter::create(manager);
 	emitter->setPosition(position);
 	emitter->setScale(scale);
-	emitter->setEffect(effect);
+	emitter->setEffect(GetEffect(name));
 	emitter->setSpeed(speed);
 	emitter->setIsLooping(looping);
-	layer->addChild(emitter, 0);
 	emitter->setName(name);
 	emitter->play();
-	mapEffect[name] = emitter;
 	return emitter;
-}
-
-void EffectMng::Play(std::string name, cocos2d::Vec2 position)
-{
-	if (mapEffect[name] == nullptr)
-	{
-		return;
-	}
-	mapEffect[name]->setPosition(position);
-	mapEffect[name]->play();
-}
-
-efk::EffectEmitter * EffectMng::PlayAgain(std::string name, cocos2d::Vec2 position, int scale, float speed, bool looping)
-{
-
-	return nullptr;
-}
-
-Effect * EffectMng::GetEffect(EffectEmitter* emitter)
-{
-	return emitter->getEffect();
 }
 
 EffectMng::EffectMng()
@@ -56,4 +51,5 @@ EffectMng::EffectMng()
 
 EffectMng::~EffectMng()
 {
+	manager->release();
 }

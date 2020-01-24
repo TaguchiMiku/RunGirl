@@ -4,9 +4,13 @@
 class HpItem : public cocos2d::Sprite
 {
 public:
-	static cocos2d::Sprite* createHpItem(const char* fileName);			//クラスを生成
+	static HpItem* createHpItem();			//クラスを生成
 	HpItem();
 	~HpItem();
-	void Init();
+	void SetDeathFlag(bool flag);
+	bool GetDeathFlag();
+	CREATE_FUNC(HpItem);
+private:
+	bool deathFlag;
 };
 
