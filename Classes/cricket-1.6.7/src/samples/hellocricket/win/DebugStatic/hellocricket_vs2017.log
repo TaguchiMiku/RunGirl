@@ -1,0 +1,28 @@
+﻿  hellocricket.cpp
+ck.lib(window.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(window.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(vorbisfile.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(vorbisfile.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(synthesis.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(synthesis.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(sharedbook.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(sharedbook.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(res012.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(res012.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(registry.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(registry.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(mdct.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(mdct.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(mapping0.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(mapping0.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(info.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(info.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(floor1.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(floor1.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(floor0.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(floor0.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(codebook.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(codebook.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(block.obj) : warning LNK4099: PDB 'tremor.pdb' が 'ck.lib(block.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\tremor.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(framing.obj) : warning LNK4099: PDB 'ogg.pdb' が 'ck.lib(framing.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\ogg.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+ck.lib(bitwise.obj) : warning LNK4099: PDB 'ogg.pdb' が 'ck.lib(bitwise.obj)' で、または 'E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\ogg.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+  hellocricket_vs2017.vcxproj -> E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\hellocricket_vs2017.exe
+  
+  Cricket Audio tool (version 1.6.7)
+  
+  building bank from ..\hellocricket.ckbx
+  bank name: hellocricket
+  adding sample 0
+    name: hello
+    source: hellocricket.wav
+    format: pcm16
+  
+  writing to E:\cricket-1.6.7\src\samples\hellocricket\win\DebugStatic\hellocricket.ckb
