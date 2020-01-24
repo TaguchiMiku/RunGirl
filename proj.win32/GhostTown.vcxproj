@@ -14,7 +14,7 @@
     <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
     <RootNamespace>test_win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -162,12 +162,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\effect\Effekseer.cpp" />
     <ClCompile Include="..\Classes\effect\EffekseerNative.cpp" />
     <ClCompile Include="..\Classes\effect\EffekseerRendererNative.cpp" />
+    <ClCompile Include="..\Classes\EnemyCreate.cpp" />
     <ClCompile Include="..\Classes\GameScene.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_Key.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_State.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_Touch.cpp" />
+    <ClCompile Include="..\Classes\ItemCreate.cpp" />
     <ClCompile Include="..\Classes\item\HpItem.cpp" />
     <ClCompile Include="..\Classes\item\NormalItem.cpp" />
+    <ClCompile Include="..\Classes\MapCreate.cpp" />
     <ClCompile Include="..\Classes\move\AttackMove.cpp" />
     <ClCompile Include="..\Classes\move\Falling.cpp" />
     <ClCompile Include="..\Classes\move\FallMove.cpp" />
@@ -183,6 +186,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ui\Attack.cpp" />
     <ClCompile Include="..\Classes\ui\BackScroll.cpp" />
     <ClCompile Include="..\Classes\ui\clickUI.cpp" />
+    <ClCompile Include="..\Classes\ui\CountDown.cpp" />
+    <ClCompile Include="..\Classes\ui\TimerMng.cpp" />
     <ClCompile Include="..\Classes\ui\TitleNameMove.cpp" />
     <ClCompile Include="DisplayUI.cpp" />
     <ClCompile Include="main.cpp" />
@@ -201,12 +206,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\effect\Effekseer.h" />
     <ClInclude Include="..\Classes\effect\EffekseerNative.h" />
     <ClInclude Include="..\Classes\effect\EffekseerRendererNative.h" />
+    <ClInclude Include="..\Classes\EnemyCreate.h" />
     <ClInclude Include="..\Classes\GameScene.h" />
     <ClInclude Include="..\Classes\input\OPRT_Key.h" />
     <ClInclude Include="..\Classes\input\OPRT_State.h" />
     <ClInclude Include="..\Classes\input\OPRT_Touch.h" />
+    <ClInclude Include="..\Classes\ItemCreate.h" />
     <ClInclude Include="..\Classes\item\HpItem.h" />
     <ClInclude Include="..\Classes\item\NormalItem.h" />
+    <ClInclude Include="..\Classes\MapCreate.h" />
     <ClInclude Include="..\Classes\move\AttackMove.h" />
     <ClInclude Include="..\Classes\move\Falling.h" />
     <ClInclude Include="..\Classes\move\FallMove.h" />
@@ -222,6 +230,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ui\Attack.h" />
     <ClInclude Include="..\Classes\ui\BackScroll.h" />
     <ClInclude Include="..\Classes\ui\clickUI.h" />
+    <ClInclude Include="..\Classes\ui\CountDown.h" />
+    <ClInclude Include="..\Classes\ui\TimerMng.h" />
     <ClInclude Include="..\Classes\ui\TitleNameMove.h" />
     <ClInclude Include="DisplayUI.h" />
     <ClInclude Include="main.h" />

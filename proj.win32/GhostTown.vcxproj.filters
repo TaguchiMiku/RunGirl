@@ -154,6 +154,21 @@
     <ClCompile Include="..\Classes\ui\Attack.cpp">
       <Filter>src\UI&amp;Visual</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ui\CountDown.cpp">
+      <Filter>src\UI&amp;Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\TimerMng.cpp">
+      <Filter>src\UI&amp;Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MapCreate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EnemyCreate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ItemCreate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -264,6 +279,21 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ui\Attack.h">
       <Filter>src\UI&amp;Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\CountDown.h">
+      <Filter>src\UI&amp;Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\TimerMng.h">
+      <Filter>src\UI&amp;Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MapCreate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EnemyCreate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ItemCreate.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

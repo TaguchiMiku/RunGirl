@@ -17,15 +17,7 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 	}
 	auto mapMng = (MapCreate*)director->getRunningScene()->getChildByName("BG_BACKGROUND")->getChildByName("mapMng");
 	map = mapMng->GetMap();
-	/*if (map->getMapSize().width >= 165)
-	{
-		TRACE("mapA\n");
-	}
-	if (map->getMapSize().width <= 165)
-	{
-		TRACE("mapB\n");
-	}*/
-	
+
 	//Žæ“¾‚µ‚½TMXTiledMap‚Ìî•ñ“à‚ÌTMXLayerŒ^‚ÌƒŒƒCƒ„[î•ñ‚ðŽæ“¾
 	lay = (cocos2d::TMXLayer*)map->getLayer("ground");
 
