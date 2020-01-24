@@ -93,6 +93,15 @@ list(APPEND GAME_SOURCE
         Classes/item/NormalItem.cpp
         Classes/CameraCtl.cpp
         Classes/Score.cpp
+        Classes/ui/clickUI.cpp
+        Classes/ui/TitleNameMove.cpp
+        Classes/ui/BackScroll.cpp
+        Classes/ui/Attack.cpp
+        Classes/ui/TimerMng.cpp
+        Classes/ui/CountDown.cpp
+        Classes/MapCreate.cpp
+        Classes/EnemyCreate.cpp
+        Classes/ItemCreate.cpp
         #Classes/sound/SoundMng.cpp
      )
 list(APPEND GAME_HEADER
@@ -124,6 +133,15 @@ list(APPEND GAME_HEADER
         Classes/item/NormalItem.h
         Classes/CameraCtl.h
         Classes/Score.h
+        Classes/ui/clickUI.h
+        Classes/ui/TitleNameMove.h
+        Classes/ui/BackScroll.h
+        Classes/ui/Attack.h
+        Classes/ui/TimerMng.h
+        Classes/ui/CountDown.h
+        Classes/MapCreate.h
+        Classes/EnemyCreate.h
+        Classes/ItemCreate.h
         #Classes/sound/SoundMng.h
      )
 
