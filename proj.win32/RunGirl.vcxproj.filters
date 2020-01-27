@@ -180,6 +180,9 @@
     <ClCompile Include="..\Classes\sound\SoundMng.cpp">
       <Filter>src\sound</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\obj\Unit.cpp">
+      <Filter>src\obj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -310,6 +313,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\sound\SoundMng.h">
       <Filter>src\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\obj\Unit.h">
+      <Filter>src\obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
