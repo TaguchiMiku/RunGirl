@@ -137,7 +137,7 @@ bool GameScene::init()
 	map->ReCreate(tilemap, plLayer);
 
 	//Player追加
-	player = Player::createPlayer();
+	player = Player::create();
 	plLayer->addChild(player, PLAYER);
 
 	//背景追加

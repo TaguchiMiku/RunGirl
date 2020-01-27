@@ -11,11 +11,6 @@
 USING_NS_CC;
 #pragma execution_charactor_set("utf-8");
 
-Enemy * Enemy::createEnemy()
-{
-	return Enemy::create();
-}
-
 Enemy::Enemy()
 {
 	lpAnimCtl.AddAnimation("player", "idle", 0.05f);
@@ -26,6 +21,9 @@ Enemy::Enemy()
 	this->setName("Enemy");
 	jumpSpeed = 0;
 	nowAction = ACT::IDLE;
+	accelFlag = false;
+	attackFlag = false;
+	timeUpFlag = false;
 	AddActData();
 
 	//OPRT_Enemyを作る
@@ -41,8 +39,17 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::update(float frame)
+Unit * Enemy::createUnit()
 {
+	return Enemy::create();
+}
+
+void Enemy::Update(float frame)
+{
+	if (timeUpFlag)
+	{
+		return;
+	}
 	if (getPositionX() <= 120)
 	{
 		return;
@@ -52,6 +59,11 @@ void Enemy::update(float frame)
 	data.key.second = EventKeyboard::KeyCode::KEY_NONE;
 	oprt_state->Update();
 	actCtl->MoveModule(data);
+}
+
+void Enemy::SetTimeUpFlag(bool flag)
+{
+	timeUpFlag = flag;
 }
 
 void Enemy::SetJumpSpeed(float speed)
@@ -72,6 +84,26 @@ void Enemy::SetActState(ACT action)
 ACT Enemy::GetActState()
 {
 	return nowAction;
+}
+
+void Enemy::SetAccelFlag(bool flag)
+{
+	accelFlag = flag;
+}
+
+bool Enemy::GetAccelFlag()
+{
+	return accelFlag;
+}
+
+void Enemy::SetAttackFlag(bool flag)
+{
+	attackFlag = flag;
+}
+
+bool Enemy::GetAttackFlag()
+{
+	return attackFlag;
 }
 
 void Enemy::SetDeathFlag(bool flag)
@@ -98,20 +130,6 @@ void Enemy::AddActData()
 		actLeft.offset = Vec2(-25, -110);
 		actLeft.action = ACT::LEFT;
 		actCtl->AddModule("左移動", actLeft);
-	}
-	{
-		//右移動
-		actModule actRight;
-		actRight.velocity = Vec2(5, 0);
-		actRight.reverce = false;
-		actRight.keyCode = EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
-		actRight.animName = "enemy-run";
-		actRight.sprite = this;
-		actRight.offset = Vec2(25, -110);
-		actRight.blackList.emplace_back(ACT::FALLING);
-		actRight.blackList.emplace_back(ACT::JUMPING);
-		actRight.action = ACT::RIGHT;
-		actCtl->AddModule("右移動", actRight);
 	}
 	{
 		//落下

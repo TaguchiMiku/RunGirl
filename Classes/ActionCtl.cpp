@@ -1,6 +1,5 @@
 ﻿#include "ActionCtl.h"
-#include "obj/Player.h"
-#include "obj/Enemy.h"
+#include "obj/Unit.h"
 #include "move/MoveLR.h"
 #include "move/FallMove.h"
 #include "move/JumpMove.h"
@@ -10,7 +9,7 @@
 #include "CheckKey.h"
 #include "CheckList.h"
 #include "CheckCollision.h"
-//#include "debug/_DebugConOut.h"
+#include "debug/_DebugConOut.h"
 #pragma execution_charactor_set("utf-8");
 
 USING_NS_CC;
@@ -91,11 +90,13 @@ void ActionCtl::MoveModule(input_data data)
 	{
 		if (map.first == "右移動" && map.second.sprite->getName() == "Player")
 		{
+			TRACE("Player\n");
 			map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
 			map.second.oldKey = data.key.second;
 		}
 		else if (map.first == "左移動" && map.second.sprite->getName() == "Enemy")
 		{
+			TRACE("Enemy\n");
 			map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW;
 			map.second.oldKey = data.key.second;
 		}
@@ -107,57 +108,33 @@ void ActionCtl::MoveModule(input_data data)
 		
 		if (CheckModule(map.second))
 		{
-			if (map.second.sprite->getName() == "Player")
+			unit = static_cast<Unit*>(map.second.sprite);
+			if (map.second.action != unit->GetActState())
 			{
-				player = static_cast<Player*>(map.second.sprite);
+				if (plNowAct != nullptr)
+				{
+					map.second.sprite->stopAllActions();
+				}
 				//加速するかどうか
-				if (player->GetAccelFlag())
+				if (unit->GetAccelFlag())
 				{
 					map.second.animName = "player-run";
 					map.second.velocity.x *= 2;
 				}
-				else if(map.first == "右移動")
+				//アニメーション
+				if (map.first == "攻撃")
 				{
-					map.second.animName = "player-walk";
-					map.second.velocity.x /= 2;
+					map.second.animName = "player-idle";
+					unit->SetAttackFlag(true);
+					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, 1);
 				}
-
-				if (map.second.action != player->GetActState())
+				else
 				{
-					if (plNowAct != nullptr)
-					{
-						map.second.sprite->stopAllActions();
-					}
-					//アニメーション
-					if (map.first == "攻撃")
-					{
-						map.second.animName = "player-idle";
-						player->SetAttackFlag(true);
-						plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, 1);
-					}
-					else
-					{
-						plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, -1);
-					}
+					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, -1);
 				}
-				player->SetActState(map.second.action);
-				map.second.runAction(*map.second.sprite, map.second);
 			}
-			if (map.second.sprite->getName() == "Enemy")
-			{
-				enemy = static_cast<Enemy*>(map.second.sprite);
-				if (map.second.action != enemy->GetActState())
-				{
-					if (enNowAct != nullptr)
-					{
-						map.second.sprite->stopAllActions();
-					}
-					//アニメーション
-					enNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, -1);
-				}
-				enemy->SetActState(map.second.action);
-				map.second.runAction(*map.second.sprite, map.second);
-			}		
+			unit->SetActState(map.second.action);
+			map.second.runAction(*map.second.sprite, map.second);
 		}
 	}
 }

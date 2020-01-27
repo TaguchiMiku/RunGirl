@@ -15,11 +15,6 @@ USING_NS_CC;
 
 #pragma execution_charactor_set("utf-8");
 
-Player * Player::createPlayer()
-{
-	return Player::create();
-}
-
 Player::Player()
 {
 	// 画面サイズと原点を取得
@@ -39,7 +34,6 @@ Player::Player()
 	AddActData();
 	jumpSpeed = 0;
 	nowAction = ACT::IDLE;
-	velocity = Vec2(5, 0);
 	accelFlag = false;
 	attackFlag = false;
 	timeUpFlag = false;
@@ -57,6 +51,11 @@ Player::Player()
 
 Player::~Player()
 {
+}
+
+Unit * Player::createUnit()
+{
+	return Player::create();
 }
 
 //毎フレーム更新関数
@@ -87,6 +86,11 @@ void Player::Update(float delta)
 	cameraCtl->FollowPlayer(Vec3(this->getPosition().x, this->getPosition().y, 500));
 }
 
+void Player::SetTimeUpFlag(bool flag)
+{
+	timeUpFlag = flag;
+}
+
 void Player::SetJumpSpeed(float speed)
 {
 	jumpSpeed = speed;
@@ -105,11 +109,6 @@ void Player::SetActState(ACT action)
 ACT Player::GetActState()
 {
 	return nowAction;
-}
-
-void Player::SetTimeUpFlag(bool flag)
-{
-	timeUpFlag = flag;
 }
 
 void Player::SetAccelFlag(bool flag)

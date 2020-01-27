@@ -13,8 +13,7 @@ enum INPUT_DATA{
 	MAX
 };
 
-class Player;
-class Enemy;
+class Unit;
 class ActionCtl
 {
 public:
@@ -29,6 +28,5 @@ private:
 	std::string animName;
 	cocos2d::Action* plNowAct;
 	cocos2d::Action* enNowAct;
-	Player* player;
-	Enemy* enemy;
+	Unit* unit;
 };

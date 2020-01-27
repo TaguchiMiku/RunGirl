@@ -35,7 +35,7 @@ void EnemyCreate::Push(Layer* layer)
 	for (auto list : sponeList)
 	{
 		//Enemy’Ç‰Á
-		auto enemy = Enemy::createEnemy();
+		auto enemy = Enemy::create();
 		enemy->setPosition(list);
 		layer->addChild(enemy, 2);
 		sponeSpList.push_back(enemy);
@@ -52,6 +52,7 @@ void EnemyCreate::Update(float flam, Player* player, Attack* attack, Score* scor
 
 		for (auto ene : sponeSpList)
 		{
+			ene->Update(flam);
 			auto eneRect = ene->getBoundingBox();
 			auto atkRect = attack->getBoundingBox();
 			if (plRect.intersectsRect(eneRect))

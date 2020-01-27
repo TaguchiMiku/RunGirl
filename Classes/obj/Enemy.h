@@ -1,21 +1,25 @@
 #pragma once
-#include "cocos2d.h"
+#include "Unit.h"
 #include "Animation/AnimCtl.h"
-#include "../ActionCtl.h"
-#include "input/OPRT_State.h"
+#include "../input/OPRT_State.h"
 
 class Enemy :
-	public cocos2d::Sprite
+	public Unit
 {
 public:
-	static Enemy* createEnemy();		//Enemyクラスを生成
 	Enemy();
 	~Enemy();
-	void update(float frame);
-	void SetJumpSpeed(float speed);
-	float GetJumpSpeed();
-	void SetActState(ACT action);
-	ACT GetActState();
+	Unit* createUnit()override;
+	void Update(float frame);
+	void SetTimeUpFlag(bool flag)override;
+	void SetJumpSpeed(float speed)override;
+	float GetJumpSpeed()override;
+	void SetActState(ACT action)override;
+	ACT GetActState()override;
+	void SetAccelFlag(bool flag)override;
+	bool GetAccelFlag()override;
+	void SetAttackFlag(bool flag)override;
+	bool GetAttackFlag()override;
 	void SetDeathFlag(bool flag);
 	bool GetDeathFlag();
 	CREATE_FUNC(Enemy);
@@ -25,9 +29,6 @@ private:
 
 	std::unique_ptr<OPRT_State> oprt_state;	//入力クラスのメンバーを呼ぶ用のポインター
 	std::unique_ptr<ActionCtl> actCtl;
-	ACT nowAction;
-	float jumpSpeed;
 	bool deathFlag;
-
 };
 
