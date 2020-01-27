@@ -31,12 +31,12 @@ void clickUI::Init(cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::Layer* 
 void clickUI::update(float delta)
 {
 	//点滅動作
-	time++;
-	if ((time * (1 - delta) >= 0) && (time * (1 - delta) < FLASHING_TIME))
+	time += delta;
+	if ((time >= 0) && (time < 1.0f))
 	{
 		setScale(maxScale.x, maxScale.y);
 	}
-	else if ((time * (1 - delta) >= FLASHING_TIME) && (time * (1 - delta) < FLASHING_TIME * 2))
+	else if ((time >= 1.0f) && (time < 1.0f * 2))
 	{
 		setScale(0, 0);
 	}

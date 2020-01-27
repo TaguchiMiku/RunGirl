@@ -20,19 +20,16 @@ public:
 	static Player* createPlayer();			//クラスを生成
 	Player();
 	~Player();
-	void update(float delta);				//毎フレーム更新関数
-	void NextScene(float millsecond);
+	void Update(float delta);				//毎フレーム更新関数
 	void SetJumpSpeed(float speed);
 	float GetJumpSpeed();
 	void SetActState(ACT action);
 	ACT GetActState();
-	void SetGoalFlag(bool flag);
-	bool GetGoalFlag();
+	void SetTimeUpFlag(bool flag);
 	void SetAccelFlag(bool flag);
 	bool GetAccelFlag();
 	void SetAttackFlag(bool flag);
 	bool GetAttackFlag();
-	bool GetGameFlag();
 	CREATE_FUNC(Player);
 
 private:
@@ -45,11 +42,9 @@ private:
 	ACT nowAction;
 	float jumpSpeed;
 	cocos2d::Vec2 velocity;
-	bool timeUpFlag;
-	bool onceFlag;
 	bool accelFlag;
 	bool attackFlag;
-	bool gameFlag;
+	bool timeUpFlag;
 	cocos2d::Action* action;//アニメーション情報を入れる
 	float time;
 };

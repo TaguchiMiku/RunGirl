@@ -85,8 +85,8 @@ void TimerMng::update(float delta)
 	{
 		return;
 	}
-	time++;
-	if ((time * (1 - delta)) >= 60)
+	time += delta;
+	if (time >= 1)
 	{
 		cntTime++;
 		if (cntTime < 4)

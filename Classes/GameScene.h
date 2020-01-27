@@ -68,6 +68,7 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
 	void update(float delta);
+	void NextScene(float millsecond);
 	void visitor(cocos2d::Renderer *renderer,
 				 const cocos2d::Mat4& parentTransform,
 				 uint32_t parentFlags);
@@ -93,9 +94,11 @@ private:
 	float after;
 	float before;
 	//CkSound* sound;
-	bool onceFlag;
 	float scaleX;
-	int listCnt;
+	bool timeUpFlag;
+	bool onceFlag;
+	bool gameFlag;
+	float time;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

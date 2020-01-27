@@ -45,10 +45,11 @@ void EnemyCreate::Push(Layer* layer)
 void EnemyCreate::Update(float flam, Player* player, Attack* attack, Score* score)
 {
 	plRect = player->getBoundingBox();
-	listCnt = 0;
 	if (player != nullptr && sponeSpList.size() > 0)
 	{
 		onceFlag = true;
+		//sponeSpList→enemySpList
+
 		for (auto ene : sponeSpList)
 		{
 			auto eneRect = ene->getBoundingBox();
@@ -59,7 +60,7 @@ void EnemyCreate::Update(float flam, Player* player, Attack* attack, Score* scor
 				{
 					TRACE("Destroy_Enemy\n");
 					//攻撃時に敵に当たったら死亡フラグを立てる
-					sponeSpList.at(listCnt)->SetDeathFlag(true);				
+					ene->SetDeathFlag(true);				
 					score->AddScore(100);
 					attack->setPosition(Vec2(player->getPosition().x + 50, player->getPosition().y));
 					lpAnimCtl.RunAnimation(attack, "Fx-impact", 1);
@@ -68,6 +69,8 @@ void EnemyCreate::Update(float flam, Player* player, Attack* attack, Score* scor
 				}
 				if (ene == collSpr)
 				{
+					//2体いたら当たり続ける
+					//EnemyはEnemyのアタックがある（アタックが一回しかできない）
 					//敵と当たり続けていたらfalseにしてHPの減らしをなくす
 					onceFlag = false;
 				}

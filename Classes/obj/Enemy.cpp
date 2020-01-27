@@ -28,6 +28,7 @@ Enemy::Enemy()
 	nowAction = ACT::IDLE;
 	AddActData();
 
+	//OPRT_Enemyを作る
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	oprt_state.reset(new OPRT_Key(this));
 #else

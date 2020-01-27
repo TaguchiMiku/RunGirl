@@ -82,13 +82,13 @@ void Score::update(float delta)
 	{
 		return;
 	}
-	waitTime++;
-	if ((waitTime * (1 - delta)) <= 60*3)
+	waitTime += delta;
+	if (waitTime <= 3)
 	{
 		return;
 	}
-	time++;
-	if ((time * (1 - delta)) >= 60)
+	time += delta;
+	if (time >= 1)
 	{
 		time = 0;
 		score++;

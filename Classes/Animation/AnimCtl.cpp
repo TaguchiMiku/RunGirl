@@ -8,9 +8,13 @@ std::string AnimCtl::AddAnimation(std::string unit, std::string action, float an
 {
 	auto cache = SpriteFrameCache::getInstance();
 	auto actName = unit + "-" + action;
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("image/Sprites/" + unit + "/" + actName + "/sprites.plist");
+	//–³‘Ê‚È“Ç‚Ýž‚Ý‚ð‚È‚­‚·Žd‘g‚Ý‚É‚·‚é
+	if (AnimationCache::getInstance()->getAnimation(actName) != nullptr)
+	{
+		return actName;
+	}
+	cache->addSpriteFramesWithFile("image/Sprites/" + unit + "/" + actName + "/sprites.plist");
 	animation = Animation::create();
-
 	for (int j = 1; j < 100; j++)
 	{
 		auto spFrame = cache->getSpriteFrameByName(actName + "-" + std::to_string(j) + ".png");

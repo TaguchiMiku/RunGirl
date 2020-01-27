@@ -19,13 +19,13 @@ void EffectMng::AddEffect(std::string name)
 	}
 }
 
-efk::Effect * EffectMng::GetEffect(std::string name)
+Effect * EffectMng::GetEffect(std::string name)
 {
 	AddEffect(name);
 	return mapEffect[name];
 }
 
-efk::EffectManager * EffectMng::GetEffectManager()
+EffectManager * EffectMng::GetEffectManager()
 {
 	return manager;
 }

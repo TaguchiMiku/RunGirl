@@ -22,12 +22,12 @@ Player * Player::createPlayer()
 
 Player::Player()
 {
-	//画面サイズと原点を取得
+	// 画面サイズと原点を取得
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin		 = Director::getInstance()->getVisibleOrigin();
 	setPosition(Vec2(visibleSize.width / 2 + origin.x, 400 + origin.y));
 
-	//アニメーションの初期化
+	// アニメーションの初期化//シーンの先頭で読み込む
 	lpAnimCtl.AddAnimation("player", "idle", 0.05f);
 	lpAnimCtl.AddAnimation("player", "walk", 0.1f);
 	lpAnimCtl.AddAnimation("player", "run", 0.05f);
@@ -35,20 +35,18 @@ Player::Player()
 
 	lpAnimCtl.RunAnimation(this, "player-idle", -1);
 
-	//アクションデータを設定(追加)する
+	// アクションデータを設定(追加)する
 	AddActData();
 	jumpSpeed = 0;
 	nowAction = ACT::IDLE;
 	velocity = Vec2(5, 0);
-	timeUpFlag = false;
-	onceFlag = true;
 	accelFlag = false;
 	attackFlag = false;
-	gameFlag = false;
+	timeUpFlag = false;
 	time = 0;
 	this->setName("Player");
 	//lpSoundMng.Init();
-//プラットフォーム別に入力クラス（操作の仕方）を切り替える
+// プラットフォーム別に入力クラス（操作の仕方）を切り替える
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	oprt_state.reset(new OPRT_Key(this));
 #else
@@ -62,58 +60,31 @@ Player::~Player()
 }
 
 //毎フレーム更新関数
-void Player::update(float delta)
+void Player::Update(float delta)
 {
-	if (Director::getInstance()->getRunningScene()->getName() != "Game")
+	// 制限時間になったら止める
+	if (timeUpFlag)
 	{
-		return;
-	}
-	else if(!gameFlag)
-	{
-		time++;
-		if ((time * (1 - delta)) >= 180)
-		{
-			time = 0;
-			gameFlag = true;
-		}
-		return;
-	}
-	else if (timeUpFlag)
-	{
-		if (onceFlag && timeUpFlag)
-		{
-			//ゴールした
-			onceFlag = false;
-			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-			this->scheduleOnce(schedule_selector(Player::NextScene), 2.0f);
-		}
 		return;
 	}
 
-	//加速する時間
+	// 加速する時間
 	if (accelFlag)
 	{
-		time++;
-		if ((time * (1 - delta)) >= 90)
+		time += delta;
+		if (time >= 3.0f)
 		{
 			time = 0;
 			accelFlag = false;
 		}
 	}
 
-	//input処理とaction処理
+	// input処理とaction処理
 	data = oprt_state->GetData();
 	oprt_state->Update();
 	actCtl->MoveModule(data);
-	//追従カメラ設定
+	// 追従カメラ設定
 	cameraCtl->FollowPlayer(Vec3(this->getPosition().x, this->getPosition().y, 500));
-}
-
-void Player::NextScene(float millsecond)
-{
-	auto scene = ResultScene::createScene();
-	auto director = cocos2d::Director::getInstance();
-	director->replaceScene(scene);
 }
 
 void Player::SetJumpSpeed(float speed)
@@ -136,14 +107,9 @@ ACT Player::GetActState()
 	return nowAction;
 }
 
-void Player::SetGoalFlag(bool flag)
+void Player::SetTimeUpFlag(bool flag)
 {
 	timeUpFlag = flag;
-}
-
-bool Player::GetGoalFlag()
-{
-	return timeUpFlag;
 }
 
 void Player::SetAccelFlag(bool flag)
@@ -165,11 +131,6 @@ void Player::SetAttackFlag(bool flag)
 bool Player::GetAttackFlag()
 {
 	return attackFlag;
-}
-
-bool Player::GetGameFlag()
-{
-	return gameFlag;
 }
 
 void Player::AddActData()

@@ -40,8 +40,8 @@ void CountDown::update(float delta)
 	{
 		return;
 	}
-	time++;
-	if ((time * (1 - delta)) >= 60)
+	time += delta;
+	if (time >= 1)
 	{
 		time = 0;
 		if (cnt >= 0)

@@ -39,6 +39,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
 #endif
+#define COUNT_DOWN_SECOND 3		// ゲーム開始までのカウントダウン(秒)
 
 #pragma execution_charactor_set("utf-8");
 
@@ -166,6 +167,9 @@ bool GameScene::init()
 
 	scaleX = 1;
 	onceFlag = true;
+	timeUpFlag = false;
+	gameFlag = false;
+	time = 0;
 
 	this->scheduleUpdate();
     return true;
@@ -178,6 +182,16 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
 void GameScene::update(float delta)
 {
+	if (!gameFlag)
+	{
+		time += delta;
+		if (time >= COUNT_DOWN_SECOND + 1)
+		{
+			time = 0;
+			gameFlag = true;
+		}
+		return;
+	}
 	//lpSoundMng.Update();
 	if (lpEffectMng.GetEffectManager() != nullptr)
 	{
@@ -187,20 +201,33 @@ void GameScene::update(float delta)
 	{
 		return;
 	}
-	backSrl->ScrBackSet(player);
-	//auto uiLayer = getChildByName("UI_LAYER");
-	score->DrawScore();
-	timer->DrawTimer();
-	if (timer->GetTimerCnt() <= 0)
+	player->Update(delta);
+	if (backSrl != nullptr)
 	{
-		player->SetGoalFlag(true);
+		backSrl->ScrBackSet(player);
 	}
-	listCnt = 0;
+	if (score != nullptr && timer != nullptr)
+	{
+		// TimerとScoreの更新
+		score->DrawScore();
+		timer->DrawTimer();
+		// 制限時間が0になったら2秒後ResultSceneへ遷移する
+		if (timer->GetTimerCnt() <= 0 && onceFlag)
+		{
+			onceFlag = false;
+			player->SetTimeUpFlag(true);
+			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
+			this->scheduleOnce(schedule_selector(GameScene::NextScene), 2.0f);
+		}
+	}
 	if (attack != nullptr && score != nullptr)
 	{
 		enemyCt = map->GetEnemyCt();
 		itemCt = map->GetItemCt();
-		//走るエフェクトのON・OFF
+		// プレイヤーとの判定
+		enemyCt->Update(delta, player, attack, score);
+		itemCt->Update(delta, player, score);
+		// 走るエフェクトのON・OFF
 		if (effect != nullptr)
 		{
 			if (player->GetAccelFlag())
@@ -212,10 +239,14 @@ void GameScene::update(float delta)
 				effect->setScale(0);
 			}
 		}
-		//プレイヤーとの判定
-		enemyCt->Update(delta, player, attack, score);
-		itemCt->Update(delta, player, score);
 	}
+}
+
+void GameScene::NextScene(float millsecond)
+{
+	auto scene = ResultScene::createScene();
+	auto director = cocos2d::Director::getInstance();
+	director->replaceScene(scene);
 }
 
 void GameScene::visitor(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)

@@ -8,6 +8,7 @@ USING_NS_CC;
 //ジャンプ処理
 bool Jumping::operator()(cocos2d::Sprite & sp, actModule & module)
 {
+	//PlayerとEnemy同じところあるので親クラスを作りprotecetedなどでまとめる
 	if (module.sprite->getName() == "Player")
 	{
 		auto player = static_cast<Player*>(module.sprite);
