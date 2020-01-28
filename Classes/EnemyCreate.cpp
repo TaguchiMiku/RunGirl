@@ -4,7 +4,7 @@
 #include "ui/Attack.h"
 #include "Score.h"
 #include "debug/_DebugConOut.h"
-
+#define START_MOVE_DISTANCE 800		// “G‚ª“®‚­‚Æ”»’f‚·‚éƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
 
 USING_NS_CC;
 
@@ -52,6 +52,10 @@ void EnemyCreate::Update(float flam, Player* player, Attack* attack, Score* scor
 
 		for (auto ene : sponeSpList)
 		{
+			if ((ene->getPosition().x - player->getPosition().x) < START_MOVE_DISTANCE)
+			{
+				ene->SetMoveFlag(true);
+			}
 			ene->Update(flam);
 			auto eneRect = ene->getBoundingBox();
 			auto atkRect = attack->getBoundingBox();

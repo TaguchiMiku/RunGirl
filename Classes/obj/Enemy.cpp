@@ -1,7 +1,7 @@
 ﻿#include "Enemy.h"
 #include "Animation/AnimCtl.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "input/OPRT_Key.h"
+#include "input/OPRT_Enemy.h"
 #include "../debug/_DebugConOut.h"
 #include "../debug/_DebugDispOut.h"
 #else
@@ -18,6 +18,7 @@ Enemy::Enemy()
 	lpAnimCtl.AddAnimation("enemy", "jump", 0.05f);
 	lpAnimCtl.RunAnimation(this, "player-idle", -1);
 	deathFlag = false;
+	moveFlag = false;
 	this->setName("Enemy");
 	jumpSpeed = 0;
 	nowAction = ACT::IDLE;
@@ -28,9 +29,9 @@ Enemy::Enemy()
 
 	//OPRT_Enemyを作る
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	oprt_state.reset(new OPRT_Key(this));
+	oprt_state.reset(new OPRT_Enemy());
 #else
-	oprt_state.reset(new OPRT_Touch(this));
+	oprt_state.reset(new OPRT_Enemy());
 #endif
 	scheduleUpdate();
 }
@@ -46,7 +47,7 @@ Unit * Enemy::createUnit()
 
 void Enemy::Update(float frame)
 {
-	if (timeUpFlag)
+	if (timeUpFlag || !moveFlag)
 	{
 		return;
 	}
@@ -55,8 +56,6 @@ void Enemy::Update(float frame)
 		return;
 	}
 	input_data data = oprt_state->GetData();
-	data.key.first = EventKeyboard::KeyCode::KEY_NONE;
-	data.key.second = EventKeyboard::KeyCode::KEY_NONE;
 	oprt_state->Update();
 	actCtl->MoveModule(data);
 }
@@ -114,6 +113,11 @@ void Enemy::SetDeathFlag(bool flag)
 bool Enemy::GetDeathFlag()
 {
 	return deathFlag;
+}
+
+void Enemy::SetMoveFlag(bool flag)
+{
+	moveFlag = flag;
 }
 
 void Enemy::AddActData()

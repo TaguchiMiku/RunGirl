@@ -183,6 +183,9 @@
     <ClCompile Include="..\Classes\obj\Unit.cpp">
       <Filter>src\obj</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\input\OPRT_Enemy.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -316,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\obj\Unit.h">
       <Filter>src\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\input\OPRT_Enemy.h">
+      <Filter>src\input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

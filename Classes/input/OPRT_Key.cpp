@@ -71,7 +71,6 @@ OPRT_Key::~OPRT_Key()
 
 void OPRT_Key::Update()
 {
-	//TRACE("%f\n", key);
 	data.key.second = data.key.first;
 	data.key.first = key;
 	if (!pushFlag/* && !clickFlag*/)

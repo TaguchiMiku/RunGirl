@@ -22,6 +22,7 @@ public:
 	bool GetAttackFlag()override;
 	void SetDeathFlag(bool flag);
 	bool GetDeathFlag();
+	void SetMoveFlag(bool flag);
 	CREATE_FUNC(Enemy);
 
 private:
@@ -30,5 +31,6 @@ private:
 	std::unique_ptr<OPRT_State> oprt_state;	//入力クラスのメンバーを呼ぶ用のポインター
 	std::unique_ptr<ActionCtl> actCtl;
 	bool deathFlag;
+	bool moveFlag;
 };
 

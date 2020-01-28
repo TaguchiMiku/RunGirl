@@ -69,7 +69,7 @@ void MapCreate::update(float flam)
 	}
 	if (director->getRunningScene()->getDefaultCamera()->getPosition().x > nowMap->getPosition().x + director->getVisibleSize().width / 2)
 	{
-		//カメラが背景Aを完全に出たら、背景Aを背景Bの右隣に移す
+		//次のマップを決める
 		while (10)
 		{
 			nextMap = map[cocos2d::random(0, (int)(map.size() - 1))];

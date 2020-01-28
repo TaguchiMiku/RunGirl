@@ -9,7 +9,7 @@
 #include "CheckKey.h"
 #include "CheckList.h"
 #include "CheckCollision.h"
-#include "debug/_DebugConOut.h"
+//#include "debug/_DebugConOut.h"
 #pragma execution_charactor_set("utf-8");
 
 USING_NS_CC;
@@ -90,15 +90,17 @@ void ActionCtl::MoveModule(input_data data)
 	{
 		if (map.first == "右移動" && map.second.sprite->getName() == "Player")
 		{
-			TRACE("Player\n");
 			map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
 			map.second.oldKey = data.key.second;
 		}
-		else if (map.first == "左移動" && map.second.sprite->getName() == "Enemy")
+		else if (map.first == "ジャンプ" && map.second.sprite->getName() == "Enemy")
 		{
-			TRACE("Enemy\n");
-			map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW;
-			map.second.oldKey = data.key.second;
+			map.second.offset = { -25, -110 };
+			if (CheckCollision()(*map.second.sprite, map.second))
+			{
+				map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_SPACE;
+				map.second.oldKey = data.key.second;
+			}
 		}
 		else
 		{

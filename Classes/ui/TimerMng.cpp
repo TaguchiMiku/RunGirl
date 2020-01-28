@@ -12,7 +12,7 @@ TimerMng * TimerMng::createTimer()
 TimerMng::TimerMng()
 {
 	time = 0;
-	timer = 5;
+	timer = 120;
 	anser = 0;
 	number = 0;
 	cntTime = 0;
