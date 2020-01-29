@@ -86,6 +86,7 @@ void EnemyCreate::Update(float flam, Player* player, Attack* attack, Score* scor
 					onceFlag = false;
 					score->AddScore(-10);
 					player->SetActState(ACT::DIE);
+					player->SetSlowlyFlag(true);
 				}
 				break;
 			}

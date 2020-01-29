@@ -3,7 +3,6 @@
 #include "obj/Enemy.h"
 #include "CheckCollision.h"
 
-
 USING_NS_CC;
 
 //落下処理
@@ -33,13 +32,13 @@ bool Falling::operator()(cocos2d::Sprite & sp, actModule & module)
 
 	//地面と当たったら落下しない
 	//右下の当たり判定
-	module.offset = { 25, -120 };
+	module.offset = { 25, /*-120*/-module.sprite->getContentSize().height };
 	if (!CheckCollision()(*module.sprite, module))
 	{
 		auto director = cocos2d::Director::getInstance();
 		auto map = (cocos2d::TMXTiledMap*)director->getRunningScene()->getChildByName("BG_BACKGROUND")->getChildByName("map");
 		//よくわからない1.6f(切りのいい数字1.0fだとマス目の真ん中で止まり、1.5fにするとちょうどマス目のデータが被ってるのかノミ運動になるので+0.1した1.6fできれいに止まった。謎。)
-		double mass = floor((module.sprite->getPosition().y - module.offset.y) / map->getTileSize().height) - 1.6f;
+		double mass = floor((module.sprite->getPosition().y - module.offset.y) / map->getTileSize().height) - 1.03f;
 		module.sprite->setPosition(module.sprite->getPosition().x, mass * map->getTileSize().height);
 		module.velocity.y = 0;
 		if (module.sprite->getName() == "Player")
@@ -53,13 +52,13 @@ bool Falling::operator()(cocos2d::Sprite & sp, actModule & module)
 		return false;
 	}
 	//左下の当たり判定
-	module.offset = { -25, -120 };
+	module.offset = { -25, /*-120*/-module.sprite->getContentSize().height };
 	if (!CheckCollision()(*module.sprite, module))
 	{
 		auto director = cocos2d::Director::getInstance();
 		auto map = (cocos2d::TMXTiledMap*)director->getRunningScene()->getChildByName("BG_BACKGROUND")->getChildByName("map");
 		//よくわからない1.6f(切りのいい数字1.0fだとマス目の真ん中で止まり、1.5fにするとちょうどマス目のデータが被ってるのかノミ運動になるので+0.1した1.6fできれいに止まった。謎。)
-		double mass = floor((module.sprite->getPosition().y - module.offset.y) / map->getTileSize().height) - 1.6f;
+		double mass = floor((module.sprite->getPosition().y - module.offset.y) / map->getTileSize().height) - 1.03f;
 		module.sprite->setPosition(module.sprite->getPosition().x, mass * map->getTileSize().height);
 		module.velocity.y = 0;
 		if (module.sprite->getName() == "Player")

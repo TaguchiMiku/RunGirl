@@ -7,57 +7,85 @@
 			<key>player-walk-1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{189,0},{60,111}}</string>
+				<string>{{72,0},{34,54}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{60,111}}</string>
+				<string>{{0,0},{34,54}}</string>
 				<key>sourceSize</key>
-				<string>{60,111}</string>
+				<string>{34,54}</string>
 			</dict>
 
 			<key>player-walk-2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{64,0},{63,108}}</string>
+				<string>{{142,0},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{63,108}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{63,108}</string>
+				<string>{34,56}</string>
 			</dict>
 
 			<key>player-walk-3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{128,0},{60,117}}</string>
+				<string>{{177,0},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{60,117}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{60,117}</string>
+				<string>{34,56}</string>
 			</dict>
 
 			<key>player-walk-4.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{63,108}}</string>
+				<string>{{0,0},{36,54}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{63,108}}</string>
+				<string>{{0,0},{36,54}}</string>
 				<key>sourceSize</key>
-				<string>{63,108}</string>
+				<string>{36,54}</string>
+			</dict>
+
+			<key>player-walk-5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{37,0},{34,56}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{34,56}}</string>
+				<key>sourceSize</key>
+				<string>{34,56}</string>
+			</dict>
+
+			<key>player-walk-6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{107,0},{34,56}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{34,56}}</string>
+				<key>sourceSize</key>
+				<string>{34,56}</string>
 			</dict>
 
 		</dict>
@@ -67,7 +95,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{256,128}</string>
+			<string>{256,64}</string>
 			<key>textureFileName</key>
 			<string>sprites.png</string>
 			</dict>

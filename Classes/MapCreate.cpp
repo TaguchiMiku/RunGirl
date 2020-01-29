@@ -24,7 +24,7 @@ MapCreate::~MapCreate()
 void MapCreate::Init(cocos2d::Layer * layer)
 {
 	director = Director::getInstance();
-	auto mapA = TMXTiledMap::create("image/Environment/test.tmx");
+	auto mapA = TMXTiledMap::create("image/Environment/mapB.tmx");
 	mapA->setName("map");
 	mapA->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 	mapA->setPosition(0, 0);

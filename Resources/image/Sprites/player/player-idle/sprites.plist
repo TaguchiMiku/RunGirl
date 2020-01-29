@@ -7,57 +7,57 @@
 			<key>player-idle-1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{240,240}}</string>
+				<string>{{41,0},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{240,240}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{240,240}</string>
+				<string>{34,56}</string>
 			</dict>
 
 			<key>player-idle-2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,241},{240,240}}</string>
+				<string>{{37,59},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{240,240}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{240,240}</string>
+				<string>{34,56}</string>
 			</dict>
 
 			<key>player-idle-3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{241,0},{240,240}}</string>
+				<string>{{0,59},{36,58}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{240,240}}</string>
+				<string>{{0,0},{36,58}}</string>
 				<key>sourceSize</key>
-				<string>{240,240}</string>
+				<string>{36,58}</string>
 			</dict>
 
 			<key>player-idle-4.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,241},{240,240}}</string>
+				<string>{{0,0},{40,58}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{240,240}}</string>
+				<string>{{0,0},{40,58}}</string>
 				<key>sourceSize</key>
-				<string>{240,240}</string>
+				<string>{40,58}</string>
 			</dict>
 
 		</dict>
@@ -67,7 +67,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{512,512}</string>
+			<string>{128,128}</string>
 			<key>textureFileName</key>
 			<string>sprites.png</string>
 			</dict>

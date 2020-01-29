@@ -1,5 +1,5 @@
 ﻿#include "ActionCtl.h"
-#include "obj/Unit.h"
+#include "obj/Player.h"
 #include "move/MoveLR.h"
 #include "move/FallMove.h"
 #include "move/JumpMove.h"
@@ -90,6 +90,8 @@ void ActionCtl::MoveModule(input_data data)
 	{
 		if (map.first == "右移動" && map.second.sprite->getName() == "Player")
 		{
+			auto player = static_cast<Player*>(map.second.sprite);
+			map.second.velocity.x = player->GetVelocityX();
 			map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
 			map.second.oldKey = data.key.second;
 		}
@@ -98,7 +100,7 @@ void ActionCtl::MoveModule(input_data data)
 			map.second.offset = { -25, -110 };
 			if (CheckCollision()(*map.second.sprite, map.second))
 			{
-				map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_SPACE;
+				map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_A;
 				map.second.oldKey = data.key.second;
 			}
 		}

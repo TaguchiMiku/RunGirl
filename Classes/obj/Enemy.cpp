@@ -1,7 +1,7 @@
 ﻿#include "Enemy.h"
 #include "Animation/AnimCtl.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Enemy.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "../debug/_DebugConOut.h"
 #include "../debug/_DebugDispOut.h"
 #else
@@ -174,7 +174,7 @@ void Enemy::AddActData()
 		actModule actJump;
 		actJump.velocity = Vec2(5, 0.2f);
 		actJump.reverce = true;
-		actJump.keyCode = EventKeyboard::KeyCode::KEY_SPACE;
+		actJump.keyCode = EventKeyboard::KeyCode::KEY_A;
 		actJump.animName = "enemy-jump";
 		actJump.sprite = this;
 		actJump.offset = Vec2(-25, 120);
@@ -190,7 +190,7 @@ void Enemy::AddActData()
 		actModule actJumping;
 		actJumping.velocity = Vec2(5, 0.5f);
 		actJumping.reverce = true;
-		actJumping.keyCode = EventKeyboard::KeyCode::KEY_SPACE;
+		actJumping.keyCode = EventKeyboard::KeyCode::KEY_A;
 		actJumping.animName = "player-jump";
 		actJumping.sprite = this;
 		actJumping.offset = Vec2(25, 120);

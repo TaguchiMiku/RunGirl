@@ -28,11 +28,11 @@ OPRT_Touch::OPRT_Touch(Node * nd)
 		lpEffectMng.Play("starTap", touchPos, 1.0f, 2, false);
 		if (touchPos.x <= Director::getInstance()->getVisibleSize().width / 2)
 		{
-			key = EventKeyboard::KeyCode::KEY_SPACE;
+			key = EventKeyboard::KeyCode::KEY_A;
 		}
 		if (touchPos.x >= Director::getInstance()->getVisibleSize().width / 2)
 		{
-			key = EventKeyboard::KeyCode::KEY_ENTER;
+			key = EventKeyboard::KeyCode::KEY_S;
 		}
 		pushFlag = true;
 		return true;

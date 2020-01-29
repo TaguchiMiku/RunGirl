@@ -19,7 +19,7 @@ public:
 	Player();
 	~Player();
 	Unit* createUnit()override;
-	void Update(float delta);				//毎フレーム更新関数
+	void Update(float delta)override;				//毎フレーム更新関数
 	void SetTimeUpFlag(bool flag)override;
 	void SetJumpSpeed(float speed)override;
 	float GetJumpSpeed()override;
@@ -29,6 +29,8 @@ public:
 	bool GetAccelFlag()override;
 	void SetAttackFlag(bool flag)override;
 	bool GetAttackFlag()override;
+	void SetSlowlyFlag(bool flag);
+	float GetVelocityX();
 	CREATE_FUNC(Player);
 
 private:
@@ -39,4 +41,6 @@ private:
 	std::unique_ptr<ActionCtl> actCtl;
 	input_data data;						//入力されたデータを取り出す変数
 	float time;
+	float velocityX;
+	bool slowlyFlag;
 };
