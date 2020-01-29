@@ -193,8 +193,8 @@ void Player::AddActData()
 		actLeft.keyCode = EventKeyboard::KeyCode::KEY_LEFT_ARROW;
 		actLeft.animName = "player-run";
 		actLeft.sprite = this;
-		actLeft.offset.emplace_back(Vec2(-17, 28));
-		actLeft.offset.emplace_back(Vec2(-17, -28));
+		actLeft.offset.emplace_back(Vec2(-16, 27));
+		actLeft.offset.emplace_back(Vec2(-16, -28));
 		//actLeft.blackList.emplace_back(ACT::FALLING);
 		//actLeft.blackList.emplace_back(ACT::JUMPING);
 		actLeft.action = ACT::LEFT;
@@ -208,7 +208,7 @@ void Player::AddActData()
 		actRight.keyCode = EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
 		actRight.animName = "player-run";
 		actRight.sprite = this;
-		actRight.offset.emplace_back(Vec2(17, 28));
+		actRight.offset.emplace_back(Vec2(17, 27));
 		actRight.offset.emplace_back(Vec2(17, -28));
 		//actRight.blackList.emplace_back(ACT::FALLING);
 		//actRight.blackList.emplace_back(ACT::JUMPING);
@@ -223,8 +223,8 @@ void Player::AddActData()
 		actFall.keyCode  = EventKeyboard::KeyCode::KEY_NONE;
 		actFall.animName = "player-run";
 		actFall.sprite   = this;
-		actFall.offset.emplace_back(Vec2(-17, -29));
-		actFall.offset.emplace_back(Vec2(17, -29));
+		actFall.offset.emplace_back(Vec2(-16, -28));
+		actFall.offset.emplace_back(Vec2(17, -28));
 		actFall.blackList.emplace_back(ACT::JUMP);
 		actFall.blackList.emplace_back(ACT::JUMPING);
 		actFall.blackList.emplace_back(ACT::FALLING);
@@ -240,8 +240,8 @@ void Player::AddActData()
 		actFalling.keyCode = EventKeyboard::KeyCode::KEY_NONE;
 		actFalling.animName = "player-run";
 		actFalling.sprite = this;
-		actFalling.offset.emplace_back(Vec2(-25, -29));
-		actFalling.offset.emplace_back(Vec2(25, -29));
+		actFalling.offset.emplace_back(Vec2(-16, -28));
+		actFalling.offset.emplace_back(Vec2(17, -28));
 		actFalling.blackList.emplace_back(ACT::JUMP);
 		actFalling.blackList.emplace_back(ACT::JUMPING);
 		actFalling.whiteList.emplace_back(ACT::FALL);
