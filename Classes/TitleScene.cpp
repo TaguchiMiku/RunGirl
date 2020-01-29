@@ -1,8 +1,13 @@
 #include "TitleScene.h"
 #include "GameScene.h"
-#include "input/OPRT_Touch.h"
 #include "ui/clickUI.h"
 #include "ui/TitleNameMove.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "input/OPRT_Key.h"
+#include "sound/SoundMng.h"
+#else
+#include "input/OPRT_Touch.h"
+#endif
 
 USING_NS_CC;
 
@@ -42,8 +47,11 @@ void TitleScene::Init()
 	{
 		click->Init(Vec2(visibleSize.width / 2, 100), Vec2(0.5f, 0.5f), bgBackLayer);
 	}
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	oprt_state.reset(new OPRT_Key(this));
+#else
 	oprt_state.reset(new OPRT_Touch(this));
+#endif
 	//sound = lpSoundMng.SoundLoopPlay("Resources/sound/titleBGM.ckb");
 	this->setName("Title");
 	this->scheduleUpdate();
@@ -60,15 +68,15 @@ void TitleScene::update(float flam)
 	auto data = oprt_state->GetData();
 	oprt_state->Update();
 
-	if (data.key.first != EventKeyboard::KeyCode::KEY_ENTER &&
-		data.key.second == EventKeyboard::KeyCode::KEY_ENTER)
+	if (data.key.first != EventKeyboard::KeyCode::KEY_A &&
+		data.key.second == EventKeyboard::KeyCode::KEY_A)
 	{
 		//sound->stop();
 		//sound->destroy();
 		NextScene();
 	}
-	if (data.key.first != EventKeyboard::KeyCode::KEY_SPACE &&
-		data.key.second == EventKeyboard::KeyCode::KEY_SPACE)
+	if (data.key.first != EventKeyboard::KeyCode::KEY_S &&
+		data.key.second == EventKeyboard::KeyCode::KEY_S)
 	{
 		//sound->stop();
 		//sound->destroy();
