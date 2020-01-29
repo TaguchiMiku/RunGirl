@@ -45,8 +45,8 @@ void ItemCreate::Push(Layer* layer)
 		nItem->setPosition(item1);
 		nItem->setName("normalItem");
 		nItem->setScale(0.5f, 0.5f);
-		layer->addChild(nItem, 2);
-		nItemSpList.push_back(nItem);
+		//layer->addChild(nItem, 2);
+		//nItemSpList.push_back(nItem);
 	}
 	for (auto item2 : hpItemList)
 	{

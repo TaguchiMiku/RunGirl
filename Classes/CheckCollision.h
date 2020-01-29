@@ -15,8 +15,8 @@ private:
 	cocos2d::Size visibleSize;
 	Player* player;
 
-	float tileX;
-	float tileY;
+	int tileX;
+	int tileY;
 	cocos2d::ValueMap properties;
 };
 

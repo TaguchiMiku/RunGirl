@@ -6,7 +6,7 @@ USING_NS_CC;
 
 bool MoveLR::operator()(cocos2d::Sprite& sp, actModule& module)
 {
-	sp.setPosition(sp.getPosition().x + module.velocity.x, sp.getPosition().y);
+	sp.setPosition(sp.getPosition().x + module.velocity.x, sp.getPosition().y + module.velocity.y);
 	sp.runAction(FlipX::create(module.reverce));
 	return true;
 }

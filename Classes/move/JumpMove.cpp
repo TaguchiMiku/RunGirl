@@ -10,15 +10,7 @@ USING_NS_CC;
 bool JumpMove::operator()(cocos2d::Sprite& sp, actModule& module)
 {
 	//lpSoundMng.OnceSoundPlay("Resources/sound/jump2.ckb");
-	if (module.sprite->getName() == "Player")
-	{
-		auto player = static_cast<Player*>(module.sprite);
-		player->SetJumpSpeed(module.jumpHeight);
-	}
-	if (module.sprite->getName() == "Enemy")
-	{
-		auto enemy = static_cast<Enemy*>(module.sprite);
-		enemy->SetJumpSpeed(module.jumpHeight);
-	}
+	auto unit = static_cast<Unit*>(module.sprite);
+	unit->SetJumpSpeed(module.jumpHeight);
 	return true;
 }

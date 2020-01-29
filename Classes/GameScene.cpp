@@ -144,7 +144,7 @@ bool GameScene::init()
 	backSrl = BackScroll::create();
 	if (backSrl != nullptr)
 	{
-		backSrl->Init(Vec2(0, 0), Vec2(1.0f, 1.5f), bgBackLayer);
+		backSrl->Init(Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer);
 	}
 
 	attack = Attack::createAttack();

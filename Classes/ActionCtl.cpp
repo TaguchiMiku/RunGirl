@@ -29,7 +29,7 @@ ActionCtl::~ActionCtl()
 bool ActionCtl::AddModule(std::string str, actModule& module)
 {
 	mapAct.emplace(str, std::move(module));
-	if (str == "左移動" || str == "右移動")
+	if (str == "左移動" || str == "右移動" || str == "上移動" || str == "下移動")
 	{
 		mapAct[str].act.emplace_back(CheckCollision());
 		mapAct[str].act.emplace_back(CheckList());
@@ -88,27 +88,8 @@ void ActionCtl::MoveModule(input_data data)
 	//mapに登録しているアクション分回す
 	for (auto map : mapAct)
 	{
-		if (map.first == "右移動" && map.second.sprite->getName() == "Player")
-		{
-			auto player = static_cast<Player*>(map.second.sprite);
-			map.second.velocity.x = player->GetVelocityX();
-			map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
-			map.second.oldKey = data.key.second;
-		}
-		else if (map.first == "ジャンプ" && map.second.sprite->getName() == "Enemy")
-		{
-			map.second.offset = { -25, -110 };
-			if (CheckCollision()(*map.second.sprite, map.second))
-			{
-				map.second.nowKey = cocos2d::EventKeyboard::KeyCode::KEY_A;
-				map.second.oldKey = data.key.second;
-			}
-		}
-		else
-		{
-			map.second.nowKey = data.key.first;
-			map.second.oldKey = data.key.second;
-		}
+		map.second.nowKey = data.key.first;
+		map.second.oldKey = data.key.second;
 		
 		if (CheckModule(map.second))
 		{

@@ -8,23 +8,11 @@ USING_NS_CC;
 //d—Í—Ž‰º‰‘¬Ý’è
 bool FallMove::operator()(cocos2d::Sprite& sp, actModule& module)
 {
-	if (module.sprite->getName() == "Player")
+	auto unit = static_cast<Unit*>(module.sprite);
+	if (unit->GetJumpSpeed() <= module.jumpHeight)
 	{
-		auto player = static_cast<Player*>(module.sprite);
-		if (player->GetJumpSpeed() <= module.jumpHeight)
-		{
-			//0‚É‚·‚é
-			player->SetJumpSpeed(module.jumpHeight);
-		}
-	}
-	if (module.sprite->getName() == "Enemy")
-	{
-		auto enemy = static_cast<Enemy*>(module.sprite);
-		if (enemy->GetJumpSpeed() <= module.jumpHeight)
-		{
-			//0‚É‚·‚é
-			enemy->SetJumpSpeed(module.jumpHeight);
-		}
+		//0‚É‚·‚é
+		unit->SetJumpSpeed(module.jumpHeight);
 	}
 	return true;
 }

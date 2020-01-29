@@ -160,6 +160,47 @@ void Player::AddActData()
 	cameraCtl.reset(new CameraCtl());
 	actCtl.reset(new ActionCtl());
 	{
+		//上移動
+		actModule actUp;
+		actUp.velocity = Vec2(0, velocityX);
+		actUp.reverce = true;
+		actUp.keyCode = EventKeyboard::KeyCode::KEY_UP_ARROW;
+		actUp.animName = "player-run";
+		actUp.sprite = this;
+		actUp.offset.emplace_back(Vec2(-17, 28));
+		actUp.offset.emplace_back(Vec2(17, 28));
+		actUp.action = ACT::UP;
+		actCtl->AddModule("上移動", actUp);
+	}
+	{
+		//下移動
+		actModule actDown;
+		actDown.velocity = Vec2(0, -velocityX);
+		actDown.reverce = true;
+		actDown.keyCode = EventKeyboard::KeyCode::KEY_DOWN_ARROW;
+		actDown.animName = "player-run";
+		actDown.sprite = this;
+		actDown.offset.emplace_back(Vec2(-17, -28));
+		actDown.offset.emplace_back(Vec2(17, -28));
+		actDown.action = ACT::DOWN;
+		actCtl->AddModule("下移動", actDown);
+	}
+	{
+		//左移動
+		actModule actLeft;
+		actLeft.velocity = Vec2(-velocityX, 0);
+		actLeft.reverce = true;
+		actLeft.keyCode = EventKeyboard::KeyCode::KEY_LEFT_ARROW;
+		actLeft.animName = "player-run";
+		actLeft.sprite = this;
+		actLeft.offset.emplace_back(Vec2(-17, 28));
+		actLeft.offset.emplace_back(Vec2(-17, -28));
+		//actLeft.blackList.emplace_back(ACT::FALLING);
+		//actLeft.blackList.emplace_back(ACT::JUMPING);
+		actLeft.action = ACT::LEFT;
+		actCtl->AddModule("左移動", actLeft);
+	}
+	{
 		//右移動
 		actModule actRight;
 		actRight.velocity = Vec2(velocityX, 0);
@@ -167,21 +208,23 @@ void Player::AddActData()
 		actRight.keyCode = EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
 		actRight.animName = "player-run";
 		actRight.sprite = this;
-		actRight.offset = Vec2(25, -70);
-		actRight.blackList.emplace_back(ACT::FALLING);
-		actRight.blackList.emplace_back(ACT::JUMPING);
+		actRight.offset.emplace_back(Vec2(17, 28));
+		actRight.offset.emplace_back(Vec2(17, -28));
+		//actRight.blackList.emplace_back(ACT::FALLING);
+		//actRight.blackList.emplace_back(ACT::JUMPING);
 		actRight.action = ACT::RIGHT;
 		actCtl->AddModule("右移動", actRight);
 	}
 	{
 		//落下
 		actModule actFall;
-		actFall.velocity = Vec2(velocityX, -1);
+		actFall.velocity = Vec2(/*velocityX*/0, -1);
 		actFall.reverce  = false;
 		actFall.keyCode  = EventKeyboard::KeyCode::KEY_NONE;
 		actFall.animName = "player-run";
 		actFall.sprite   = this;
-		actFall.offset   = Vec2(-25, /*-(getContentSize().height / 2)*/0);
+		actFall.offset.emplace_back(Vec2(-17, -29));
+		actFall.offset.emplace_back(Vec2(17, -29));
 		actFall.blackList.emplace_back(ACT::JUMP);
 		actFall.blackList.emplace_back(ACT::JUMPING);
 		actFall.blackList.emplace_back(ACT::FALLING);
@@ -192,12 +235,13 @@ void Player::AddActData()
 	{
 		//落下中
 		actModule actFalling;
-		actFalling.velocity = Vec2(velocityX, -1);
+		actFalling.velocity = Vec2(/*velocityX*/0, -1);
 		actFalling.reverce = false;
 		actFalling.keyCode = EventKeyboard::KeyCode::KEY_NONE;
 		actFalling.animName = "player-run";
 		actFalling.sprite = this;
-		actFalling.offset = Vec2(-25, /*-(getContentSize().height / 2)*/0);
+		actFalling.offset.emplace_back(Vec2(-25, -29));
+		actFalling.offset.emplace_back(Vec2(25, -29));
 		actFalling.blackList.emplace_back(ACT::JUMP);
 		actFalling.blackList.emplace_back(ACT::JUMPING);
 		actFalling.whiteList.emplace_back(ACT::FALL);
@@ -215,13 +259,14 @@ void Player::AddActData()
 		actJump.keyCode = EventKeyboard::KeyCode::KEY_A;
 		actJump.animName = "player-run";
 		actJump.sprite = this;
-		actJump.offset = Vec2(25, 120);
+		actJump.offset.emplace_back(Vec2(-17, 28));
+		actJump.offset.emplace_back(Vec2(17, 28));
 		actJump.blackList.emplace_back(ACT::FALL);
 		actJump.blackList.emplace_back(ACT::FALLING);
 		actJump.blackList.emplace_back(ACT::JUMPING);
 		actJump.action = ACT::JUMP;
 		actJump.jumpHeight = 15;
-		actCtl->AddModule("ジャンプ", actJump);
+//		actCtl->AddModule("ジャンプ", actJump);
 	}
 	{
 		//ジャンプ中
@@ -231,7 +276,8 @@ void Player::AddActData()
 		actJumping.keyCode = EventKeyboard::KeyCode::KEY_A;
 		actJumping.animName = "player-run";
 		actJumping.sprite = this;
-		actJumping.offset = Vec2(25, 120);
+		actJumping.offset.emplace_back(Vec2(-25, 120));
+		actJumping.offset.emplace_back(Vec2(25, 120));
 		actJumping.blackList.emplace_back(ACT::FALL);
 		actJumping.blackList.emplace_back(ACT::FALLING);
 		actJumping.whiteList.emplace_back(ACT::JUMP);
@@ -239,7 +285,7 @@ void Player::AddActData()
 		actJumping.action = ACT::JUMPING;
 		actJumping.gravity = 0.5f;
 		actJumping.jumpHeight = 0;
-		actCtl->AddModule("ジャンプ中", actJumping);
+	//	actCtl->AddModule("ジャンプ中", actJumping);
 	}
 	{
 		//攻撃
@@ -249,10 +295,11 @@ void Player::AddActData()
 		actAttack.keyCode = EventKeyboard::KeyCode::KEY_S;
 		actAttack.animName = "player-jump";
 		actAttack.sprite = this;
-		actAttack.offset = Vec2(25, -70);
+		actAttack.offset.emplace_back(Vec2(17, 28));
+		actAttack.offset.emplace_back(Vec2(17, -28));
 		actAttack.action = ACT::ATTACK;
 		actAttack.blackList.emplace_back(ACT::FALLING);
 		actAttack.blackList.emplace_back(ACT::JUMPING);
-		actCtl->AddModule("攻撃", actAttack);
+		//actCtl->AddModule("攻撃", actAttack);
 	}
 }

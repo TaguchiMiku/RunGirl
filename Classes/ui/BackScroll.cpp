@@ -23,7 +23,7 @@ void BackScroll::Init(Vec2 position, Vec2 scale, Layer * layer)
 
 	//背景A
 	backA = Sprite::create();
-	backA->setTexture("image/Environment/back_sky.png");
+	backA->setTexture("image/Environment/platformer_background_2.png");
 	backA->setName("backA");
 	backA->setScale(scale.x, scale.y);
 	backA->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
@@ -32,7 +32,7 @@ void BackScroll::Init(Vec2 position, Vec2 scale, Layer * layer)
 
 	//背景B
 	backB = Sprite::create();
-	backB->setTexture("image/Environment/back_sky.png");
+	backB->setTexture("image/Environment/platformer_background_2.png");
 	backB->setName("backB");
 	backB->setScale(scale.x, scale.y);
 	backB->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
