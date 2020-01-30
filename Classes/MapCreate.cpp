@@ -24,13 +24,13 @@ MapCreate::~MapCreate()
 void MapCreate::Init(cocos2d::Layer * layer)
 {
 	director = Director::getInstance();
-	auto mapA = TMXTiledMap::create("image/Environment/mapB.tmx");
+	auto mapA = TMXTiledMap::create("image/Environment/mapA.tmx");
 	mapA->setName("map");
 	mapA->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 	mapA->setPosition(0, 0);
 	layer->addChild(mapA, 1);
 	map.push_back(mapA);
-	auto mapB = TMXTiledMap::create("image/Environment/test2.tmx");
+	auto mapB = TMXTiledMap::create("image/Environment/mapB.tmx");
 	mapB->setName("map");
 	mapB->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 	mapB->setPosition(mapA->getContentSize().width, 0);
@@ -55,7 +55,7 @@ void MapCreate::update(float flam)
 		return;
 	}
 	
-	if (director->getRunningScene()->getDefaultCamera()->getPosition().x + nextMap->getTileSize().width > nextMap->getPosition().x && setMapFlag)
+	if (director->getRunningScene()->getDefaultCamera()->getPosition().x > nextMap->getPosition().x && setMapFlag)
 	{
 		//次のマップのアイテム等配置しなおし
 		ReCreate(nextMap, layer);

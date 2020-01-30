@@ -9,8 +9,6 @@ enum class ACT{
 	IDLE,
 	LEFT,
 	RIGHT,
-	UP,
-	DOWN,
 	JUMP,
 	JUMPING,
 	FALL,

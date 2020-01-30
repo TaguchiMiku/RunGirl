@@ -2,31 +2,31 @@
 #include "obj/Player.h"
 #include "obj/Enemy.h"
 #include "CheckCollision.h"
+#include "debug/_DebugConOut.h"
 
 USING_NS_CC;
 
 //ジャンプ処理
 bool Jumping::operator()(cocos2d::Sprite & sp, actModule & module)
 {
-	//PlayerとEnemy同じところあるので親クラスを作りprotecetedなどでまとめる
 	auto unit = static_cast<Unit*>(module.sprite);
-	//天井に当たっている
-	module.offset = { 0, 0 };
-	if (!CheckCollision()(*module.sprite, module))
+	if (unit->GetJumpSpeed() > -module.jumpHeight)
 	{
-		unit->SetActState(ACT::FALL);
-		return false;
-	}
-	//0以上であれば重力加速度を引いていく
-	if (unit->GetJumpSpeed() >= module.jumpHeight)
-	{
-		unit->SetJumpSpeed(unit->GetJumpSpeed() - module.gravity);
+		unit->SetJumpSpeed(unit->GetJumpSpeed() + module.gravity);
 	}
 	else
 	{
 		unit->SetActState(ACT::FALL);
 		return false;
 	}
-	//sp.setPosition(sp.getPosition().x + module.velocity.x, sp.getPosition().y + (module.velocity.y + unit->GetJumpSpeed()));
+	module.velocity.y = unit->GetJumpSpeed();
+	//天井に当たっている
+	if (!CheckCollision()(*module.sprite, module))
+	{
+		TRACE("jumpPos = %f\n", sp.getPosition().y);
+		unit->SetActState(ACT::FALL);
+		return false;
+	}
+	sp.setPosition(sp.getPosition().x + module.velocity.x, sp.getPosition().y + module.velocity.y);
 	return true;
 }

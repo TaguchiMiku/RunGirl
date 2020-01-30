@@ -3,7 +3,7 @@
 #include "input/OPRT_Enemy.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "../debug/_DebugConOut.h"
-#include "../debug/_DebugDispOut.h"
+#include "../debug/_DebugDispOutCC.h"
 #else
 #include "input/OPRT_Touch.h"
 #endif
