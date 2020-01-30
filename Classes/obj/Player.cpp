@@ -90,7 +90,7 @@ void Player::Update(float delta)
 			slowlyFlag = false;
 		}
 	}
-	DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 22), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+	DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 28), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
 	// input処理とaction処理
 	data = oprt_state->GetData();
 	oprt_state->Update();
@@ -269,7 +269,7 @@ void Player::AddActData()
 		actAttack.keyCode = EventKeyboard::KeyCode::KEY_S;
 		actAttack.animName = "player-jump";
 		actAttack.sprite = this;
-		actAttack.offset.emplace_back(Vec2(17, 22));
+		actAttack.offset.emplace_back(Vec2(17, 28));
 		actAttack.offset.emplace_back(Vec2(17, -27));
 		actAttack.action = ACT::ATTACK;
 		actAttack.blackList.emplace_back(ACT::FALLING);
