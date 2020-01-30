@@ -27,6 +27,7 @@ Player::Player()
 	lpAnimCtl.AddAnimation("player", "walk", 0.1f);
 	lpAnimCtl.AddAnimation("player", "run", 0.05f);
 	lpAnimCtl.AddAnimation("player", "jump", 0.05f);
+	lpAnimCtl.AddAnimation("player", "attack", 0.05f);
 
 	lpAnimCtl.RunAnimation(this, "player-idle", -1);
 
@@ -73,9 +74,11 @@ void Player::Update(float delta)
 	if (accelFlag)
 	{
 		time += delta;
+		velocityX = 10.0f;
 		if (time >= 3.0f)
 		{
 			time = 0;
+			velocityX = 5.0f;
 			accelFlag = false;
 		}
 	}
@@ -90,7 +93,7 @@ void Player::Update(float delta)
 			slowlyFlag = false;
 		}
 	}
-	DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 28), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+	DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 22), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
 	// input処理とaction処理
 	data = oprt_state->GetData();
 	oprt_state->Update();
@@ -160,21 +163,6 @@ void Player::AddActData()
 	cameraCtl.reset(new CameraCtl());
 	actCtl.reset(new ActionCtl());
 	{
-		//左移動
-		actModule actLeft;
-		actLeft.velocity = Vec2(-velocityX, 0);
-		actLeft.reverce = false;
-		actLeft.keyCode = EventKeyboard::KeyCode::KEY_LEFT_ARROW;
-		actLeft.animName = "player-run";
-		actLeft.sprite = this;
-		actLeft.offset.emplace_back(Vec2(-16, 28));
-		actLeft.offset.emplace_back(Vec2(-16, -27));
-		//actRight.blackList.emplace_back(ACT::FALLING);
-		//actRight.blackList.emplace_back(ACT::JUMPING);
-		actLeft.action = ACT::LEFT;
-		actCtl->AddModule("左移動", actLeft);
-	}
-	{
 		//右移動
 		actModule actRight;
 		actRight.velocity = Vec2(velocityX, 0);
@@ -184,8 +172,8 @@ void Player::AddActData()
 		actRight.sprite = this;
 		actRight.offset.emplace_back(Vec2(17, 28));
 		actRight.offset.emplace_back(Vec2(17, -27));
-		//actRight.blackList.emplace_back(ACT::FALLING);
-		//actRight.blackList.emplace_back(ACT::JUMPING);
+		actRight.blackList.emplace_back(ACT::FALLING);
+		actRight.blackList.emplace_back(ACT::JUMPING);
 		actRight.action = ACT::RIGHT;
 		actCtl->AddModule("右移動", actRight);
 	}
@@ -195,7 +183,7 @@ void Player::AddActData()
 		actFall.velocity = Vec2(0, -1);
 		actFall.reverce  = false;
 		actFall.keyCode  = EventKeyboard::KeyCode::KEY_NONE;
-		actFall.animName = "player-run";
+		actFall.animName = "player-jump";
 		actFall.sprite   = this;
 		actFall.offset.emplace_back(Vec2(-16, -27));
 		actFall.offset.emplace_back(Vec2(17, -27));
@@ -209,10 +197,10 @@ void Player::AddActData()
 	{
 		//落下中
 		actModule actFalling;
-		actFalling.velocity = Vec2(/*velocityX*/0, -1);
+		actFalling.velocity = Vec2(velocityX, -1);
 		actFalling.reverce = false;
 		actFalling.keyCode = EventKeyboard::KeyCode::KEY_NONE;
-		actFalling.animName = "player-run";
+		actFalling.animName = "player-jump";
 		actFalling.sprite = this;
 		actFalling.offset.emplace_back(Vec2(-16, -27));
 		actFalling.offset.emplace_back(Vec2(17, -27));
@@ -231,7 +219,7 @@ void Player::AddActData()
 		actJump.velocity = Vec2(0, 0.2f);
 		actJump.reverce = true;
 		actJump.keyCode = EventKeyboard::KeyCode::KEY_A;
-		actJump.animName = "player-run";
+		actJump.animName = "player-jump";
 		actJump.sprite = this;
 		actJump.offset.emplace_back(Vec2(-16, 28));
 		actJump.offset.emplace_back(Vec2(17, 28));
@@ -245,10 +233,10 @@ void Player::AddActData()
 	{
 		//ジャンプ中
 		actModule actJumping;
-		actJumping.velocity = Vec2(0, 0.5f);
+		actJumping.velocity = Vec2(velocityX, 0.5f);
 		actJumping.reverce = true;
 		actJumping.keyCode = EventKeyboard::KeyCode::KEY_A;
-		actJumping.animName = "player-run";
+		actJumping.animName = "player-jump";
 		actJumping.sprite = this;
 		actJumping.offset.emplace_back(Vec2(-16, 28));
 		actJumping.offset.emplace_back(Vec2(17, 28));
@@ -267,13 +255,13 @@ void Player::AddActData()
 		actAttack.velocity = Vec2(velocityX, 0);
 		actAttack.reverce = true;
 		actAttack.keyCode = EventKeyboard::KeyCode::KEY_S;
-		actAttack.animName = "player-jump";
+		actAttack.animName = "player-attack";
 		actAttack.sprite = this;
 		actAttack.offset.emplace_back(Vec2(17, 28));
 		actAttack.offset.emplace_back(Vec2(17, -27));
 		actAttack.action = ACT::ATTACK;
 		actAttack.blackList.emplace_back(ACT::FALLING);
 		actAttack.blackList.emplace_back(ACT::JUMPING);
-		//actCtl->AddModule("攻撃", actAttack);
+		actCtl->AddModule("攻撃", actAttack);
 	}
 }

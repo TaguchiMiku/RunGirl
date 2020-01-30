@@ -33,7 +33,6 @@ bool ActionCtl::AddModule(std::string str, actModule& module)
 	{
 		mapAct[str].act.emplace_back(CheckCollision());
 		mapAct[str].act.emplace_back(CheckList());
-		mapAct[str].act.emplace_back(CheckKey());
 		mapAct[str].runAction = MoveLR();
 	}
 	if (str == "ジャンプ")
@@ -80,6 +79,7 @@ void ActionCtl::MoveModule(input_data data)
 			if (!actList.operator()(*module.sprite, module))
 			{
 				rtnFlg = false;
+				return rtnFlg;
 			}
 		}
 		return rtnFlg;
@@ -94,17 +94,12 @@ void ActionCtl::MoveModule(input_data data)
 		if (CheckModule(map.second))
 		{
 			unit = static_cast<Unit*>(map.second.sprite);
+			map.second.velocity.x = unit->GetVelocityX();
 			if (map.second.action != unit->GetActState())
 			{
 				if (plNowAct != nullptr)
 				{
 					map.second.sprite->stopAllActions();
-				}
-				//加速するかどうか
-				if (unit->GetAccelFlag())
-				{
-					map.second.animName = "player-run";
-					map.second.velocity.x *= 2;
 				}
 				//アニメーション
 				if (map.first == "攻撃")

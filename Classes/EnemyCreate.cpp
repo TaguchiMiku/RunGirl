@@ -1,10 +1,9 @@
 #include "EnemyCreate.h"
 #include "obj/Enemy.h"
 #include "obj/Player.h"
-#include "ui/Attack.h"
 #include "Score.h"
 #include "debug/_DebugConOut.h"
-#define START_MOVE_DISTANCE 800		// 敵が動くと判断するプレイヤーとの距離
+#define EN_CHAR_SIZE 30
 
 USING_NS_CC;
 
@@ -15,8 +14,6 @@ EnemyCreate * EnemyCreate::createEnemyC()
 
 EnemyCreate::EnemyCreate()
 {
-	listCnt = 0;
-	onceFlag = true;
 }
 
 EnemyCreate::~EnemyCreate()
@@ -26,7 +23,7 @@ EnemyCreate::~EnemyCreate()
 void EnemyCreate::AddCreateList(cocos2d::TMXTiledMap * map, cocos2d::Vec2 tile)
 {
 	//敵スポーン座標
-	sponeList.push_back(Vec2(map->getPosition().x + tile.x * map->getTileSize().width, (map->getMapSize().height - 1 - tile.y) * map->getTileSize().height + 100));
+	sponeList.push_back(Vec2(map->getPosition().x + tile.x * map->getTileSize().width, (map->getMapSize().height - 1 - tile.y) * map->getTileSize().height + EN_CHAR_SIZE / 2));
 }
 
 void EnemyCreate::Push(Layer* layer)
@@ -38,59 +35,18 @@ void EnemyCreate::Push(Layer* layer)
 		auto enemy = Enemy::create();
 		enemy->setPosition(list);
 		layer->addChild(enemy, 2);
-		sponeSpList.push_back(enemy);
+		enSpList.push_back(enemy);
 	}
 }
 
-void EnemyCreate::Update(float flam, Player* player, Attack* attack, Score* score)
+void EnemyCreate::Update(float flam, Player* player, Score* score)
 {
 	plRect = player->getBoundingBox();
-	if (player != nullptr && sponeSpList.size() > 0)
+	if (player != nullptr && enSpList.size() > 0)
 	{
-		onceFlag = true;
-		//sponeSpList→enemySpList
-
-		for (auto ene : sponeSpList)
+		for (auto ene : enSpList)
 		{
-			if ((ene->getPosition().x - player->getPosition().x) < START_MOVE_DISTANCE)
-			{
-				ene->SetMoveFlag(true);
-			}
-			ene->Update(flam);
-			auto eneRect = ene->getBoundingBox();
-			auto atkRect = attack->getBoundingBox();
-			if (plRect.intersectsRect(eneRect))
-			{
-				if (player->GetAttackFlag())
-				{
-					TRACE("Destroy_Enemy\n");
-					//攻撃時に敵に当たったら死亡フラグを立てる
-					ene->SetDeathFlag(true);				
-					score->AddScore(100);
-					attack->setPosition(Vec2(player->getPosition().x + 50, player->getPosition().y));
-					lpAnimCtl.RunAnimation(attack, "Fx-impact", 1);
-					player->SetAttackFlag(false);
-					break;
-				}
-				if (ene == collSpr)
-				{
-					//2体いたら当たり続ける
-					//EnemyはEnemyのアタックがある（アタックが一回しかできない）
-					//敵と当たり続けていたらfalseにしてHPの減らしをなくす
-					onceFlag = false;
-				}
-				if (onceFlag && player->GetActState() != ACT::ATTACK)
-				{
-					collSpr = ene;
-					//lpSoundMng.OnceSoundPlay("Resources/sound/die.ckb");
-					onceFlag = false;
-					score->AddScore(-10);
-					player->SetActState(ACT::DIE);
-					player->SetSlowlyFlag(true);
-				}
-				break;
-			}
-			listCnt++;
+			ene->Update(flam);			
 		}
 		DeathCheck();
 	}
@@ -98,7 +54,7 @@ void EnemyCreate::Update(float flam, Player* player, Attack* attack, Score* scor
 
 void EnemyCreate::DeathCheck()
 {
-	auto death = std::remove_if(sponeSpList.begin(), sponeSpList.end(), 
+	auto death = std::remove_if(enSpList.begin(), enSpList.end(), 
 		[](Enemy* enemy) { 
 		if (enemy->GetDeathFlag())
 		{
@@ -106,11 +62,16 @@ void EnemyCreate::DeathCheck()
 		}
 		return enemy->GetDeathFlag();
 	});
-	sponeSpList.erase(death, sponeSpList.end());
+	enSpList.erase(death, enSpList.end());
 }
 
 void EnemyCreate::ClearList()
 {
 	sponeList.clear();
-	sponeSpList.clear();
+	enSpList.clear();
+}
+
+std::vector<Enemy*> EnemyCreate::GetEnSpriteList()
+{
+	return enSpList;
 }

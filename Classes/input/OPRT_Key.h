@@ -9,7 +9,7 @@ struct OPRT_Key : OPRT_State
 	TYPE GetType() {
 		return TYPE::KEY;
 	}
-	void Update();
+	void Update()override;
 
 private:
 	cocos2d::EventListenerKeyboard* listener;

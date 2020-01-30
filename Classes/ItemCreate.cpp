@@ -41,7 +41,8 @@ void ItemCreate::Push(Layer* layer)
 	{
 		//’ÊíƒAƒCƒeƒ€’Ç‰Á
 		auto nItem = NormalItem::createNItem();
-		nItem->setTexture("image/Sprites/item/coin.png");
+		nItem->setTexture("image/Sprites/item/bonus3.png");
+		nItem->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 		nItem->setPosition(item1);
 		nItem->setName("normalItem");
 		nItem->setScale(0.5f, 0.5f);

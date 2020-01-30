@@ -87,7 +87,7 @@ bool GameScene::init()
 	this->addChild(bgBackLayer, 0);
 
 	auto bgFrontLayer = Layer::create();
-	bgFrontLayer->setName("BG_BACKGROUND");
+	bgFrontLayer->setName("BG_FRONTGROUND");
 	this->addChild(bgFrontLayer, 2);
 
 	auto plLayer = Layer::create();
@@ -116,6 +116,7 @@ bool GameScene::init()
 	score = Score::createScore();
 	score->setPosition(Vec2(origin.x + visibleSize.width - 200, 40));
 	score->ResetScore();
+	score->setName("Score");
 	this->addChild(score, 0);
 	score->Init(uiLayer);
 	score->DrawScore();
@@ -225,7 +226,7 @@ void GameScene::update(float delta)
 		enemyCt = map->GetEnemyCt();
 		itemCt = map->GetItemCt();
 		// プレイヤーとの判定
-		enemyCt->Update(delta, player, attack, score);
+		enemyCt->Update(delta, player, score);
 		itemCt->Update(delta, player, score);
 		// 走るエフェクトのON・OFF
 		if (effect != nullptr)

@@ -21,6 +21,16 @@
    <property name="col" type="int" value="1"/>
   </properties>
  </tile>
+ <tile id="4">
+  <properties>
+   <property name="col" type="int" value="3"/>
+  </properties>
+ </tile>
+ <tile id="5">
+  <properties>
+   <property name="col" type="int" value="2"/>
+  </properties>
+ </tile>
  <tile id="6">
   <properties>
    <property name="col" type="int" value="1"/>
@@ -53,32 +63,32 @@
  </tile>
  <tile id="14">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="15">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="16">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="17">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="18">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="19">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="20">
@@ -133,32 +143,32 @@
  </tile>
  <tile id="34">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="35">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="36">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="37">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="38">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="39">
   <properties>
-   <property name="col" type="int" value="3"/>
+   <property name="col" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="40">
@@ -438,7 +448,7 @@
  </tile>
  <tile id="119">
   <properties>
-   <property name="col" value="2"/>
+   <property name="col" value="0"/>
   </properties>
  </tile>
  <tile id="122">

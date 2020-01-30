@@ -23,6 +23,8 @@ public:
 	void SetDeathFlag(bool flag);
 	bool GetDeathFlag();
 	void SetMoveFlag(bool flag);
+	float GetVelocityX()override;
+
 	CREATE_FUNC(Enemy);
 
 private:

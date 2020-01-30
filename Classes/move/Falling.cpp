@@ -2,7 +2,6 @@
 #include "obj/Player.h"
 #include "obj/Enemy.h"
 #include "CheckCollision.h"
-#include "debug/_DebugConOut.h"
 
 USING_NS_CC;
 
@@ -28,7 +27,6 @@ bool Falling::operator()(cocos2d::Sprite & sp, actModule & module)
 		auto map = (cocos2d::TMXTiledMap*)director->getRunningScene()->getChildByName("BG_BACKGROUND")->getChildByName("map");
 		sp.setPositionY(floor(sp.getPosition().y) - ((int)(floor(sp.getPosition().y) - sp.getContentSize().height / 2) % (int)map->getTileSize().height));
 		unit->SetActState(ACT::IDLE);
-		TRACE("%f\n", sp.getPositionY());
 		return false;
 	}
 	sp.setPosition(sp.getPosition() + module.velocity);

@@ -9,7 +9,7 @@ struct OPRT_Touch : OPRT_State
 	TYPE GetType() {
 		return TYPE::TOUCH;
 	}
-	void Update();
+	void Update()override;
 
 private:
 	cocos2d::Vec2 touchPos;

@@ -2,7 +2,6 @@
 #include "obj/Player.h"
 #include "obj/Enemy.h"
 #include "CheckCollision.h"
-#include "debug/_DebugConOut.h"
 
 USING_NS_CC;
 
@@ -23,7 +22,7 @@ bool Jumping::operator()(cocos2d::Sprite & sp, actModule & module)
 	//“Vˆä‚É“–‚½‚Á‚Ä‚¢‚é
 	if (!CheckCollision()(*module.sprite, module))
 	{
-		TRACE("jumpPos = %f\n", sp.getPosition().y);
+		unit->SetJumpSpeed(0);
 		unit->SetActState(ACT::FALL);
 		return false;
 	}

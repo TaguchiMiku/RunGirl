@@ -17,6 +17,8 @@ public:
 	virtual bool GetAccelFlag() = 0;
 	virtual void SetAttackFlag(bool flag) = 0;
 	virtual bool GetAttackFlag() = 0;
+	virtual float GetVelocityX() = 0;
+
 protected:
 	ACT nowAction;
 	float jumpSpeed;

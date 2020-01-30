@@ -30,7 +30,7 @@ public:
 	void SetAttackFlag(bool flag)override;
 	bool GetAttackFlag()override;
 	void SetSlowlyFlag(bool flag);
-	float GetVelocityX();
+	float GetVelocityX()override;
 	CREATE_FUNC(Player);
 
 private:

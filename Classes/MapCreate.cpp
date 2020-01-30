@@ -41,6 +41,7 @@ void MapCreate::Init(cocos2d::Layer * layer)
 	nextMap = mapB;
 
 	enemyCt = EnemyCreate::create();
+	enemyCt->setName("EnemyCreate");
 	layer->addChild(enemyCt, 2);
 	itemCt = ItemCreate::create();
 	layer->addChild(itemCt, 2);
