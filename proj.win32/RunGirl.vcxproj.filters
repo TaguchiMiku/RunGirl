@@ -135,9 +135,6 @@
     <ClCompile Include="..\Classes\debug\_DebugConOut.cpp">
       <Filter>src\debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\debug\_DebugDispOut.cpp">
-      <Filter>src\debug</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\input\OPRT_Key.cpp">
       <Filter>src\input</Filter>
     </ClCompile>
@@ -185,6 +182,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\input\OPRT_Enemy.cpp">
       <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\debug\_DebugDispOutCC.cpp">
+      <Filter>src\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\move\EnemyLR.cpp">
+      <Filter>src\action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -272,9 +275,6 @@
     <ClInclude Include="..\Classes\debug\_DebugConOut.h">
       <Filter>src\debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\debug\_DebugDispOut.h">
-      <Filter>src\debug</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\input\OPRT_Key.h">
       <Filter>src\input</Filter>
     </ClInclude>
@@ -322,6 +322,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\input\OPRT_Enemy.h">
       <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\debug\_DebugDispOutCC.h">
+      <Filter>src\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\move\EnemyLR.h">
+      <Filter>src\action</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

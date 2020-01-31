@@ -26,7 +26,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v141_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -118,9 +118,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;D:\cocosProject\RunGirl\Classes\cricket-1.6.7\inc;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -130,9 +130,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcurl.lib;%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.lib;ck.lib;%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\cocosProject\RunGirl\Classes\cricket-1.6.7\lib\win\vs15.0\x86\ReleaseStatic;$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -159,7 +159,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\CheckKey.cpp" />
     <ClCompile Include="..\Classes\CheckList.cpp" />
     <ClCompile Include="..\Classes\debug\_DebugConOut.cpp" />
-    <ClCompile Include="..\Classes\debug\_DebugDispOut.cpp" />
+    <ClCompile Include="..\Classes\debug\_DebugDispOutCC.cpp" />
     <ClCompile Include="..\Classes\effect\EffectMng.cpp" />
     <ClCompile Include="..\Classes\effect\Effekseer.cpp" />
     <ClCompile Include="..\Classes\effect\EffekseerNative.cpp" />
@@ -175,6 +175,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\item\NormalItem.cpp" />
     <ClCompile Include="..\Classes\MapCreate.cpp" />
     <ClCompile Include="..\Classes\move\AttackMove.cpp" />
+    <ClCompile Include="..\Classes\move\EnemyLR.cpp" />
     <ClCompile Include="..\Classes\move\Falling.cpp" />
     <ClCompile Include="..\Classes\move\FallMove.cpp" />
     <ClCompile Include="..\Classes\move\Jumping.cpp" />
@@ -206,7 +207,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\CheckKey.h" />
     <ClInclude Include="..\Classes\CheckList.h" />
     <ClInclude Include="..\Classes\debug\_DebugConOut.h" />
-    <ClInclude Include="..\Classes\debug\_DebugDispOut.h" />
+    <ClInclude Include="..\Classes\debug\_DebugDispOutCC.h" />
     <ClInclude Include="..\Classes\effect\EffectMng.h" />
     <ClInclude Include="..\Classes\effect\Effekseer.h" />
     <ClInclude Include="..\Classes\effect\EffekseerNative.h" />
@@ -222,6 +223,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\item\NormalItem.h" />
     <ClInclude Include="..\Classes\MapCreate.h" />
     <ClInclude Include="..\Classes\move\AttackMove.h" />
+    <ClInclude Include="..\Classes\move\EnemyLR.h" />
     <ClInclude Include="..\Classes\move\Falling.h" />
     <ClInclude Include="..\Classes\move\FallMove.h" />
     <ClInclude Include="..\Classes\move\Jumping.h" />
