@@ -101,8 +101,8 @@ void ActionCtl::MoveModule(input_data data)
 		
 		if (CheckModule(map.second))
 		{
-			std::string st = map.first;
-			TRACE("%s\n", st.c_str());
+			/*std::string st = map.first;
+			TRACE("%s\n", st.c_str());*/
 			unit = static_cast<Unit*>(map.second.sprite);
 			if (map.second.action != unit->GetActState())
 			{

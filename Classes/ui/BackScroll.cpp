@@ -17,13 +17,13 @@ BackScroll::~BackScroll()
 {
 }
 
-void BackScroll::Init(Vec2 position, Vec2 scale, Layer * layer)
+void BackScroll::Init(std::string fileName, Vec2 position, Vec2 scale, Layer * layer, float speed)
 {
 	layer->addChild(this, 0);
-
+	sclSpeed = speed;
 	//背景A
 	backA = Sprite::create();
-	backA->setTexture("image/Environment/platformer_background_2.png");
+	backA->setTexture("image/Environment/Layers/" + fileName + ".png");
 	backA->setName("backA");
 	backA->setScale(scale.x, scale.y);
 	backA->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
@@ -32,7 +32,7 @@ void BackScroll::Init(Vec2 position, Vec2 scale, Layer * layer)
 
 	//背景B
 	backB = Sprite::create();
-	backB->setTexture("image/Environment/platformer_background_2.png");
+	backB->setTexture("image/Environment/Layers/" + fileName + ".png");
 	backB->setName("backB");
 	backB->setScale(scale.x, scale.y);
 	backB->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
@@ -44,8 +44,8 @@ void BackScroll::Init(Vec2 position, Vec2 scale, Layer * layer)
 
 void BackScroll::update(float delta)
 {
-	backA->setPositionX(backA->getPositionX() - 0.5f);
-	backB->setPositionX(backB->getPositionX() - 0.5f);
+	backA->setPositionX(backA->getPositionX() - sclSpeed);
+	backB->setPositionX(backB->getPositionX() - sclSpeed);
 
 	if (scrSetFlag) {
 		// 背景Aが画面左外に出きった場合、背景Aを背景Bの右隣に移す

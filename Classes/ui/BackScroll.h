@@ -7,7 +7,7 @@ public:
 	static BackScroll* BackSrlCreate();
 	BackScroll();
 	~BackScroll();
-	void Init(cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::Layer* layer);
+	void Init(std::string fileName, cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::Layer* layer, float speed);
 	void update(float delta);
 	void ScrBackSet(Player* player);
 	CREATE_FUNC(BackScroll);
@@ -16,5 +16,6 @@ private:
 	cocos2d::Sprite* backB;
 	bool scrSetFlag;
 	cocos2d::Vec2 visibleSize;
+	float sclSpeed;
 };
 

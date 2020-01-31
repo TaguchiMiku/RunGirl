@@ -148,10 +148,29 @@ bool GameScene::init()
 	auto a = Director::getInstance()->getRunningScene();
 
 	//背景追加
-	backSrl = BackScroll::create();
-	if (backSrl != nullptr)
+	auto backGround1 = BackScroll::create();
+	if (backGround1 != nullptr)
 	{
-		backSrl->Init(Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer);
+		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
+		backSrl.emplace_back(backGround1);
+	}
+	auto backGround2 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+		backSrl.emplace_back(backGround2);
+	}
+	auto backGround3 = BackScroll::create();
+	if (backGround3 != nullptr)
+	{
+		backGround3->Init("Clouds_2", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
+		backSrl.emplace_back(backGround3);
+	}
+	auto backGround4 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround4->Init("Clouds_1", Vec2(0, 100), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
+		backSrl.emplace_back(backGround4);
 	}
 
 	attack = Attack::createAttack();
@@ -209,9 +228,12 @@ void GameScene::update(float delta)
 		return;
 	}
 	player->Update(delta);
-	if (backSrl != nullptr)
+	for (auto bg : backSrl)
 	{
-		backSrl->ScrBackSet(player);
+		if (bg != nullptr)
+		{
+			bg->ScrBackSet(player);
+		}
 	}
 	if (score != nullptr && timer != nullptr)
 	{

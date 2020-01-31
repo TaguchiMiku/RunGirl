@@ -89,7 +89,7 @@ private:
 	cocos2d::Rect eneRect;
 	cocos2d::Rect atkRect;
 	cocos2d::Node* hpBar;
-	BackScroll* backSrl;
+	std::vector<BackScroll*> backSrl;
 	Attack* attack;
 	float after;
 	float before;
