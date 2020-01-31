@@ -9,7 +9,7 @@ USING_NS_CC;
 bool FallMove::operator()(cocos2d::Sprite& sp, actModule& module)
 {
 	auto unit = static_cast<Unit*>(module.sprite);
-	if (unit->GetJumpSpeed() <= module.jumpHeight)
+	if ((unit->GetJumpSpeed() <= module.jumpHeight))
 	{
 		//0‚É‚·‚é
 		unit->SetJumpSpeed(module.jumpHeight);

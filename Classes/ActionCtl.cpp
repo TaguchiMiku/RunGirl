@@ -10,7 +10,7 @@
 #include "CheckKey.h"
 #include "CheckList.h"
 #include "CheckCollision.h"
-//#include "debug/_DebugConOut.h"
+#include "debug/_DebugConOut.h"
 #pragma execution_charactor_set("utf-8");
 
 USING_NS_CC;
@@ -101,8 +101,9 @@ void ActionCtl::MoveModule(input_data data)
 		
 		if (CheckModule(map.second))
 		{
+			std::string st = map.first;
+			TRACE("%s\n", st.c_str());
 			unit = static_cast<Unit*>(map.second.sprite);
-			map.second.velocity.x = unit->GetVelocityX();
 			if (map.second.action != unit->GetActState())
 			{
 				if (plNowAct != nullptr)
@@ -121,7 +122,13 @@ void ActionCtl::MoveModule(input_data data)
 					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, -1);
 				}
 			}
-			unit->SetActState(map.second.action);
+			if ((unit->GetActState() == ACT::IDLE && map.second.action == ACT::RIGHT)
+				|| map.second.action != ACT::RIGHT)
+			{
+				//現在の状態は落下中に攻撃すると落下しなくなる処理である
+				//右移動するのはIDLEか右移動のときでそれ以外は移動しないようにする必要がある
+				unit->SetActState(map.second.action);
+			}
 			map.second.runAction(*map.second.sprite, map.second);
 		}
 	}

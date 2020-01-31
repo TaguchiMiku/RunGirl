@@ -30,8 +30,8 @@ public:
 	bool GetAccelFlag()override;
 	void SetAttackFlag(bool flag)override;
 	bool GetAttackFlag()override;
-	void SetSlowlyFlag(bool flag);
 	float GetVelocityX()override;
+	void SetSlowlyFlag(bool flag);
 	CREATE_FUNC(Player);
 
 private:

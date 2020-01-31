@@ -27,6 +27,11 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 		col = Vec2((sp.getPosition().x - mapMng->GetMapSize().width * map->getTileSize().width) + col.x + module.velocity.x, sp.getPosition().y + col.y + module.velocity.y);
 		//現在の座標をマス目単位になおす
 		tileX = floor(col.x / map->getTileSize().width);
+		if (tileX > 0)
+		{
+			//現在のプレイヤーの座標がどのマップか判定する。その際に難マップめかが必要
+			tileX %= (int)map->getMapSize().width;
+		}
 		tileY =floor((map->getMapSize().height) - (col.y / map->getTileSize().height));
 		//画面の範囲外まで移動していたら進まないようにする
 		if ((tileX < 0 || tileX >= map->getMapSize().width)

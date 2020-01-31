@@ -20,10 +20,10 @@ public:
 	bool GetAccelFlag()override;
 	void SetAttackFlag(bool flag)override;
 	bool GetAttackFlag()override;
+	float GetVelocityX()override;
 	void SetDeathFlag(bool flag);
 	bool GetDeathFlag();
 	void SetMoveFlag(bool flag);
-	float GetVelocityX()override;
 
 	CREATE_FUNC(Enemy);
 

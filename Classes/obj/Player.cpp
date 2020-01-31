@@ -180,6 +180,8 @@ void Player::AddActData()
 		actRight.sprite = this;
 		actRight.offset.emplace_back(Vec2(17, 28));
 		actRight.offset.emplace_back(Vec2(17, -27));
+		//actRight.blackList.emplace_back(ACT::FALLING);
+		//actRight.blackList.emplace_back(ACT::JUMPING);
 		actRight.action = ACT::RIGHT;
 		actCtl->AddModule("右移動", actRight);
 	}

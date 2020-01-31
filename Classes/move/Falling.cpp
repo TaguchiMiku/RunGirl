@@ -2,6 +2,7 @@
 #include "obj/Player.h"
 #include "obj/Enemy.h"
 #include "CheckCollision.h"
+#include "debug/_DebugConOut.h"
 
 USING_NS_CC;
 
