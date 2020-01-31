@@ -96,7 +96,7 @@ void Player::Update(float delta)
 			slowlyFlag = false;
 		}
 	}
-	DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 22), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+	//DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 22), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
 	// input処理とaction処理
 	data = oprt_state->GetData();
 	oprt_state->Update();
@@ -180,8 +180,6 @@ void Player::AddActData()
 		actRight.sprite = this;
 		actRight.offset.emplace_back(Vec2(17, 28));
 		actRight.offset.emplace_back(Vec2(17, -27));
-		actRight.blackList.emplace_back(ACT::FALLING);
-		actRight.blackList.emplace_back(ACT::JUMPING);
 		actRight.action = ACT::RIGHT;
 		actCtl->AddModule("右移動", actRight);
 	}
@@ -205,7 +203,7 @@ void Player::AddActData()
 	{
 		//落下中
 		actModule actFalling;
-		actFalling.velocity = Vec2(velocityX, -1);
+		actFalling.velocity = Vec2(0, -1);
 		actFalling.reverce = false;
 		actFalling.keyCode = EventKeyboard::KeyCode::KEY_NONE;
 		actFalling.animName = "player-jump";
@@ -241,13 +239,14 @@ void Player::AddActData()
 	{
 		//ジャンプ中
 		actModule actJumping;
-		actJumping.velocity = Vec2(velocityX, 0.5f);
+		actJumping.velocity = Vec2(0, 0.5f);
 		actJumping.reverce = true;
 		actJumping.keyCode = EventKeyboard::KeyCode::KEY_A;
 		actJumping.animName = "player-jump";
 		actJumping.sprite = this;
 		actJumping.offset.emplace_back(Vec2(-16, 28));
 		actJumping.offset.emplace_back(Vec2(17, 28));
+		actJumping.offset.emplace_back(Vec2(17, -27));
 		actJumping.blackList.emplace_back(ACT::FALL);
 		actJumping.blackList.emplace_back(ACT::FALLING);
 		actJumping.whiteList.emplace_back(ACT::JUMP);

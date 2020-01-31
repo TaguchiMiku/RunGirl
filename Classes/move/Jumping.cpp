@@ -26,6 +26,6 @@ bool Jumping::operator()(cocos2d::Sprite & sp, actModule & module)
 		unit->SetActState(ACT::FALL);
 		return false;
 	}
-	sp.setPosition(sp.getPosition().x + module.velocity.x, sp.getPosition().y + module.velocity.y);
+	sp.setPositionY(sp.getPosition().y + module.velocity.y);
 	return true;
 }

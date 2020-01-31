@@ -2,7 +2,7 @@
 #include "obj/Enemy.h"
 #include "obj/Player.h"
 #include "Score.h"
-#include "debug/_DebugConOut.h"
+//#include "debug/_DebugConOut.h"
 #define EN_CHAR_SIZE 30
 
 USING_NS_CC;

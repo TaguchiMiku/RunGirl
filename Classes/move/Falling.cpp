@@ -29,6 +29,6 @@ bool Falling::operator()(cocos2d::Sprite & sp, actModule & module)
 		unit->SetActState(ACT::IDLE);
 		return false;
 	}
-	sp.setPosition(sp.getPosition() + module.velocity);
+	sp.setPositionY(sp.getPosition().y + module.velocity.y);
 	return true;
 }
