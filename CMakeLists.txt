@@ -69,15 +69,18 @@ list(APPEND GAME_SOURCE
      Classes/GameScene.cpp
         Classes/input/OPRT_State.cpp
         Classes/input/OPRT_Touch.cpp
+        Classes/input/OPRT_Enemy.cpp
         Classes/Animation/AnimCtl.cpp
         Classes/obj/Player.cpp
         Classes/obj/Enemy.cpp
+        Classes/obj/Unit.cpp
         Classes/move/FallMove.cpp
         Classes/move/Falling.cpp
         Classes/move/JumpMove.cpp
         Classes/move/Jumping.cpp
         Classes/move/MoveLR.cpp
         Classes/move/AttackMove.cpp
+        Classes/move/EnemyLR.cpp
         Classes/ActionCtl.cpp
         Classes/actModule.cpp
         Classes/CheckCollision.cpp
@@ -109,15 +112,18 @@ list(APPEND GAME_HEADER
      Classes/GameScene.h
         Classes/input/OPRT_State.h
         Classes/input/OPRT_Touch.h
+        Classes/input/OPRT_Enemy.h
         Classes/Animation/AnimCtl.h
         Classes/obj/Player.h
         Classes/obj/Enemy.h
+        Classes/obj/Unit.h
         Classes/move/FallMove.h
         Classes/move/Falling.h
         Classes/move/JumpMove.h
         Classes/move/Jumping.h
         Classes/move/MoveLR.h
         Classes/move/AttackMove.h
+        Classes/move/EnemyLR.h
         Classes/ActionCtl.h
         Classes/actModule.h
         Classes/CheckCollision.h
