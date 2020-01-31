@@ -13,6 +13,7 @@ enum TUPLE_INFO {
 	ANIMATE
 };
 
+class Score;
 class Player : public Unit
 {
 public:
@@ -43,4 +44,5 @@ private:
 	float time;
 	float velocityX;
 	bool slowlyFlag;
+	Score* score;
 };

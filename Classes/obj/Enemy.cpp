@@ -23,6 +23,7 @@ Enemy::Enemy()
 	accelFlag = false;
 	attackFlag = false;
 	timeUpFlag = false;
+	velocityX = -3;
 	AddActData();
 
 	//OPRT_Enemyを作る
@@ -53,7 +54,7 @@ void Enemy::Update(float frame)
 	{
 		return;
 	}
-	DEBUG_DrawRect("enBox", getPosition(), Vec2(-14, 15), Vec2(15, -15), Color4F(1.0f, 0.0f, 0.0f, 1.0f));
+	//DEBUG_DrawRect("enBox", getPosition(), Vec2(-14, 15), Vec2(15, -15), Color4F(1.0f, 0.0f, 0.0f, 1.0f));
 	input_data data = oprt_state->GetData();
 	oprt_state->Update();
 	actCtl->MoveModule(data);
@@ -121,7 +122,7 @@ void Enemy::SetMoveFlag(bool flag)
 
 float Enemy::GetVelocityX()
 {
-	return -5.0f;
+	return velocityX;
 }
 
 void Enemy::AddActData()
@@ -130,7 +131,7 @@ void Enemy::AddActData()
 	{
 		//左移動
 		actModule actLeft;
-		actLeft.velocity = Vec2(-5, 0);
+		actLeft.velocity = Vec2(velocityX, 0);
 		actLeft.reverce = true;
 		actLeft.keyCode = EventKeyboard::KeyCode::KEY_LEFT_ARROW;
 		actLeft.animName = "enemy-run";
@@ -162,7 +163,7 @@ void Enemy::AddActData()
 	{
 		//落下中
 		actModule actFalling;
-		actFalling.velocity = Vec2(-5, -1);
+		actFalling.velocity = Vec2(velocityX, -1);
 		actFalling.reverce = false;
 		actFalling.keyCode = EventKeyboard::KeyCode::KEY_NONE;
 		actFalling.animName = "enemy-jump";
@@ -198,7 +199,7 @@ void Enemy::AddActData()
 	{
 		//ジャンプ中
 		actModule actJumping;
-		actJumping.velocity = Vec2(-5, 0.5f);
+		actJumping.velocity = Vec2(velocityX, 0.5f);
 		actJumping.reverce = true;
 		actJumping.keyCode = EventKeyboard::KeyCode::KEY_A;
 		actJumping.animName = "enemy-jump";
@@ -217,7 +218,7 @@ void Enemy::AddActData()
 	{
 		//攻撃
 		actModule actAttack;
-		actAttack.velocity = Vec2(-5, 0);
+		actAttack.velocity = Vec2(velocityX, 0);
 		actAttack.reverce = true;
 		actAttack.keyCode = EventKeyboard::KeyCode::KEY_S;
 		actAttack.animName = "enemy-jump";

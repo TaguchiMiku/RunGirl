@@ -6,7 +6,7 @@ struct OPRT_Key : OPRT_State
 	OPRT_Key(Node * nd);
 	~OPRT_Key();
 
-	TYPE GetType() {
+	TYPE GetType()override {
 		return TYPE::KEY;
 	}
 	void Update()override;

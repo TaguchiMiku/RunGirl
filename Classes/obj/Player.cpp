@@ -2,6 +2,7 @@
 #include "effect/EffectMng.h"
 #include "../ResultScene.h"
 #include "ui/CountDown.h"
+#include "Score.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
 #include "sound/SoundMng.h"
@@ -73,6 +74,8 @@ void Player::Update(float delta)
 	// 加速する時間
 	if (accelFlag)
 	{
+		score = static_cast<Score*>(Director::getInstance()->getRunningScene()->getChildByName("Score"));
+		score->AddScore(50);
 		time += delta;
 		velocityX = 10.0f;
 		if (time >= 3.0f)
@@ -97,6 +100,11 @@ void Player::Update(float delta)
 	// input処理とaction処理
 	data = oprt_state->GetData();
 	oprt_state->Update();
+	if (data.key.first != EventKeyboard::KeyCode::KEY_Q &&
+		data.key.second == EventKeyboard::KeyCode::KEY_Q)
+	{
+		velocityX = 0.1f;
+	}
 	actCtl->MoveModule(data);
 	// 追従カメラ設定
 	cameraCtl->FollowPlayer(Vec3(this->getPosition().x, this->getPosition().y, 500));

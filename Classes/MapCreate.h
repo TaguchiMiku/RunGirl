@@ -13,11 +13,14 @@ public:
 	void Init(cocos2d::Layer* layer);
 	void update(float flam);
 	cocos2d::TMXTiledMap* GetMap();
+	cocos2d::TMXTiledMap* GetNextMap();
 	cocos2d::Size GetMapSize();
 	EnemyCreate* GetEnemyCt();
-	ItemCreate* GetItemCt();;
+	ItemCreate* GetItemCt();
+	bool GetMapSetFlag();
 
 	void ReCreate(cocos2d::TMXTiledMap* map, cocos2d::Layer* layer);
+	void NextSet();
 	CREATE_FUNC(MapCreate);
 private:
 	cocos2d::TMXTiledMap* nowMap;
@@ -25,8 +28,10 @@ private:
 	std::vector<cocos2d::TMXTiledMap*> map;
 	cocos2d::Size mapSize;
 	cocos2d::Director* director;
-	EnemyCreate* enemyCt;
-	ItemCreate* itemCt;
+	EnemyCreate* enemyNow;
+	ItemCreate* itemNow;
+	EnemyCreate* enemyNext;
+	ItemCreate* itemNext;
 	bool setMapFlag;
 	cocos2d::Layer* layer;
 };

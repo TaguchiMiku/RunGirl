@@ -2,8 +2,9 @@
 #include "item/NormalItem.h"
 #include "item/HpItem.h"
 #include "obj/Player.h"
+#include "MapCreate.h"
 #include "Score.h"
-#include "debug/_DebugConOut.h"
+//#include "debug/_DebugConOut.h"
 
 USING_NS_CC;
 
@@ -15,6 +16,7 @@ ItemCreate * ItemCreate::createItemC()
 ItemCreate::ItemCreate()
 {
 	listCnt = 0;
+	playerPos = Vec2(0, 0);
 }
 
 ItemCreate::~ItemCreate()
@@ -39,21 +41,24 @@ void ItemCreate::Push(Layer* layer)
 {
 	for (auto item1 : normalItemList)
 	{
-		//通常アイテム追加
-		auto nItem = NormalItem::createNItem();
-		nItem->setTexture("image/Sprites/item/bonus3.png");
-		nItem->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-		nItem->setPosition(item1);
-		nItem->setName("normalItem");
-		nItem->setScale(0.5f, 0.5f);
-		//layer->addChild(nItem, 2);
-		//nItemSpList.push_back(nItem);
+		//加速アイテム追加
+		auto accelItem = NormalItem::createNItem();
+		accelItem->setTexture("image/Sprites/item/lightning.png");
+		accelItem->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+		accelItem->setPosition(item1);
+		accelItem->setName("normalItem");
+		accelItem->setScale(0.3f, 0.3f);
+		layer->addChild(accelItem, 2);
+		nItemSpList.push_back(accelItem);
+
 	}
 	for (auto item2 : hpItemList)
 	{
-		//HP回復アイテム追加
+		//得点UPアイテム追加
 		auto hpItem = HpItem::createHpItem();
-		hpItem->setTexture("image/Sprites/item/n_item.png");
+		auto num = cocos2d::random(1, 3);
+		hpItem->setTexture("image/Sprites/item/bonus" + std::to_string(num) + ".png");
+		hpItem->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 		hpItem->setPosition(item2);
 		hpItem->setName("normalItem");
 		hpItem->setScale(0.5f, 0.5f);
@@ -77,11 +82,15 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 			if (nItemSpList[listCnt] != nullptr)
 			{
 				player->SetAccelFlag(true);
-				nItemSpList.at(listCnt)->SetDeathFlag(true);
+				item1->SetDeathFlag(true);
 				lpAnimCtl.RunAnimation(item1, "Fx-glow", 4);
 				score->AddScore(30);
 			}
 			break;
+		}
+		if (player->getPosition().x - item1->getPosition().x > 1000)
+		{
+			item1->SetDeathFlag(true);
 		}
 		listCnt++;
 	}
@@ -95,12 +104,15 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
 			if (hpItemSpList[listCnt] != nullptr)
 			{
-				player->SetAccelFlag(true);
-				hpItemSpList.at(listCnt)->SetDeathFlag(true);
+				item2->SetDeathFlag(true);
 				lpAnimCtl.RunAnimation(item2, "Fx-glow", 4);
 				score->AddScore(50);
 			}
 			break;
+		}
+		if (player->getPosition().x - item2->getPosition().x > 1000)
+		{
+			item2->SetDeathFlag(true);
 		}
 		listCnt++;
 	}
@@ -144,8 +156,6 @@ void ItemCreate::DeathCheck()
 void ItemCreate::ClearList()
 {
 	normalItemList.clear();
-	nItemSpList.clear();
 	hpItemList.clear();
-	hpItemSpList.clear();
-	fxActList.clear();
+	//fxActList.clear();
 }

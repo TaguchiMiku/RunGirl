@@ -34,5 +34,6 @@ private:
 	std::unique_ptr<ActionCtl> actCtl;
 	bool deathFlag;
 	bool moveFlag;
+	float velocityX;
 };
 

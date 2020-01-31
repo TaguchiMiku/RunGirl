@@ -49,6 +49,10 @@ GameScene::~GameScene()
 {
 	//sound->stop();
 	//sound->destroy();
+	if (_running)
+	{
+		onExit();
+	}
 }
 
 Scene* GameScene::createScene()
@@ -130,6 +134,10 @@ bool GameScene::init()
 	//UIレイヤーにUI用カメラを適用
 	uiLayer->setCameraMask(static_cast<int>(CameraFlag::USER1));
 
+	//Player追加
+	player = Player::create();
+	plLayer->addChild(player, PLAYER);
+
 	map = MapCreate::create();
 	map->Init(bgBackLayer);
 	map->setName("mapMng");
@@ -137,9 +145,7 @@ bool GameScene::init()
 	auto tilemap = map->GetMap();
 	map->ReCreate(tilemap, plLayer);
 
-	//Player追加
-	player = Player::create();
-	plLayer->addChild(player, PLAYER);
+	auto a = Director::getInstance()->getRunningScene();
 
 	//背景追加
 	backSrl = BackScroll::create();

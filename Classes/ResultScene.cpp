@@ -18,6 +18,10 @@ ResultScene::ResultScene()
 
 ResultScene::~ResultScene()
 {
+	if (_running)
+	{
+		onExit();
+	}
 	//CkShutdown();
 }
 

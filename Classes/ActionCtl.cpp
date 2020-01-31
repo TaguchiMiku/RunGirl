@@ -6,6 +6,7 @@
 #include "move/Jumping.h"
 #include "move/Falling.h"
 #include "move/AttackMove.h"
+#include "move/EnemyLR.h"
 #include "CheckKey.h"
 #include "CheckList.h"
 #include "CheckCollision.h"
@@ -29,11 +30,18 @@ ActionCtl::~ActionCtl()
 bool ActionCtl::AddModule(std::string str, actModule& module)
 {
 	mapAct.emplace(str, std::move(module));
-	if (str == "左移動" || str == "右移動" || str == "上移動" || str == "下移動")
+	if (str == "右移動" || str == "上移動" || str == "下移動")
 	{
 		mapAct[str].act.emplace_back(CheckCollision());
 		mapAct[str].act.emplace_back(CheckList());
 		mapAct[str].runAction = MoveLR();
+	}
+	if (str == "左移動")
+	{
+		mapAct[str].act.emplace_back(CheckCollision());
+		mapAct[str].act.emplace_back(CheckList());
+		mapAct[str].act.emplace_back(CheckKey());
+		mapAct[str].runAction = EnemyLR();
 	}
 	if (str == "ジャンプ")
 	{

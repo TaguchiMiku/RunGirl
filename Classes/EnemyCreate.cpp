@@ -46,7 +46,11 @@ void EnemyCreate::Update(float flam, Player* player, Score* score)
 	{
 		for (auto ene : enSpList)
 		{
-			ene->Update(flam);			
+			ene->Update(flam);
+			if (player->getPosition().x - ene->getPosition().x > 1000)
+			{
+				ene->SetDeathFlag(true);
+			}
 		}
 		DeathCheck();
 	}
@@ -68,7 +72,6 @@ void EnemyCreate::DeathCheck()
 void EnemyCreate::ClearList()
 {
 	sponeList.clear();
-	enSpList.clear();
 }
 
 std::vector<Enemy*> EnemyCreate::GetEnSpriteList()

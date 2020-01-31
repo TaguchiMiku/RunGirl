@@ -6,7 +6,7 @@ struct OPRT_Touch : OPRT_State
 	OPRT_Touch(Node * nd);
 	~OPRT_Touch();
 
-	TYPE GetType() {
+	TYPE GetType()override {
 		return TYPE::TOUCH;
 	}
 	void Update()override;

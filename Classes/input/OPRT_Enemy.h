@@ -8,11 +8,10 @@ public:
 	OPRT_Enemy();
 	OPRT_Enemy(Unit* unit);
 	~OPRT_Enemy();
-	TYPE GetType() {
+	TYPE GetType()override {
 		return TYPE::KEY;
 	}
 	void Update()override;
-	bool BeAttack(Enemy* enemy);
 
 private:
 	cocos2d::EventKeyboard::KeyCode key;

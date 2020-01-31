@@ -26,6 +26,7 @@ private:
 	std::vector<HpItem*> hpItemSpList;		//HP回復アイテムリスト
 	std::vector<std::pair<cocos2d::Sprite*, cocos2d::Action*>> fxActList;		//エフェクトのアクションリスト
 	cocos2d::Rect plRect;
+	cocos2d::Vec2 playerPos;
 	int listCnt;
 };
 

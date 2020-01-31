@@ -32,7 +32,14 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 		if ((tileX < 0 || tileX >= map->getMapSize().width)
 			|| tileY < 0 || tileY >= map->getMapSize().height)
 		{
-			return false;
+			if (mapMng->GetMapSetFlag() && module.action != ACT::FALL)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		//ˆø”‚ÅŽw’è‚µ‚½ƒ}ƒX–Ú‚Ìî•ñ‚ðtile‚É“ü‚ê‚é
 		tile = lay->getTileGIDAt(cocos2d::Vec2(tileX, tileY));

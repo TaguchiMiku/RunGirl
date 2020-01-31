@@ -4,6 +4,8 @@
 #include "item/NormalItem.h"
 #include "EnemyCreate.h"
 #include "ItemCreate.h"
+#include "debug/_DebugConOut.h"
+#define PL_SIZE_X 34
 USING_NS_CC;
 
 cocos2d::Node * MapCreate::createMap()
@@ -14,7 +16,7 @@ cocos2d::Node * MapCreate::createMap()
 MapCreate::MapCreate()
 {
 	mapSize = Vec2(0, 0);
-	setMapFlag = true;
+	setMapFlag = false;
 }
 
 MapCreate::~MapCreate()
@@ -33,18 +35,30 @@ void MapCreate::Init(cocos2d::Layer * layer)
 	auto mapB = TMXTiledMap::create("image/Environment/mapB.tmx");
 	mapB->setName("map");
 	mapB->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-	mapB->setPosition(mapA->getContentSize().width, 0);
+	mapB->setPosition(mapA->getContentSize().width, 1000);
 	layer->addChild(mapB, 1);
 	map.push_back(mapB);
+	auto mapC = TMXTiledMap::create("image/Environment/mapC.tmx");
+	mapC->setName("map");
+	mapC->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+	mapC->setPosition(mapB->getContentSize().width, 1000);
+	layer->addChild(mapC, 1);
+	map.push_back(mapC);
 
 	nowMap = mapA;
 	nextMap = mapB;
 
-	enemyCt = EnemyCreate::create();
-	enemyCt->setName("EnemyCreate");
-	layer->addChild(enemyCt, 2);
-	itemCt = ItemCreate::create();
-	layer->addChild(itemCt, 2);
+	enemyNow = EnemyCreate::create();
+	enemyNow->setName("EnemyCreate");
+	layer->addChild(enemyNow, 2);
+	itemNow = ItemCreate::create();
+	layer->addChild(itemNow, 2);
+
+	enemyNext = EnemyCreate::create();
+	layer->addChild(enemyNext, 2);
+	itemNext = ItemCreate::create();
+	layer->addChild(itemNext, 2);
+
 	this->layer = layer;
 	this->scheduleUpdate();
 }
@@ -55,11 +69,8 @@ void MapCreate::update(float flam)
 	{
 		return;
 	}
-	
-	if (director->getRunningScene()->getDefaultCamera()->getPosition().x > nextMap->getPosition().x && setMapFlag)
+	if ((director->getRunningScene()->getDefaultCamera()->getPosition().x > nextMap->getPosition().x + PL_SIZE_X / 2) && setMapFlag)
 	{
-		//次のマップのアイテム等配置しなおし
-		ReCreate(nextMap, layer);
 		//Collision用オフセット
 		mapSize.width += nowMap->getMapSize().width;
 		//背景AとBの変数を入れ替える
@@ -68,7 +79,7 @@ void MapCreate::update(float flam)
 		nowMap = s;
 		setMapFlag = false;
 	}
-	if (director->getRunningScene()->getDefaultCamera()->getPosition().x > nowMap->getPosition().x + director->getVisibleSize().width / 2)
+	if (director->getRunningScene()->getDefaultCamera()->getPosition().x > nowMap->getPosition().x + (director->getVisibleSize().width / 2) && !setMapFlag)
 	{
 		//次のマップを決める
 		while (10)
@@ -79,7 +90,9 @@ void MapCreate::update(float flam)
 				break;
 			}
 		}
-		nextMap->setPositionX(nowMap->getPositionX() + nowMap->getContentSize().width);
+		nextMap->setPosition(nowMap->getPositionX() + nowMap->getContentSize().width, 0);
+		//次のマップのアイテム等配置しなおし
+		ReCreate(nextMap, layer);
 		setMapFlag = true;
 	}
 }
@@ -90,6 +103,11 @@ cocos2d::TMXTiledMap * MapCreate::GetMap()
 	return nowMap;
 }
 
+cocos2d::TMXTiledMap * MapCreate::GetNextMap()
+{
+	return nextMap;
+}
+
 cocos2d::Size MapCreate::GetMapSize()
 {
 	return mapSize;
@@ -97,18 +115,23 @@ cocos2d::Size MapCreate::GetMapSize()
 
 EnemyCreate * MapCreate::GetEnemyCt()
 {
-	return enemyCt;
+	return enemyNow;
 }
 
 ItemCreate * MapCreate::GetItemCt()
 {
-	return itemCt;
+	return itemNow;
+}
+
+bool MapCreate::GetMapSetFlag()
+{
+	return setMapFlag;
 }
 
 void MapCreate::ReCreate(cocos2d::TMXTiledMap * map, cocos2d::Layer* layer)
 {
-	enemyCt->ClearList();
-	itemCt->ClearList();
+	itemNow->ClearList();
+	enemyNow->ClearList();
 	for (int y = 0; y < map->getMapSize().height; y++)
 	{
 		for (int x = 0; x < map->getMapSize().width; x++)
@@ -121,16 +144,21 @@ void MapCreate::ReCreate(cocos2d::TMXTiledMap * map, cocos2d::Layer* layer)
 				if (properties.at("col").asInt() == 2)
 				{
 					//敵スポーン座標
-					enemyCt->AddCreateList(map, Vec2(x, y));
+					enemyNow->AddCreateList(map, Vec2(x, y));
 				}
 				else
 				{
-					itemCt->AddCreateList(map, Vec2(x, y), properties.at("col").asInt());
+					itemNow->AddCreateList(map, Vec2(x, y), properties.at("col").asInt());
 				}
 			}
 		}
 	}
 	//リストをもとに配置
-	enemyCt->Push(layer);
-	itemCt->Push(layer);
+	enemyNow->Push(layer);
+	itemNow->Push(layer);
+}
+
+void MapCreate::NextSet()
+{
+
 }

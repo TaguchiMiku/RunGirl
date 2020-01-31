@@ -4,8 +4,7 @@
 #include "ui/Attack.h"
 #include "Score.h"
 #include "CheckCollision.h"
-#include "debug/_DebugConOut.h"
-#define START_MOVE_DISTANCE 100		// 敵が動くと判断するプレイヤーとの距離
+#define START_MOVE_DISTANCE 500		// 敵が動くと判断するプレイヤーとの距離
 
 USING_NS_CC;
 
@@ -76,10 +75,4 @@ void OPRT_Enemy::Update()
 	{
 		data.key.first = EventKeyboard::KeyCode::KEY_NONE;
 	}
-}
-
-bool OPRT_Enemy::BeAttack(Enemy * enemy)
-{
-	
-	return false;
 }

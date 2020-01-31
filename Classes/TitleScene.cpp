@@ -18,6 +18,10 @@ TitleScene::TitleScene()
 
 TitleScene::~TitleScene()
 {
+	if (_running)
+	{
+		onExit();
+	}
 }
 
 void TitleScene::Init()

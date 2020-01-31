@@ -111,6 +111,11 @@
    <property name="col" type="int" value="1"/>
   </properties>
  </tile>
+ <tile id="24">
+  <properties>
+   <property name="col" type="int" value="4"/>
+  </properties>
+ </tile>
  <tile id="26">
   <properties>
    <property name="col" type="int" value="1"/>
