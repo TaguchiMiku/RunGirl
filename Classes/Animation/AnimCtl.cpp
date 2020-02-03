@@ -33,7 +33,7 @@ std::string AnimCtl::AddAnimation(std::string unit, std::string action, float an
 	return actName;
 }
 
-Action * AnimCtl::RunAnimation(Node * sprite, std::string action, int repeatCnt)
+Action * AnimCtl::RunAnimation(Node * sprite, std::string action, int repeatCnt, int tag)
 {
 	animation = AnimationCache::getInstance()->getAnimation(action);
 	if (animation != nullptr)
@@ -44,6 +44,7 @@ Action * AnimCtl::RunAnimation(Node * sprite, std::string action, int repeatCnt)
 			//retain()しないとisDone()を使用した際に自動解放された後なのでメモリリークが起きる。
 			//それを防ぐために、ここでカウントをプラスしておく必要がある。
 			action->retain();
+			action->setTag(tag);
 			return sprite->runAction(action);
 		}
 		else

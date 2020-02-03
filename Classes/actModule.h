@@ -33,6 +33,7 @@ struct actModule
 	ACT action;								//現在のアクション情報
 	ACT beforeAction;						//1つ前に実行されたアクション情報
 	std::list<cocos2d::Vec2> offset;					//当たり判定用オフセット
+	cocos2d::Action* actionData;
 	float gravity;							//重力加速度
 	float jumpHeight;						//ジャンプの高さ
 };

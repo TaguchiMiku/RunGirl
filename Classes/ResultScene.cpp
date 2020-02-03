@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "ui/clickUI.h"
 #include "Score.h"
+#include "ui/BackScroll.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
 #include "sound/SoundMng.h"
@@ -30,12 +31,20 @@ void ResultScene::Init()
 	auto bgBackLayer = Layer::create();
 	bgBackLayer->setName("BG_BACKGROUND");
 	this->addChild(bgBackLayer, BG_BACK);
-	Sprite* background = Sprite::create("image/Environment/school.png");
-	background->setName("ResultBack");
-	background->setScale(1.05f, 1.02f);
-	background->setAnchorPoint(cocos2d::Vec2(0, 0));
-	bgBackLayer->addChild(background, BG_BACK);
-
+	visibleSize = Director::getInstance()->getVisibleSize();
+	//背景追加
+	auto backGround1 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
+		backSrl.emplace_back(backGround1);
+	}
+	auto backGround2 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+		backSrl.emplace_back(backGround2);
+	}
 	//クリックUI表示
 	click = clickUI::createClick();
 	if (click != nullptr)
@@ -46,7 +55,7 @@ void ResultScene::Init()
 
 	//スコア表示
 	score = Score::createScore();
-	auto visibleSize = Director::getInstance()->getVisibleSize();
+	visibleSize = Director::getInstance()->getVisibleSize();
 	score->setScale(1.5f, 1.5f);
 	score->setPosition(Vec2(visibleSize.width / 2 - 100, visibleSize.height - 200));
 	this->addChild(score, 0);
@@ -72,6 +81,14 @@ void ResultScene::update(float flam)
 	//lpSoundMng.Update();
 	auto data = oprt_state->GetData();
 	oprt_state->Update();
+
+	for (auto bg : backSrl)
+	{
+		if (bg != nullptr)
+		{
+			bg->ScrBackSet(visibleSize / 2);
+		}
+	}
 
 	if (data.key.first != EventKeyboard::KeyCode::KEY_A &&
 		data.key.second == EventKeyboard::KeyCode::KEY_A)

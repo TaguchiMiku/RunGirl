@@ -1,7 +1,8 @@
-#include "TitleScene.h"
+ï»¿#include "TitleScene.h"
 #include "GameScene.h"
 #include "ui/clickUI.h"
 #include "ui/TitleNameMove.h"
+#include "ui/BackScroll.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
 #include "sound/SoundMng.h"
@@ -13,6 +14,7 @@ USING_NS_CC;
 
 TitleScene::TitleScene()
 {
+	sound = nullptr;
 	Init();
 }
 
@@ -22,6 +24,11 @@ TitleScene::~TitleScene()
 	{
 		onExit();
 	}
+	if (sound)
+	{
+		sound->destroy();
+		sound = nullptr;
+	}
 }
 
 void TitleScene::Init()
@@ -29,23 +36,44 @@ void TitleScene::Init()
 	auto bgBackLayer = Layer::create();
 	bgBackLayer->setName("BG_BACKGROUND");
 	this->addChild(bgBackLayer, BG_BACK);
-	Sprite* background = Sprite::create("image/Environment/school.png");
-	background->setName("TitleBack");
-	background->setScale(1.05f, 1.02f);
-	background->setAnchorPoint(cocos2d::Vec2(0, 0));
-	bgBackLayer->addChild(background, BG_BACK);
+
+	//èƒŒæ™¯è¿½åŠ 
+	auto backGround1 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
+		backSrl.emplace_back(backGround1);
+	}
+	auto backGround2 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+		backSrl.emplace_back(backGround2);
+	}
+	auto backGround3 = BackScroll::create();
+	if (backGround3 != nullptr)
+	{
+		backGround3->Init("Clouds_2", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
+		backSrl.emplace_back(backGround3);
+	}
+	auto backGround4 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround4->Init("Clouds_1", Vec2(0, 100), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
+		backSrl.emplace_back(backGround4);
+	}
 
 
-	Size visibleSize = Director::getInstance()->getVisibleSize();
+	visibleSize = Director::getInstance()->getVisibleSize();
 
-	//ƒ^ƒCƒgƒ‹•\Ž¦{‰‰o€”õ
+	//ã‚¿ã‚¤ãƒˆãƒ«è¡¨ç¤ºï¼‹æ¼”å‡ºæº–å‚™
 	titleName = TitleNameMove::create();
 	if (titleName != nullptr)
 	{
 		titleName->Init(Vec2(visibleSize.width / 2 + 32, visibleSize.height / 2), Vec2(1.05f, 1.02f), bgBackLayer);
 	}
 
-	//ƒNƒŠƒbƒNUI•\Ž¦
+	//ã‚¯ãƒªãƒƒã‚¯UIè¡¨ç¤º
 	click = clickUI::createClick();
 	if (click != nullptr)
 	{
@@ -53,9 +81,14 @@ void TitleScene::Init()
 	}
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	oprt_state.reset(new OPRT_Key(this));
+	CkBank* bank = CkBank::newBank("Resources/sound/titleBGM.ckb");
 #else
 	oprt_state.reset(new OPRT_Touch(this));
+	CkBank* bank = CkBank::newBank("sound/titleBGM.ckb");
 #endif
+	sound = CkSound::newBankSound(bank, 0);
+	sound->setLoopCount(-1);
+	sound->play();
 	//sound = lpSoundMng.SoundLoopPlay("Resources/sound/titleBGM.ckb");
 	this->setName("Title");
 	this->scheduleUpdate();
@@ -69,8 +102,17 @@ cocos2d::Scene * TitleScene::createScene()
 void TitleScene::update(float flam)
 {
 	//lpSoundMng.Update();
+	CkUpdate();
 	auto data = oprt_state->GetData();
 	oprt_state->Update();
+
+	for (auto bg : backSrl)
+	{
+		if (bg != nullptr)
+		{
+			bg->ScrBackSet(visibleSize / 2);
+		}
+	}
 
 	if (data.key.first != EventKeyboard::KeyCode::KEY_A &&
 		data.key.second == EventKeyboard::KeyCode::KEY_A)

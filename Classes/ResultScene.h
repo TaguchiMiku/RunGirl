@@ -4,6 +4,7 @@
 
 class clickUI;
 class Score;
+class BackScroll;
 class ResultScene : public cocos2d::Scene
 {
 public:
@@ -18,7 +19,9 @@ public:
 private:
 	std::unique_ptr<OPRT_State> oprt_state;
 	clickUI* click;
+	std::vector<BackScroll*> backSrl;
 	Score* score;
+	cocos2d::Size visibleSize;
 	//CkSound* sound;
 };
 

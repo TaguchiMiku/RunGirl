@@ -35,6 +35,7 @@
 #include "MapCreate.h"
 #include "EnemyCreate.h"
 #include "ItemCreate.h"
+#include "obj/DashFx.h"
 //#include "sound/SoundMng.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
@@ -138,6 +139,12 @@ bool GameScene::init()
 	player = Player::create();
 	plLayer->addChild(player, PLAYER);
 
+	auto dash = DashFx::createDash();
+	dash->setPosition(Vec2(player->getPosition().x - 10, player->getPosition().y));
+	dash->setName("dash");
+	dash->setScale(1.0f, 1.0f);
+	plLayer->addChild(dash, 2);
+
 	map = MapCreate::create();
 	map->Init(bgBackLayer);
 	map->setName("mapMng");
@@ -232,7 +239,7 @@ void GameScene::update(float delta)
 	{
 		if (bg != nullptr)
 		{
-			bg->ScrBackSet(player);
+			bg->ScrBackSet(player->getPosition());
 		}
 	}
 	if (score != nullptr && timer != nullptr)

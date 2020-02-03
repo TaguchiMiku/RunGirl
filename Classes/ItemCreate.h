@@ -6,6 +6,7 @@ class Player;
 class Score;
 class NormalItem;
 class HpItem;
+class FxGlow;
 class ItemCreate : public cocos2d::Node
 {
 public:
@@ -24,9 +25,10 @@ private:
 	std::vector<NormalItem*> nItemSpList;		//通常アイテムリスト
 	std::vector<cocos2d::Vec2> hpItemList;			//HP回復アイテム座標リスト
 	std::vector<HpItem*> hpItemSpList;		//HP回復アイテムリスト
-	std::vector<std::pair<cocos2d::Sprite*, cocos2d::Action*>> fxActList;		//エフェクトのアクションリスト
+	std::vector<FxGlow*> fxActSpList;		//エフェクトのアクションリスト
 	cocos2d::Rect plRect;
 	cocos2d::Vec2 playerPos;
+	cocos2d::Layer* layer;
 	int listCnt;
 };
 

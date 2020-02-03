@@ -16,6 +16,5 @@ private:
 	cocos2d::EventListenerTouchOneByOne* listener_mouse;
 	cocos2d::EventKeyboard::KeyCode key;
 	bool pushFlag;
-	bool clickFlag;
 };
 

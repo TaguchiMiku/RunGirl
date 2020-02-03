@@ -9,7 +9,7 @@ public:
 	~BackScroll();
 	void Init(std::string fileName, cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::Layer* layer, float speed);
 	void update(float delta);
-	void ScrBackSet(Player* player);
+	void ScrBackSet(cocos2d::Vec2 position);
 	CREATE_FUNC(BackScroll);
 private:
 	cocos2d::Sprite* backA;

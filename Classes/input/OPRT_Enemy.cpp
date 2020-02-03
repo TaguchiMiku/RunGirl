@@ -40,8 +40,7 @@ void OPRT_Enemy::Update()
 			enemy->SetDeathFlag(true);
 			score->AddScore(100);
 			attack->setPosition(Vec2(player->getPosition().x + 50, player->getPosition().y));
-			lpAnimCtl.RunAnimation(attack, "Fx-impact", 1);
-			player->SetAttackFlag(false);
+			lpAnimCtl.RunAnimation(attack, "Fx-impact", 1, 0);
 		}
 		else
 		{

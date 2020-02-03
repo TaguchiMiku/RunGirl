@@ -10,7 +10,7 @@
 #include "CheckKey.h"
 #include "CheckList.h"
 #include "CheckCollision.h"
-#include "debug/_DebugConOut.h"
+//#include "debug/_DebugConOut.h"
 #pragma execution_charactor_set("utf-8");
 
 USING_NS_CC;
@@ -20,6 +20,7 @@ ActionCtl::ActionCtl()
 	animName = "player-idle";
 	plNowAct = nullptr;
 	enNowAct = nullptr;
+	unit = nullptr;
 }
 
 
@@ -30,7 +31,7 @@ ActionCtl::~ActionCtl()
 bool ActionCtl::AddModule(std::string str, actModule& module)
 {
 	mapAct.emplace(str, std::move(module));
-	if (str == "右移動" || str == "上移動" || str == "下移動")
+	if (str == "右移動")
 	{
 		mapAct[str].act.emplace_back(CheckCollision());
 		mapAct[str].act.emplace_back(CheckList());
@@ -75,7 +76,7 @@ bool ActionCtl::AddModule(std::string str, actModule& module)
 	return true;
 }
 
-void ActionCtl::MoveModule(input_data data)
+void ActionCtl::MoveModule(input_data data, float delta)
 {
 	/*チェックリストを全て回しす
 	  全部true		 = trueを返す
@@ -94,42 +95,64 @@ void ActionCtl::MoveModule(input_data data)
 	};
 	
 	//mapに登録しているアクション分回す
+	if (unit != nullptr)
+	{
+		if (unit->GetAttackFlag())
+		{
+			if (unit->getNumberOfRunningActionsByTag(static_cast<int>(ACT_TAG::ATTACK)) <= 0)
+			{
+				unit->stopAllActions();
+				unit->SetAttackFlag(false);
+			}
+		}	
+	}
+
 	for (auto map : mapAct)
 	{
 		map.second.nowKey = data.key.first;
 		map.second.oldKey = data.key.second;
-		
+		unit = static_cast<Unit*>(map.second.sprite);
 		if (CheckModule(map.second))
 		{
-			/*std::string st = map.first;
-			TRACE("%s\n", st.c_str());*/
-			unit = static_cast<Unit*>(map.second.sprite);
-			if (map.second.action != unit->GetActState())
+			if(!unit->GetAttackFlag())
 			{
-				if (plNowAct != nullptr)
+				if (map.second.animName != animName)
 				{
-					map.second.sprite->stopAllActions();
+					if (plNowAct != nullptr)
+					{
+						map.second.sprite->stopAllActions();
+					}
+					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, -1, static_cast<int>(ACT_TAG::NORMAL));
+					animName = map.second.animName;
 				}
-				//アニメーション
-				if (map.first == "攻撃")
+				if ((unit->GetActState() == ACT::IDLE && map.second.action == ACT::RIGHT) || (map.second.action != ACT::RIGHT))
 				{
-					map.second.animName = "player-idle";
-					unit->SetAttackFlag(true);
-					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, 1);
+					//現在の状態は落下中に攻撃すると落下しなくなる処理である
+					//右移動するのはIDLEか右移動のときでそれ以外は移動しないようにする必要がある
+					unit->SetActState(map.second.action);
 				}
-				else
-				{
-					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, -1);
-				}
-			}
-			if ((unit->GetActState() == ACT::IDLE && map.second.action == ACT::RIGHT)
-				|| map.second.action != ACT::RIGHT)
-			{
-				//現在の状態は落下中に攻撃すると落下しなくなる処理である
-				//右移動するのはIDLEか右移動のときでそれ以外は移動しないようにする必要がある
-				unit->SetActState(map.second.action);
 			}
 			map.second.runAction(*map.second.sprite, map.second);
+			// 上記でattackFlagが書き換わるため、もう一度判断して処理する
+			if (unit->GetAttackFlag())
+			{
+				if (unit->getNumberOfRunningActionsByTag(static_cast<int>(ACT_TAG::ATTACK)) > 0)
+				{
+					return;
+				}
+				if ((map.second.animName == "player-attack" && animName == "player-run") || (animName != "player-attack"))
+				{
+					if (plNowAct != nullptr)
+					{
+						map.second.sprite->stopAllActions();
+					}
+				}
+				if (map.first == "攻撃")
+				{
+					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, 1, static_cast<int>(ACT_TAG::ATTACK));
+					animName = map.second.animName;
+				}
+			}
 		}
 	}
 }

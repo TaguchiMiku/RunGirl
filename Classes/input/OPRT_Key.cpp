@@ -33,7 +33,6 @@ OPRT_Key::OPRT_Key(Node * nd)
 		}
 		key = keyCode;
 		pushFlag = true;
-		clickFlag = false;
 	};
 
 	listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event) {
@@ -50,18 +49,6 @@ OPRT_Key::OPRT_Key(Node * nd)
 	};
 
 	nd->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, nd);
-
-	/*listener_mouse = EventListenerTouchOneByOne::create();
-	listener_mouse->onTouchBegan = [this](Touch* touch, Event* event) {
-		key = EventKeyboard::KeyCode::KEY_ENTER;
-		clickFlag = true;
-		return true;
-	};
-	listener_mouse->onTouchEnded = [this](Touch* touch, Event* event) {
-		key = EventKeyboard::KeyCode::KEY_NONE;
-		clickFlag = false;
-	};
-	nd->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener_mouse, nd);*/
 }
 
 
@@ -73,6 +60,11 @@ void OPRT_Key::Update()
 {
 	data.key.second = data.key.first;
 	data.key.first = key;
+	//‰Ÿ‚µ‚Ä‚éŠÔ
+	if (pushFlag && (data.key.second == data.key.first))
+	{
+		key = EventKeyboard::KeyCode::KEY_NONE;
+	}
 	if (!pushFlag)
 	{
 		key = EventKeyboard::KeyCode::KEY_NONE;

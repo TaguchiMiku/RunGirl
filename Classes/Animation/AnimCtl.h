@@ -33,7 +33,7 @@ public:
 		return *s_instance;			//自身のクラスのポインターを返す
 	}
 	std::string AddAnimation(std::string unit, std::string action, float animSpeed);
-	cocos2d::Action* RunAnimation(cocos2d::Node* sprite, std::string action, int repeatCnt);
+	cocos2d::Action* RunAnimation(cocos2d::Node* sprite, std::string action, int repeatCnt, int tag);
 
 private:
 	struct AnimCtlDeleter	//unique_ptr用の自作デストラクター

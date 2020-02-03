@@ -1,6 +1,7 @@
 #include "ItemCreate.h"
 #include "item/NormalItem.h"
 #include "item/HpItem.h"
+#include "item/FxGlow.h"
 #include "obj/Player.h"
 #include "MapCreate.h"
 #include "Score.h"
@@ -65,6 +66,7 @@ void ItemCreate::Push(Layer* layer)
 		layer->addChild(hpItem, 2);
 		hpItemSpList.push_back(hpItem);
 	}
+	this->layer = layer;
 }
 
 void ItemCreate::Update(float flam, Player* player, Score* score)
@@ -77,13 +79,19 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 		auto nItemRect = item1->getBoundingBox();
 		if (plRect.intersectsRect(nItemRect))
 		{
-			//fxActList.push_back(std::make_pair(item1, lpAnimCtl.RunAnimation(item1, "Fx-glow", 4)));
+			auto fxGlow = FxGlow::createHpItem();
+			fxGlow->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+			fxGlow->setPosition(item1->getPosition());
+			fxGlow->setScale(item1->getScale());
+			lpAnimCtl.RunAnimation(fxGlow, "Fx-glow", 4, 3);
+			layer->addChild(fxGlow, 2);
+			fxActSpList.push_back(fxGlow);
 			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
 			if (nItemSpList[listCnt] != nullptr)
 			{
 				player->SetAccelFlag(true);
 				item1->SetDeathFlag(true);
-				lpAnimCtl.RunAnimation(item1, "Fx-glow", 4);
+				item1->setScale(0, 0);
 				score->AddScore(30);
 			}
 			break;
@@ -100,12 +108,18 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 		auto hpItemRect = item2->getBoundingBox();
 		if (plRect.intersectsRect(hpItemRect))
 		{
-			//fxActList.push_back(std::make_pair(item2, lpAnimCtl.RunAnimation(item2, "Fx-glow", 4)));
+			auto fxGlow = FxGlow::createHpItem();
+			fxGlow->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+			fxGlow->setPosition(item2->getPosition());
+			fxGlow->setScale(item2->getScale());
+			lpAnimCtl.RunAnimation(fxGlow, "Fx-glow", 4, 3);
+			layer->addChild(fxGlow, 2);
+			fxActSpList.push_back(fxGlow);
 			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
 			if (hpItemSpList[listCnt] != nullptr)
 			{
 				item2->SetDeathFlag(true);
-				lpAnimCtl.RunAnimation(item2, "Fx-glow", 4);
+				item2->setScale(0, 0);
 				score->AddScore(50);
 			}
 			break;
@@ -116,19 +130,16 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 		}
 		listCnt++;
 	}
-	//listCnt = 0;
-	//for (auto fx : fxActList)
-	//{
-	//	//エフェクト（アニメーション）の再生が終わったらspriteと配列の要素を消す。
-	//	if (fx.second->isDone())
-	//	{
-	//		TRACE("Destroy_Item\n");
-	//		fx.first->removeFromParentAndCleanup(true);
-	//		fx.second->release();
-	//		fxActList.erase(fxActList.begin() + listCnt);
-	//	}
-	//	listCnt++;
-	//}
+	listCnt = 0;
+	for (auto fx : fxActSpList)
+	{
+		//エフェクト（アニメーション）の再生が終わったらspriteと配列の要素を消す。
+		if (fx->getNumberOfRunningActionsByTag(3) <= 0)
+		{
+			fx->SetDeathFlag(true);
+		}
+		listCnt++;
+	}
 }
 
 void ItemCreate::DeathCheck()
@@ -151,11 +162,20 @@ void ItemCreate::DeathCheck()
 		return hpItem->GetDeathFlag();
 	});
 	hpItemSpList.erase(death_hp, hpItemSpList.end());
+
+	auto death_fx = std::remove_if(fxActSpList.begin(), fxActSpList.end(),
+		[this](FxGlow* fxGlow) {
+		if (fxGlow->GetDeathFlag())
+		{
+			fxGlow->removeFromParentAndCleanup(true);
+		}
+		return fxGlow->GetDeathFlag();
+	});
+	fxActSpList.erase(death_fx, fxActSpList.end());
 }
 
 void ItemCreate::ClearList()
 {
 	normalItemList.clear();
 	hpItemList.clear();
-	//fxActList.clear();
 }

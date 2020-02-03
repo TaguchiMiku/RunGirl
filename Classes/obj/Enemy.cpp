@@ -14,7 +14,7 @@ Enemy::Enemy()
 {
 	lpAnimCtl.AddAnimation("enemy", "run", 0.05f);
 	lpAnimCtl.AddAnimation("enemy", "jump", 0.05f);
-	lpAnimCtl.RunAnimation(this, "enemy-jump", -1);
+	lpAnimCtl.RunAnimation(this, "enemy-jump", -1, 0);
 	deathFlag = false;
 	moveFlag = false;
 	this->setName("Enemy");
@@ -57,7 +57,7 @@ void Enemy::Update(float frame)
 	//DEBUG_DrawRect("enBox", getPosition(), Vec2(-14, 15), Vec2(15, -15), Color4F(1.0f, 0.0f, 0.0f, 1.0f));
 	input_data data = oprt_state->GetData();
 	oprt_state->Update();
-	actCtl->MoveModule(data);
+	actCtl->MoveModule(data, frame);
 }
 
 void Enemy::SetTimeUpFlag(bool flag)
@@ -228,6 +228,7 @@ void Enemy::AddActData()
 		actAttack.action = ACT::ATTACK;
 		actAttack.blackList.emplace_back(ACT::FALLING);
 		actAttack.blackList.emplace_back(ACT::JUMPING);
+		actAttack.actionData = nullptr;
 		actCtl->AddModule("攻撃", actAttack);
 	}
 }

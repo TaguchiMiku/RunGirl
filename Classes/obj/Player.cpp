@@ -28,9 +28,9 @@ Player::Player()
 	lpAnimCtl.AddAnimation("player", "walk", 0.1f);
 	lpAnimCtl.AddAnimation("player", "run", 0.05f);
 	lpAnimCtl.AddAnimation("player", "jump", 0.05f);
-	lpAnimCtl.AddAnimation("player", "attack", 0.05f);
+	lpAnimCtl.AddAnimation("player", "attack", 0.1f);
 
-	lpAnimCtl.RunAnimation(this, "player-idle", -1);
+	lpAnimCtl.RunAnimation(this, "player-idle", -1, 0);
 
 	// アクションデータを設定(追加)する
 	velocityX = 5;
@@ -96,16 +96,13 @@ void Player::Update(float delta)
 			slowlyFlag = false;
 		}
 	}
-	//DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 22), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 22), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+#endif
 	// input処理とaction処理
 	data = oprt_state->GetData();
 	oprt_state->Update();
-	if (data.key.first != EventKeyboard::KeyCode::KEY_Q &&
-		data.key.second == EventKeyboard::KeyCode::KEY_Q)
-	{
-		velocityX = 0.1f;
-	}
-	actCtl->MoveModule(data);
+	actCtl->MoveModule(data, delta);
 	// 追従カメラ設定
 	cameraCtl->FollowPlayer(Vec3(this->getPosition().x, this->getPosition().y, 500));
 }
@@ -180,8 +177,6 @@ void Player::AddActData()
 		actRight.sprite = this;
 		actRight.offset.emplace_back(Vec2(17, 28));
 		actRight.offset.emplace_back(Vec2(17, -27));
-		//actRight.blackList.emplace_back(ACT::FALLING);
-		//actRight.blackList.emplace_back(ACT::JUMPING);
 		actRight.action = ACT::RIGHT;
 		actCtl->AddModule("右移動", actRight);
 	}
@@ -269,8 +264,11 @@ void Player::AddActData()
 		actAttack.offset.emplace_back(Vec2(17, 28));
 		actAttack.offset.emplace_back(Vec2(17, -27));
 		actAttack.action = ACT::ATTACK;
+		actAttack.blackList.emplace_back(ACT::FALL);
 		actAttack.blackList.emplace_back(ACT::FALLING);
 		actAttack.blackList.emplace_back(ACT::JUMPING);
+		actAttack.blackList.emplace_back(ACT::JUMP);
+		actAttack.actionData = nullptr;
 		actCtl->AddModule("攻撃", actAttack);
 	}
 }

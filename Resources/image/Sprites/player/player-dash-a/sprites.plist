@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>player-dash-a-1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,13},{10,10}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{9,9},{10,10}}</string>
+				<key>sourceSize</key>
+				<string>{20,20}</string>
+			</dict>
+
+			<key>player-dash-a-2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{11,13},{8,10}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{4,9},{8,10}}</string>
+				<key>sourceSize</key>
+				<string>{20,20}</string>
+			</dict>
+
+			<key>player-dash-a-3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{12,12}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,6},{12,12}}</string>
+				<key>sourceSize</key>
+				<string>{20,20}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{32,32}</string>
+			<key>textureFileName</key>
+			<string>sprites.png</string>
+			</dict>
+		</dict>
+</plist>

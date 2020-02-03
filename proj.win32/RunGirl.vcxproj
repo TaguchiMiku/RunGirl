@@ -69,6 +69,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CRICKET_INC_PATH);$(JAVA_HOME)\include\win32;$(JAVA_HOME)\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
@@ -171,6 +172,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\input\OPRT_State.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_Touch.cpp" />
     <ClCompile Include="..\Classes\ItemCreate.cpp" />
+    <ClCompile Include="..\Classes\item\FxGlow.cpp" />
     <ClCompile Include="..\Classes\item\HpItem.cpp" />
     <ClCompile Include="..\Classes\item\NormalItem.cpp" />
     <ClCompile Include="..\Classes\MapCreate.cpp" />
@@ -181,6 +183,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\move\Jumping.cpp" />
     <ClCompile Include="..\Classes\move\JumpMove.cpp" />
     <ClCompile Include="..\Classes\move\MoveLR.cpp" />
+    <ClCompile Include="..\Classes\obj\DashFx.cpp" />
     <ClCompile Include="..\Classes\obj\Enemy.cpp" />
     <ClCompile Include="..\Classes\obj\Player.cpp" />
     <ClCompile Include="..\Classes\obj\Unit.cpp" />
@@ -219,6 +222,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\input\OPRT_State.h" />
     <ClInclude Include="..\Classes\input\OPRT_Touch.h" />
     <ClInclude Include="..\Classes\ItemCreate.h" />
+    <ClInclude Include="..\Classes\item\FxGlow.h" />
     <ClInclude Include="..\Classes\item\HpItem.h" />
     <ClInclude Include="..\Classes\item\NormalItem.h" />
     <ClInclude Include="..\Classes\MapCreate.h" />
@@ -229,6 +233,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\move\Jumping.h" />
     <ClInclude Include="..\Classes\move\JumpMove.h" />
     <ClInclude Include="..\Classes\move\MoveLR.h" />
+    <ClInclude Include="..\Classes\obj\DashFx.h" />
     <ClInclude Include="..\Classes\obj\Enemy.h" />
     <ClInclude Include="..\Classes\obj\Player.h" />
     <ClInclude Include="..\Classes\obj\Unit.h" />

@@ -25,6 +25,24 @@
 #include "AppDelegate.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include <cricket-1.6.7/inc/ck/ck.h>
+
+#if CK_PLATFORM_ANDROID
+#ifdef __cplusplus
+extern "C" {
+#endif
+    JNIEXPORT void JNICALL Java_org_cocos2dx_cpp_AppActivity_initCricket(
+            JNIEnv* env,
+            jclass activity,
+            jobject context)
+    {
+        CkConfig config(env, context);
+        CkInit(&config);
+    }
+#ifdef __cplusplus
+}
+#endif
+#endif
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -55,7 +73,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate() 
 {
-	//CkShutdown();
+	CkShutdown();
 #if USE_AUDIO_ENGINE
     AudioEngine::end();
 #elif USE_SIMPLE_AUDIO_ENGINE
@@ -105,6 +123,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	lpEffectMng.Init();
     // create a scene. it's an autorelease object
+#if  (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	CkConfig config;
+	CkInit(&config);
+#endif
     auto scene = TitleScene::createScene();
     // run
     director->runWithScene(scene);

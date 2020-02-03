@@ -189,6 +189,12 @@
     <ClCompile Include="..\Classes\move\EnemyLR.cpp">
       <Filter>src\action</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\item\FxGlow.cpp">
+      <Filter>src\item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\obj\DashFx.cpp">
+      <Filter>src\obj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -328,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\move\EnemyLR.h">
       <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\item\FxGlow.h">
+      <Filter>src\item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\obj\DashFx.h">
+      <Filter>src\obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
