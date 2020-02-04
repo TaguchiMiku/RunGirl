@@ -32,7 +32,7 @@ void Score::Init(cocos2d::Layer * layer)
 	//表示する座標リスト
 	for (int j = 0; j < 6; j++)
 	{
-		rankPos[j] = Vec2(this->getPosition().x + 35 * j, Director::getInstance()->getVisibleSize().height - STRING_SIZE);
+		rankPos[j] = Vec2(this->getPosition().x + 35 * j, this->getPosition().y + Director::getInstance()->getVisibleSize().height - STRING_SIZE * 2);
 	}
 	//描画するスプライト情報リスト(1の位から順に)
 	for (int rank = 0; rank < 6; rank++)
@@ -47,6 +47,26 @@ void Score::Init(cocos2d::Layer * layer)
 void Score::AddScore(int point)
 {
 	score += point;
+}
+
+void Score::AddCandy(int point)
+{
+	candy += point;
+}
+
+void Score::AddLight(int point)
+{
+	light += point;
+}
+
+int Score::GetCandy()
+{
+	return candy;
+}
+
+int Score::GetLight()
+{
+	return light;
 }
 
 int Score::GetScore()
@@ -74,6 +94,8 @@ void Score::DrawScore()
 void Score::ResetScore()
 {
 	score = 0;
+	candy = 0;
+	light = 0;
 }
 
 void Score::update(float delta)

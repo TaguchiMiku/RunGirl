@@ -9,6 +9,7 @@
 #else
 #include "input/OPRT_Touch.h"
 #endif
+#define LOCAL_SPACE 100
 USING_NS_CC;
 
 ResultScene::ResultScene()
@@ -28,6 +29,9 @@ ResultScene::~ResultScene()
 
 void ResultScene::Init()
 {
+	allScore = score;
+	number = 0;
+	anser = 0;
 	auto bgBackLayer = Layer::create();
 	bgBackLayer->setName("BG_BACKGROUND");
 	this->addChild(bgBackLayer, BG_BACK);
@@ -53,14 +57,53 @@ void ResultScene::Init()
 		click->Init(Vec2(visibleSize.width / 2, 100), Vec2(0.5f, 0.5f), bgBackLayer);
 	}
 
+	auto candy = Sprite::create("image/Sprites/item/bonus1.png");
+	candy->setPosition(Vec2(visibleSize.width / 2 - LOCAL_SPACE, visibleSize.height / 2 + 100));
+	candy->setScale(0.7f, 0.7f);
+	this->addChild(candy, 0);
+	auto light = Sprite::create("image/Sprites/item/lightning.png");
+	light->setPosition(Vec2(visibleSize.width / 2 - LOCAL_SPACE, visibleSize.height / 2 + 10));
+	light->setScale(0.5f, 0.5f);
+	this->addChild(light, 0);
+	auto closs1 = Sprite::create("image/Sprites/item/peke.png");
+	closs1->setPosition(Vec2(visibleSize.width / 2 - LOCAL_SPACE / 2, visibleSize.height / 2 + 100));
+	this->addChild(closs1, 0);
+	auto closs2 = Sprite::create("image/Sprites/item/peke.png");
+	closs2->setPosition(Vec2(visibleSize.width / 2 - LOCAL_SPACE / 2, visibleSize.height / 2 + 10));
+	this->addChild(closs2, 0);
+
+	//画像読み込み（数字画像リスト）
+	for (int num = 0; num < 10; num++)
+	{
+		numList[num] = "image/Sprites/numberC/_number_0" + std::to_string(num) + ".png";
+	}
+	//表示する座標リスト
+	for (int j = 0; j < 3; j++)
+	{
+		rankPos[j] = Vec2(visibleSize.width / 2 + 35 * j, visibleSize.height / 2 + 100);
+		rankPos2[j] = Vec2(visibleSize.width / 2 + 35 * j, visibleSize.height / 2 + 10);
+	}
+	//描画するスプライト情報リスト(1の位から順に)
+	for (int rank = 0; rank < 3; rank++)
+	{
+		numberSpList[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
+		numberSpList[rank]->setScale(0.3f, 0.3f);
+		numberSpList[rank]->setPosition(rankPos[2 - rank]);
+		this->addChild(numberSpList[rank], 1);
+		numberSpListL[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
+		numberSpListL[rank]->setScale(0.3f, 0.3f);
+		numberSpListL[rank]->setPosition(rankPos2[2 - rank]);
+		this->addChild(numberSpListL[rank], 1);
+	}
+	ItemCount();
 	//スコア表示
-	score = Score::createScore();
+	scorePtr = Score::createScore();
 	visibleSize = Director::getInstance()->getVisibleSize();
-	score->setScale(1.5f, 1.5f);
-	score->setPosition(Vec2(visibleSize.width / 2 - 100, visibleSize.height - 200));
-	this->addChild(score, 0);
-	score->Init(bgBackLayer);
-	score->DrawScore();
+	scorePtr->setScale(1.5f, 1.5f);
+	scorePtr->setPosition(Vec2(visibleSize.width / 2 - 100, -300));
+	this->addChild(scorePtr, 0);
+	scorePtr->Init(bgBackLayer);
+	scorePtr->DrawScore();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	oprt_state.reset(new OPRT_Key(this));
 #else
@@ -74,6 +117,36 @@ void ResultScene::Init()
 cocos2d::Scene * ResultScene::createScene()
 {
 	return ResultScene::create();
+}
+
+void ResultScene::ItemCount()
+{
+	// アイテム取得数の表示
+	int cnt = 1;
+	anser = scorePtr->GetCandy();
+	for (auto numSp : numberSpList)
+	{
+		if (anser < 0)
+		{
+			break;
+		}
+		number = anser % 10;
+		anser = anser / 10;
+		numSp->setTexture(numList[number]);
+		cnt += 10;
+	}
+	anser = scorePtr->GetLight();
+	for (auto numSp : numberSpListL)
+	{
+		if (anser < 0)
+		{
+			break;
+		}
+		number = anser % 10;
+		anser = anser / 10;
+		numSp->setTexture(numList[number]);
+		cnt += 10;
+	}
 }
 
 void ResultScene::update(float flam)

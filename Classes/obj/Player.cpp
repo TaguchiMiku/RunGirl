@@ -3,6 +3,7 @@
 #include "../ResultScene.h"
 #include "ui/CountDown.h"
 #include "Score.h"
+#include "obj/DashFx.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
 #include "sound/SoundMng.h"
@@ -26,7 +27,9 @@ Player::Player()
 	// アニメーションの初期化//シーンの先頭で読み込む
 	lpAnimCtl.AddAnimation("player", "idle", 0.05f);
 	lpAnimCtl.AddAnimation("player", "walk", 0.1f);
+	lpAnimCtl.AddAnimation("player", "run-slow", 0.07f);
 	lpAnimCtl.AddAnimation("player", "run", 0.05f);
+	lpAnimCtl.AddAnimation("player", "run2", 0.03f);
 	lpAnimCtl.AddAnimation("player", "jump", 0.05f);
 	lpAnimCtl.AddAnimation("player", "attack", 0.1f);
 
@@ -42,6 +45,7 @@ Player::Player()
 	timeUpFlag = false;
 	slowlyFlag = false;
 	time = 0;
+	dashFxTime = 0;
 	this->setName("Player");
 	//lpSoundMng.Init();
 // プラットフォーム別に入力クラス（操作の仕方）を切り替える
@@ -96,8 +100,45 @@ void Player::Update(float delta)
 			slowlyFlag = false;
 		}
 	}
+
+	// ダッシュエフェクト生成
+	if (nowAction == ACT::RIGHT || nowAction == ACT::ATTACK)
+	{
+		dashFxTime += delta;
+		if (!accelFlag)
+		{
+			if (dashFxTime > 0.25f)
+			{
+				dashFxTime = 0;
+				auto dash = DashFx::createDash();
+				dash->SetAddAnim("dash-b");
+				dash->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+				dash->setPosition(Vec2(getPosition().x - 20, getPosition().y - getContentSize().height / 2 - 3));
+				dash->setName("dash");
+				dash->setScale(1.0f, 1.0f);
+				auto layer = static_cast<Layer*>(Director::getInstance()->getRunningScene()->getChildByName("plLayer"));
+				layer->addChild(dash, 2);
+			}
+		}
+		if (accelFlag)
+		{
+			if (dashFxTime > 0.1f)
+			{
+				dashFxTime = 0;
+				auto dash = DashFx::createDash();
+				dash->SetAddAnim("dash-a");
+				dash->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+				dash->setPosition(Vec2(getPosition().x - 20, getPosition().y - getContentSize().height / 2));
+				dash->setName("dash");
+				dash->setScale(1.0f, 1.0f);
+				auto layer = static_cast<Layer*>(Director::getInstance()->getRunningScene()->getChildByName("plLayer"));
+				layer->addChild(dash, 2);
+			}
+		}
+	}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 22), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+	//DEBUG_DrawRect("plBox", getPosition(), Vec2(-16, 22), Vec2(17, -27), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
 #endif
 	// input処理とaction処理
 	data = oprt_state->GetData();
@@ -156,6 +197,11 @@ bool Player::GetAttackFlag()
 void Player::SetSlowlyFlag(bool flag)
 {
 	slowlyFlag = flag;
+}
+
+bool Player::GetSlowlyFlag()
+{
+	return slowlyFlag;
 }
 
 float Player::GetVelocityX()

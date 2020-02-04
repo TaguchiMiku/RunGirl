@@ -4,88 +4,88 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>player-dash-a-1.png</key>
+			<key>player-run2-1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{39,0},{38,14}}</string>
+				<string>{{35,0},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{38,14}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{38,14}</string>
+				<string>{34,56}</string>
 			</dict>
 
-			<key>player-dash-a-2.png</key>
+			<key>player-run2-2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{78,0},{38,14}}</string>
+				<string>{{70,0},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{38,14}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{38,14}</string>
+				<string>{34,56}</string>
 			</dict>
 
-			<key>player-dash-a-3.png</key>
+			<key>player-run2-3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{39,15},{38,14}}</string>
+				<string>{{35,57},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{38,14}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{38,14}</string>
+				<string>{34,56}</string>
 			</dict>
 
-			<key>player-dash-a-4.png</key>
+			<key>player-run2-4.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{78,15},{38,14}}</string>
+				<string>{{70,57},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{38,14}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{38,14}</string>
+				<string>{34,56}</string>
 			</dict>
 
-			<key>player-dash-a-5.png</key>
+			<key>player-run2-5.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,15},{38,14}}</string>
+				<string>{{0,57},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{38,14}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{38,14}</string>
+				<string>{34,56}</string>
 			</dict>
 
-			<key>player-dash-a-6.png</key>
+			<key>player-run2-6.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{38,14}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{38,14}}</string>
+				<string>{{0,0},{34,56}}</string>
 				<key>sourceSize</key>
-				<string>{38,14}</string>
+				<string>{34,56}</string>
 			</dict>
 
 		</dict>
@@ -95,7 +95,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{128,32}</string>
+			<string>{128,128}</string>
 			<key>textureFileName</key>
 			<string>sprites.png</string>
 			</dict>

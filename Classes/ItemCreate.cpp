@@ -87,12 +87,14 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 			layer->addChild(fxGlow, 2);
 			fxActSpList.push_back(fxGlow);
 			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-			if (nItemSpList[listCnt] != nullptr)
+			if ((nItemSpList[listCnt] != nullptr) && (!item1->GetDeathFlag()))
 			{
+				light++;
 				player->SetAccelFlag(true);
 				item1->SetDeathFlag(true);
 				item1->setScale(0, 0);
 				score->AddScore(30);
+				score->AddLight(1);
 			}
 			break;
 		}
@@ -116,11 +118,12 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 			layer->addChild(fxGlow, 2);
 			fxActSpList.push_back(fxGlow);
 			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
-			if (hpItemSpList[listCnt] != nullptr)
+			if ((hpItemSpList[listCnt] != nullptr) && (!item2->GetDeathFlag()))
 			{
 				item2->SetDeathFlag(true);
 				item2->setScale(0, 0);
 				score->AddScore(50);
+				score->AddCandy(1);
 			}
 			break;
 		}

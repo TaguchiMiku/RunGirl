@@ -31,6 +31,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(${APP_NAME})
+include_directories(${CMAKE_SOURCE_DIR}/Classes/cricket-1.6.7/inc)
+link_directories(${CMAKE_SOURCE_DIR}/Classes/cricket-1.6.7/lib/android/ndk/${ANDROID_ABI}/debug)
+link_libraries(${CMAKE_SOURCE_DIR}/Classes/cricket-1.6.7/lib/android/ndk/${ANDROID_ABI}/debug/libck.a)
 #include(AndroidNdkModules)
 #android_ndk_import_module_cpufeatures()
 
@@ -74,6 +77,7 @@ list(APPEND GAME_SOURCE
         Classes/obj/Player.cpp
         Classes/obj/Enemy.cpp
         Classes/obj/Unit.cpp
+        Classes/obj/DashFx.cpp
         Classes/move/FallMove.cpp
         Classes/move/Falling.cpp
         Classes/move/JumpMove.cpp
@@ -94,6 +98,7 @@ list(APPEND GAME_SOURCE
         Classes/ResultScene.cpp
         Classes/item/HpItem.cpp
         Classes/item/NormalItem.cpp
+        Classes/item/FxGlow.cpp
         Classes/CameraCtl.cpp
         Classes/Score.cpp
         Classes/ui/clickUI.cpp
@@ -117,6 +122,7 @@ list(APPEND GAME_HEADER
         Classes/obj/Player.h
         Classes/obj/Enemy.h
         Classes/obj/Unit.h
+        Classes/obj/DashFx.h
         Classes/move/FallMove.h
         Classes/move/Falling.h
         Classes/move/JumpMove.h
@@ -137,6 +143,7 @@ list(APPEND GAME_HEADER
         Classes/ResultScene.h
         Classes/item/HpItem.h
         Classes/item/NormalItem.h
+        Classes/item/FxGlow.cpp
         Classes/CameraCtl.h
         Classes/Score.h
         Classes/ui/clickUI.h

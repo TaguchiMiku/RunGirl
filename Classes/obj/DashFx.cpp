@@ -1,5 +1,6 @@
 #include "DashFx.h"
 #include "../Animation/AnimCtl.h"
+#define LIMIT 1
 
 USING_NS_CC;
 
@@ -10,24 +11,27 @@ DashFx * DashFx::createDash()
 
 DashFx::DashFx()
 {
-	deathFlag = false;
-	lpAnimCtl.AddAnimation("player", "dash-a", 0.1f);
-	lpAnimCtl.AddAnimation("player", "dash-b", 0.1f);
-
-	lpAnimCtl.RunAnimation(this, "player-dash-b", -1, 0);
+	time = 0.0f;
+	this->scheduleUpdate();
 }
 
 
 DashFx::~DashFx()
 {
+	int a = 0;
 }
 
-void DashFx::SetDeathFlag(bool flag)
+void DashFx::SetAddAnim(std::string fileName)
 {
-	deathFlag = flag;
+	lpAnimCtl.AddAnimation("player", fileName, 0.1f);
+	lpAnimCtl.RunAnimation(this, "player-" + fileName, 1, 0);
 }
 
-bool DashFx::GetDeathFlag()
+void DashFx::update(float delta)
 {
-	return deathFlag;
+	time += delta;
+	if (time > LIMIT)
+	{
+		this->removeFromParentAndCleanup(true);
+	}
 }

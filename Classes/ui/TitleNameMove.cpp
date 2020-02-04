@@ -24,14 +24,14 @@ void TitleNameMove::Init(cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::L
 	setScale(scale.x, scale.y);
 	this->position = position;
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	setPosition(Vec2(visibleSize.width + 500, position.y));
+	setPosition(Vec2(position.x, visibleSize.height - this->getContentSize().height));
 	layer->addChild(this, 1);
 	this->scheduleUpdate();
 }
 
 void TitleNameMove::update(float delta)
 {
-	time += delta;
+	/*time += delta;
 	if (time >= 1 / 20 && getPosition().x >= position.x)
 	{
 		setPosition(getPosition().x - speed, getPosition().y);
@@ -39,5 +39,5 @@ void TitleNameMove::update(float delta)
 		{
 			speed--;
 		}
-	}
+	}*/
 }

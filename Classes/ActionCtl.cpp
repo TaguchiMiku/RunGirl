@@ -114,6 +114,20 @@ void ActionCtl::MoveModule(input_data data, float delta)
 		unit = static_cast<Unit*>(map.second.sprite);
 		if (CheckModule(map.second))
 		{
+			// キャラのスピードに合ったアニメーションを再生させる
+			// 今はべたで書いているが後で書き直す
+			if (map.second.action == ACT::RIGHT && unit->getName() == "Player")
+			{
+				if (unit->GetAccelFlag())
+				{
+					map.second.animName = "player-run2";
+				}
+				if (static_cast<Player*>(unit)->GetSlowlyFlag())
+				{
+					map.second.animName = "player-run-slow";
+				}
+			}
+
 			if(!unit->GetAttackFlag())
 			{
 				if (map.second.animName != animName)

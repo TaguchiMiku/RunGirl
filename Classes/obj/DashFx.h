@@ -7,10 +7,10 @@ public:
 	static DashFx* createDash();			//ÉNÉâÉXÇê∂ê¨
 	DashFx();
 	~DashFx();
-	void SetDeathFlag(bool flag);
-	bool GetDeathFlag();
+	void SetAddAnim(std::string fileName);
+	void update(float delta);
 	CREATE_FUNC(DashFx);
 private:
-	bool deathFlag;
+	float time;
 };
 

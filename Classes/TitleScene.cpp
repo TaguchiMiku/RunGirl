@@ -70,7 +70,7 @@ void TitleScene::Init()
 	titleName = TitleNameMove::create();
 	if (titleName != nullptr)
 	{
-		titleName->Init(Vec2(visibleSize.width / 2 + 32, visibleSize.height / 2), Vec2(1.05f, 1.02f), bgBackLayer);
+		titleName->Init(Vec2(visibleSize.width / 2, visibleSize.height / 2), Vec2(1.05f, 1.02f), bgBackLayer);
 	}
 
 	//クリックUI表示

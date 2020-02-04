@@ -10,6 +10,10 @@ public:
 	~Score();
 	void Init(cocos2d::Layer* layer);
 	void AddScore(int point);
+	void AddCandy(int point);
+	void AddLight(int point);
+	int GetCandy();
+	int GetLight();
 	int GetScore();
 	void DrawScore();
 	void ResetScore();
@@ -27,3 +31,5 @@ private:
 };
 
 static int score;
+static int candy;
+static int light;

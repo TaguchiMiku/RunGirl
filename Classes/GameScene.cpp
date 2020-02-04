@@ -35,7 +35,6 @@
 #include "MapCreate.h"
 #include "EnemyCreate.h"
 #include "ItemCreate.h"
-#include "obj/DashFx.h"
 //#include "sound/SoundMng.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
@@ -111,11 +110,6 @@ bool GameScene::init()
 	auto uiLayer = Layer::create();
 	this->addChild(uiLayer, UI);
 	uiLayer->setName("UI_LAYER");
-	//UI追加
-	auto hp = Sprite::create("image/Environment/gree_bar.jpg");
-	hp->setName("HP");
-	hp->setPosition(cocos2d::Vec2(260, 30));
-	uiLayer->addChild(hp, 0);
 
 	//スコア表示初期化
 	score = Score::createScore();
@@ -139,12 +133,6 @@ bool GameScene::init()
 	player = Player::create();
 	plLayer->addChild(player, PLAYER);
 
-	auto dash = DashFx::createDash();
-	dash->setPosition(Vec2(player->getPosition().x - 10, player->getPosition().y));
-	dash->setName("dash");
-	dash->setScale(1.0f, 1.0f);
-	plLayer->addChild(dash, 2);
-
 	map = MapCreate::create();
 	map->Init(bgBackLayer);
 	map->setName("mapMng");
@@ -156,27 +144,32 @@ bool GameScene::init()
 
 	//背景追加
 	auto backGround1 = BackScroll::create();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	auto scale = 1.0f;
+#else
+	auto scale = 2.0f;
+#endif
 	if (backGround1 != nullptr)
 	{
-		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
+		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.05f);
 		backSrl.emplace_back(backGround1);
 	}
 	auto backGround2 = BackScroll::create();
 	if (backGround1 != nullptr)
 	{
-		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.1f);
 		backSrl.emplace_back(backGround2);
 	}
 	auto backGround3 = BackScroll::create();
 	if (backGround3 != nullptr)
 	{
-		backGround3->Init("Clouds_2", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
+		backGround3->Init("Clouds_2", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.2f);
 		backSrl.emplace_back(backGround3);
 	}
 	auto backGround4 = BackScroll::create();
 	if (backGround1 != nullptr)
 	{
-		backGround4->Init("Clouds_1", Vec2(0, 100), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
+		backGround4->Init("Clouds_1", Vec2(0, 100), Vec2(scale, scale), bgBackLayer, 0.5f);
 		backSrl.emplace_back(backGround4);
 	}
 
@@ -186,14 +179,8 @@ bool GameScene::init()
 		attack->Init(Vec2(player->getPosition().x + 10, player->getPosition().y), Vec2(1.0f, 1.0f), plLayer);
 	}
 	
-	effect = lpEffectMng.Play("drill", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, true);
-	plLayer->addChild(effect, 0);
 	/*auto tapEfk = lpEffectMng.Play("starTap", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, false);
 	plLayer->addChild(tapEfk, 1);*/
-	if (effect != nullptr)
-	{
-		effect->setRotation3D(Vec3(0, -90.0f, 0));
-	}
 	//sound = lpSoundMng.SoundLoopPlay("Resources/sound/bgm1.ckb");
 
 	lpAnimCtl.AddAnimation("Fx", "glow", 0.05f);
@@ -263,18 +250,6 @@ void GameScene::update(float delta)
 		// プレイヤーとの判定
 		enemyCt->Update(delta, player, score);
 		itemCt->Update(delta, player, score);
-		// 走るエフェクトのON・OFF
-		if (effect != nullptr)
-		{
-			if (player->GetAccelFlag())
-			{
-				effect->setScale(20);
-			}
-			else
-			{
-				effect->setScale(0);
-			}
-		}
 	}
 }
 

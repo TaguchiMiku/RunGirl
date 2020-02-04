@@ -5,7 +5,6 @@
 #include <tuple>
 #include "Animation/AnimCtl.h"
 #include "../CameraCtl.h"
-//using Info = std::array<cocos2d::Animation*, static_cast<int>(PLAYER_ST::MAX)>;//アニメーション情報、アニメーションの種類
 
 enum TUPLE_INFO {
 	VELOCITY,
@@ -32,6 +31,7 @@ public:
 	bool GetAttackFlag()override;
 	float GetVelocityX()override;
 	void SetSlowlyFlag(bool flag);
+	bool GetSlowlyFlag();
 	CREATE_FUNC(Player);
 
 private:
@@ -42,6 +42,7 @@ private:
 	std::unique_ptr<ActionCtl> actCtl;
 	input_data data;						//入力されたデータを取り出す変数
 	float time;
+	float dashFxTime;
 	float velocityX;
 	bool slowlyFlag;
 	Score* score;

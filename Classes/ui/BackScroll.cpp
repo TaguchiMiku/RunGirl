@@ -45,7 +45,7 @@ void BackScroll::Init(std::string fileName, Vec2 position, Vec2 scale, Layer * l
 void BackScroll::update(float delta)
 {
 	backA->setPositionX(backA->getPositionX() - sclSpeed * (1 - delta));
-	backB->setPositionX(backB->getPositionX() - sclSpeed * (1 - delta));
+	backB->setPositionX(backA->getPositionX() + backA->getContentSize().width);
 
 	if (scrSetFlag) {
 		// 背景Aが画面左外に出きった場合、背景Aを背景Bの右隣に移す
