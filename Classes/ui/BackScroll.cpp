@@ -39,12 +39,21 @@ void BackScroll::Init(std::string fileName, Vec2 position, Vec2 scale, Layer * l
 	backB->setPosition(backA->getContentSize().width, 0);
 	layer->addChild(backB, 0);
 
+	//背景C
+	backC = Sprite::create();
+	backC->setTexture("image/Environment/Layers/" + fileName + ".png");
+	backC->setName("backC");
+	backC->setScale(scale.x, scale.y);
+	backC->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+	backC->setPosition(backB->getContentSize().width, 0);
+	layer->addChild(backC, 0);
+
 	this->scheduleUpdate();
 }
 
 void BackScroll::update(float delta)
 {
-	backA->setPositionX(backA->getPositionX() - sclSpeed * (1 - delta));
+	backA->setPositionX(backA->getPositionX() - sclSpeed);
 	backB->setPositionX(backA->getPositionX() + backA->getContentSize().width);
 
 	if (scrSetFlag) {

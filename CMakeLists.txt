@@ -110,6 +110,7 @@ list(APPEND GAME_SOURCE
         Classes/MapCreate.cpp
         Classes/EnemyCreate.cpp
         Classes/ItemCreate.cpp
+        Classes/sound/SoundMng.cpp
         #Classes/sound/SoundMng.cpp
      )
 list(APPEND GAME_HEADER
@@ -155,6 +156,7 @@ list(APPEND GAME_HEADER
         Classes/MapCreate.h
         Classes/EnemyCreate.h
         Classes/ItemCreate.h
+        Classes/sound/SoundMng.h
         #Classes/sound/SoundMng.h
      )
 

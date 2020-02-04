@@ -10,6 +10,7 @@
 #include "input/OPRT_Touch.h"
 #endif
 #define LOCAL_SPACE 100
+#define STRING_SIZE 35
 USING_NS_CC;
 
 ResultScene::ResultScene()
@@ -100,7 +101,7 @@ void ResultScene::Init()
 	scorePtr = Score::createScore();
 	visibleSize = Director::getInstance()->getVisibleSize();
 	scorePtr->setScale(1.5f, 1.5f);
-	scorePtr->setPosition(Vec2(visibleSize.width / 2 - 100, -300));
+	scorePtr->setPosition(Vec2(visibleSize.width / 2 - 100, -this->getPosition().y - Director::getInstance()->getVisibleSize().height + STRING_SIZE * 2 + visibleSize.height / 2 - 100));
 	this->addChild(scorePtr, 0);
 	scorePtr->Init(bgBackLayer);
 	scorePtr->DrawScore();

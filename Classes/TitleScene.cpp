@@ -3,9 +3,9 @@
 #include "ui/clickUI.h"
 #include "ui/TitleNameMove.h"
 #include "ui/BackScroll.h"
+#include "sound/SoundMng.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
-#include "sound/SoundMng.h"
 #else
 #include "input/OPRT_Touch.h"
 #endif
@@ -81,15 +81,10 @@ void TitleScene::Init()
 	}
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	oprt_state.reset(new OPRT_Key(this));
-	CkBank* bank = CkBank::newBank("Resources/sound/titleBGM.ckb");
 #else
 	oprt_state.reset(new OPRT_Touch(this));
-	CkBank* bank = CkBank::newBank("sound/titleBGM.ckb");
 #endif
-	sound = CkSound::newBankSound(bank, 0);
-	sound->setLoopCount(-1);
-	sound->play();
-	//sound = lpSoundMng.SoundLoopPlay("Resources/sound/titleBGM.ckb");
+	sound = lpSoundMng.SoundLoopPlay("sound/TitleScene.ckb");
 	this->setName("Title");
 	this->scheduleUpdate();
 }
@@ -101,8 +96,7 @@ cocos2d::Scene * TitleScene::createScene()
 
 void TitleScene::update(float flam)
 {
-	//lpSoundMng.Update();
-	CkUpdate();
+	lpSoundMng.Update();
 	auto data = oprt_state->GetData();
 	oprt_state->Update();
 
@@ -117,15 +111,11 @@ void TitleScene::update(float flam)
 	if (data.key.first != EventKeyboard::KeyCode::KEY_A &&
 		data.key.second == EventKeyboard::KeyCode::KEY_A)
 	{
-		//sound->stop();
-		//sound->destroy();
 		NextScene();
 	}
 	if (data.key.first != EventKeyboard::KeyCode::KEY_S &&
 		data.key.second == EventKeyboard::KeyCode::KEY_S)
 	{
-		//sound->stop();
-		//sound->destroy();
 		NextScene();
 	}
 	

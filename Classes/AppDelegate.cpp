@@ -26,6 +26,7 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include <cricket-1.6.7/inc/ck/ck.h>
+#include "sound/SoundMng.h"
 
 #if CK_PLATFORM_ANDROID
 #ifdef __cplusplus
@@ -68,7 +69,6 @@ static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
 AppDelegate::AppDelegate()
 {
-	//lpSoundMng.Init();
 }
 
 AppDelegate::~AppDelegate() 
@@ -106,19 +106,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         glview = GLViewImpl::createWithRect("TestProject", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
-        glview = GLViewImpl::create("TestProject");
+		glview = GLViewImpl::create("TestProject");
 #endif
         director->setOpenGLView(glview);
     }
 
     // turn on display FPS
-    director->setDisplayStats(false);
+    director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
-  //  glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
+    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
     register_all_packages();
 
 	lpEffectMng.Init();

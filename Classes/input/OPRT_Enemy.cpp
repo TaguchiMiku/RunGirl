@@ -4,6 +4,7 @@
 #include "ui/Attack.h"
 #include "Score.h"
 #include "CheckCollision.h"
+#include "sound/SoundMng.h"
 #define START_MOVE_DISTANCE 500		// “G‚ª“®‚­‚Æ”»’f‚·‚éƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
 
 USING_NS_CC;
@@ -37,6 +38,10 @@ void OPRT_Enemy::Update()
 		if (player->GetAttackFlag())
 		{
 			//UŒ‚Žž‚É“G‚É“–‚½‚Á‚½‚çŽ€–Sƒtƒ‰ƒO‚ð—§‚Ä‚é
+			if (!enemy->GetDeathFlag())
+			{
+				//lpSoundMng.OnceSoundPlay("enemy_die.ckb")
+			}
 			enemy->SetDeathFlag(true);
 			score->AddScore(100);
 			attack->setPosition(Vec2(player->getPosition().x + 50, player->getPosition().y));

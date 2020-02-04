@@ -35,11 +35,11 @@
 #include "MapCreate.h"
 #include "EnemyCreate.h"
 #include "ItemCreate.h"
-//#include "sound/SoundMng.h"
+#include "sound/SoundMng.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
 #endif
-#define COUNT_DOWN_SECOND 3		// ゲーム開始までのカウントダウン(秒)
+#define COUNT_DOWN_SECOND 0.25*3		// ゲーム開始までのカウントダウン(秒)
 
 #pragma execution_charactor_set("utf-8");
 
@@ -47,11 +47,13 @@ USING_NS_CC;
 
 GameScene::~GameScene()
 {
-	//sound->stop();
-	//sound->destroy();
 	if (_running)
 	{
 		onExit();
+	}
+	if (sound)
+	{
+		sound->destroy();
 	}
 }
 
@@ -144,17 +146,13 @@ bool GameScene::init()
 
 	//背景追加
 	auto backGround1 = BackScroll::create();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	auto scale = 1.0f;
-#else
-	auto scale = 2.0f;
-#endif
 	if (backGround1 != nullptr)
 	{
 		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.05f);
 		backSrl.emplace_back(backGround1);
 	}
-	auto backGround2 = BackScroll::create();
+	/*auto backGround2 = BackScroll::create();
 	if (backGround1 != nullptr)
 	{
 		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.1f);
@@ -171,7 +169,7 @@ bool GameScene::init()
 	{
 		backGround4->Init("Clouds_1", Vec2(0, 100), Vec2(scale, scale), bgBackLayer, 0.5f);
 		backSrl.emplace_back(backGround4);
-	}
+	}*/
 
 	attack = Attack::createAttack();
 	if (attack != nullptr)
@@ -181,12 +179,11 @@ bool GameScene::init()
 	
 	/*auto tapEfk = lpEffectMng.Play("starTap", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, false);
 	plLayer->addChild(tapEfk, 1);*/
-	//sound = lpSoundMng.SoundLoopPlay("Resources/sound/bgm1.ckb");
-
 	lpAnimCtl.AddAnimation("Fx", "glow", 0.05f);
 
 	scaleX = 1;
 	onceFlag = true;
+	onceBGMFlag = true;
 	timeUpFlag = false;
 	gameFlag = false;
 	time = 0;
@@ -202,6 +199,11 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
 void GameScene::update(float delta)
 {
+	if (onceBGMFlag)
+	{
+		sound = lpSoundMng.OnceSoundPlay("sound/GameScene.ckb");
+		onceBGMFlag = false;
+	}
 	if (!gameFlag)
 	{
 		time += delta;
@@ -212,7 +214,7 @@ void GameScene::update(float delta)
 		}
 		return;
 	}
-	//lpSoundMng.Update();
+	lpSoundMng.Update();
 	if (lpEffectMng.GetEffectManager() != nullptr)
 	{
 		lpEffectMng.GetEffectManager()->update();
@@ -239,7 +241,7 @@ void GameScene::update(float delta)
 		{
 			onceFlag = false;
 			player->SetTimeUpFlag(true);
-			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
+			lpSoundMng.OnceSoundPlay("sound/jump.ckb");
 			this->scheduleOnce(schedule_selector(GameScene::NextScene), 2.0f);
 		}
 	}

@@ -93,10 +93,11 @@ private:
 	Attack* attack;
 	float after;
 	float before;
-	//CkSound* sound;
+	CkSound* sound;
 	float scaleX;
 	bool timeUpFlag;
 	bool onceFlag;
+	bool onceBGMFlag;
 	bool gameFlag;
 	float time;
 };

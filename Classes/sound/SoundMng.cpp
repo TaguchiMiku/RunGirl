@@ -4,41 +4,32 @@ USING_NS_CC;
 
 std::unique_ptr<SoundMng, SoundMng::SoundMngDeleter> SoundMng::s_instance(new SoundMng());
 
-#if CK_PLATFORM_ANDROID
-#ifdef __cplusplus
-extern "C" {
-#endif
-JNIEXPORT void JNICALL Java_org_cocos2dx_cpp_AppActivity_initCricket(JNIEnv * env, jclass activity, jobject context)
-{
-	CkConfig config;
-	CkInit(&config);
-	CkBank* bank = CkBank::newBank("Resources/sound/bgm1.ckb", kCkPathType_FileSystem);
-	CkSound* sound = CkSound::newBankSound(bank, 0);
-	sound->setLoopCount(-1);
-	sound->play();
-}
-#ifdef __cplusplus
-}
-#endif
-#endif
-
 void SoundMng::Init()
 {
-	CkConfig config;
-	CkInit(&config);
 }
 
-void SoundMng::OnceSoundPlay(const char* filename)
+CkSound* SoundMng::OnceSoundPlay(const char* filename)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	std::string resources = "Resources/" + std::string(filename);
+	CkBank* bank = CkBank::newBank(resources.c_str());
+#else
 	CkBank* bank = CkBank::newBank(filename);
+#endif
 	CkSound* sound = CkSound::newBankSound(bank, 0);
 	sound->setLoopCount(0);
 	sound->play();
+	return sound;
 }
 
 CkSound* SoundMng::SoundLoopPlay(const char * filename)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	std::string resources = "Resources/" + std::string(filename);
+	CkBank* bank = CkBank::newBank(resources.c_str());
+#else
 	CkBank* bank = CkBank::newBank(filename);
+#endif
 	CkSound* sound = CkSound::newBankSound(bank, 0);
 	sound->setLoopCount(-1);
 	sound->play();
@@ -48,7 +39,7 @@ CkSound* SoundMng::SoundLoopPlay(const char * filename)
 void SoundMng::Update()
 {
 	CkUpdate();
-	Sleep(30);
+	//Sleep(30);
 }
 
 SoundMng::SoundMng()

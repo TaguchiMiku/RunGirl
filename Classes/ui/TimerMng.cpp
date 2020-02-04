@@ -89,7 +89,7 @@ void TimerMng::update(float delta)
 	if (time >= 1)
 	{
 		cntTime++;
-		if (cntTime < 4)
+		if (cntTime < (0.25f*4))
 		{
 			time = 0;
 			return;

@@ -14,6 +14,7 @@ public:
 private:
 	cocos2d::Sprite* backA;
 	cocos2d::Sprite* backB;
+	cocos2d::Sprite* backC;
 	bool scrSetFlag;
 	cocos2d::Vec2 visibleSize;
 	float sclSpeed;

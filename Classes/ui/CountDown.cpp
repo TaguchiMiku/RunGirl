@@ -41,7 +41,7 @@ void CountDown::update(float delta)
 		return;
 	}
 	time += delta;
-	if (time >= 1)
+	if (time >= 0.25f)
 	{
 		time = 0;
 		if (cnt >= 0)

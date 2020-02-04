@@ -5,6 +5,7 @@
 #include "obj/Player.h"
 #include "MapCreate.h"
 #include "Score.h"
+#include "sound/SoundMng.h"
 //#include "debug/_DebugConOut.h"
 
 USING_NS_CC;
@@ -86,9 +87,9 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 			lpAnimCtl.RunAnimation(fxGlow, "Fx-glow", 4, 3);
 			layer->addChild(fxGlow, 2);
 			fxActSpList.push_back(fxGlow);
-			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
 			if ((nItemSpList[listCnt] != nullptr) && (!item1->GetDeathFlag()))
 			{
+				lpSoundMng.OnceSoundPlay("sound/jump2.ckb");
 				light++;
 				player->SetAccelFlag(true);
 				item1->SetDeathFlag(true);
@@ -117,9 +118,9 @@ void ItemCreate::Update(float flam, Player* player, Score* score)
 			lpAnimCtl.RunAnimation(fxGlow, "Fx-glow", 4, 3);
 			layer->addChild(fxGlow, 2);
 			fxActSpList.push_back(fxGlow);
-			//lpSoundMng.OnceSoundPlay("Resources/sound/jump.ckb");
 			if ((hpItemSpList[listCnt] != nullptr) && (!item2->GetDeathFlag()))
 			{
+				lpSoundMng.OnceSoundPlay("sound/jump2.ckb");
 				item2->SetDeathFlag(true);
 				item2->setScale(0, 0);
 				score->AddScore(50);
