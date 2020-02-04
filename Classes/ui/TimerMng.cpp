@@ -12,7 +12,7 @@ TimerMng * TimerMng::createTimer()
 TimerMng::TimerMng()
 {
 	time = 0;
-	timer = 10;
+	timer = 90;
 	anser = 0;
 	number = 0;
 	cntTime = 0;
@@ -89,7 +89,7 @@ void TimerMng::update(float delta)
 	if (time >= 1)
 	{
 		cntTime++;
-		if (cntTime < (0.25f*4))
+		if (cntTime < 4)
 		{
 			time = 0;
 			return;

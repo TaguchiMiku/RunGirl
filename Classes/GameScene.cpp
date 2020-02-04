@@ -39,7 +39,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
 #endif
-#define COUNT_DOWN_SECOND 0.25*3		// ゲーム開始までのカウントダウン(秒)
+#define COUNT_DOWN_SECOND 3		// ゲーム開始までのカウントダウン(秒)
 
 #pragma execution_charactor_set("utf-8");
 
@@ -50,10 +50,6 @@ GameScene::~GameScene()
 	if (_running)
 	{
 		onExit();
-	}
-	if (sound)
-	{
-		sound->destroy();
 	}
 }
 
@@ -183,7 +179,6 @@ bool GameScene::init()
 
 	scaleX = 1;
 	onceFlag = true;
-	onceBGMFlag = true;
 	timeUpFlag = false;
 	gameFlag = false;
 	time = 0;
@@ -199,11 +194,6 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
 void GameScene::update(float delta)
 {
-	if (onceBGMFlag)
-	{
-		sound = lpSoundMng.OnceSoundPlay("sound/GameScene.ckb");
-		onceBGMFlag = false;
-	}
 	if (!gameFlag)
 	{
 		time += delta;

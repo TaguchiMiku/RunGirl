@@ -2,6 +2,7 @@
 #include "cocos2d.h"
 #include <array>
 
+class CkSound;
 class CountDown : public cocos2d::Sprite
 {
 public:
@@ -16,6 +17,6 @@ private:
 	float time;
 	int cnt;
 	std::array<cocos2d::Sprite*, 3> numberSpList;
-
+	CkSound* sound;
 };
 
