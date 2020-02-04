@@ -40,7 +40,7 @@ void OPRT_Enemy::Update()
 			//UŒ‚Žž‚É“G‚É“–‚½‚Á‚½‚çŽ€–Sƒtƒ‰ƒO‚ð—§‚Ä‚é
 			if (!enemy->GetDeathFlag())
 			{
-				//lpSoundMng.OnceSoundPlay("enemy_die.ckb")
+				lpSoundMng.OnceSoundPlay("sound/enemy_die.ckb");
 			}
 			enemy->SetDeathFlag(true);
 			score->AddScore(100);

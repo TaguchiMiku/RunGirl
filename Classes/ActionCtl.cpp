@@ -139,11 +139,14 @@ void ActionCtl::MoveModule(input_data data, float delta)
 					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, -1, static_cast<int>(ACT_TAG::NORMAL));
 					animName = map.second.animName;
 				}
-				if ((unit->GetActState() == ACT::IDLE && map.second.action == ACT::RIGHT) || (map.second.action != ACT::RIGHT))
+				if (map.second.action != ACT::ATTACK)
 				{
-					//現在の状態は落下中に攻撃すると落下しなくなる処理である
-					//右移動するのはIDLEか右移動のときでそれ以外は移動しないようにする必要がある
-					unit->SetActState(map.second.action);
+					if ((unit->GetActState() == ACT::IDLE && map.second.action == ACT::RIGHT) || (map.second.action != ACT::RIGHT))
+					{
+						//現在の状態は落下中に攻撃すると落下しなくなる処理である
+						//右移動するのはIDLEか右移動のときでそれ以外は移動しないようにする必要がある
+						unit->SetActState(map.second.action);
+					}
 				}
 			}
 			map.second.runAction(*map.second.sprite, map.second);

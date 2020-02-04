@@ -27,10 +27,15 @@ private:
 	std::array<cocos2d::Sprite*, 3> numberSpList;
 	std::array<cocos2d::Sprite*, 3> numberSpListL;
 	std::array<std::string, 10> numList;
-	std::array<cocos2d::Vec2, 3> rankPos;
-	std::array<cocos2d::Vec2, 3> rankPos2;
+	std::array<cocos2d::Vec2, 3> rankPos;	// キャンディー個数表示用　位のリスト
+	std::array<cocos2d::Vec2, 3> rankPos2;  // 稲妻個数表示用　位のリスト
+	cocos2d::Layer* candyLayer;
+	cocos2d::Layer* lightLayer;
+	cocos2d::Layer* scoreLayer;
+	cocos2d::Layer* clickUILayer;
 	int number;
 	int anser;
-	//CkSound* sound;
+	float time;
+	CkSound* sound;
 };
 

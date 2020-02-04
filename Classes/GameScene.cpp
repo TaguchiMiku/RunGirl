@@ -152,7 +152,7 @@ bool GameScene::init()
 		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.05f);
 		backSrl.emplace_back(backGround1);
 	}
-	/*auto backGround2 = BackScroll::create();
+	auto backGround2 = BackScroll::create();
 	if (backGround1 != nullptr)
 	{
 		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.1f);
@@ -169,7 +169,7 @@ bool GameScene::init()
 	{
 		backGround4->Init("Clouds_1", Vec2(0, 100), Vec2(scale, scale), bgBackLayer, 0.5f);
 		backSrl.emplace_back(backGround4);
-	}*/
+	}
 
 	attack = Attack::createAttack();
 	if (attack != nullptr)
