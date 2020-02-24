@@ -6,7 +6,7 @@
 USING_NS_CC;
 
 //ƒWƒƒƒ“ƒvˆ—
-bool Jumping::operator()(cocos2d::Sprite & sp, actModule & module)
+bool Jumping::operator()(actModule & module)
 {
 	auto unit = static_cast<Unit*>(module.sprite);
 	if (unit->GetJumpSpeed() > -module.jumpHeight)
@@ -18,14 +18,15 @@ bool Jumping::operator()(cocos2d::Sprite & sp, actModule & module)
 		unit->SetActState(ACT::FALL);
 		return false;
 	}
+
 	module.velocity.y = unit->GetJumpSpeed();
 	//“Vˆä‚É“–‚½‚Á‚Ä‚¢‚é
-	if (!CheckCollision()(*module.sprite, module))
+	if (!CheckCollision()(module))
 	{
 		unit->SetJumpSpeed(0);
 		unit->SetActState(ACT::FALL);
 		return false;
 	}
-	sp.setPositionY(sp.getPosition().y + module.velocity.y);
+	module.sprite->setPositionY(module.sprite->getPosition().y + module.velocity.y);
 	return true;
 }

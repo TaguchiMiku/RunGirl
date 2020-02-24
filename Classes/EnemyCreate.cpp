@@ -2,15 +2,9 @@
 #include "obj/Enemy.h"
 #include "obj/Player.h"
 #include "Score.h"
-//#include "debug/_DebugConOut.h"
-#define EN_CHAR_SIZE 30
+#define EN_CHAR_SIZE 30.0f
 
 USING_NS_CC;
-
-EnemyCreate * EnemyCreate::createEnemyC()
-{
-	return EnemyCreate::create();
-}
 
 EnemyCreate::EnemyCreate()
 {
@@ -20,10 +14,18 @@ EnemyCreate::~EnemyCreate()
 {
 }
 
+EnemyCreate * EnemyCreate::createEnemyC()
+{
+	return EnemyCreate::create();
+}
+
 void EnemyCreate::AddCreateList(cocos2d::TMXTiledMap * map, cocos2d::Vec2 tile)
 {
 	//敵スポーン座標
-	sponeList.push_back(Vec2(map->getPosition().x + tile.x * map->getTileSize().width, (map->getMapSize().height - 1 - tile.y) * map->getTileSize().height + EN_CHAR_SIZE / 2));
+	sponeList.push_back(
+		Vec2(map->getPosition().x + tile.x * map->getTileSize().width,
+			 (map->getTileSize().height + EN_CHAR_SIZE / 2.0f) * (map->getMapSize().height - 1.0f - tile.y))
+	);
 }
 
 void EnemyCreate::Push(Layer* layer)
@@ -47,7 +49,7 @@ void EnemyCreate::Update(float flam, Player* player, Score* score)
 		for (auto ene : enSpList)
 		{
 			ene->Update(flam);
-			if (player->getPosition().x - ene->getPosition().x > 1000)
+			if (player->getPosition().x - ene->getPosition().x > 1000.0f)
 			{
 				ene->SetDeathFlag(true);
 			}
@@ -63,8 +65,9 @@ void EnemyCreate::DeathCheck()
 		if (enemy->GetDeathFlag())
 		{
 			enemy->removeFromParentAndCleanup(true);
+			return true;
 		}
-		return enemy->GetDeathFlag();
+		return false;
 	});
 	enSpList.erase(death, enSpList.end());
 }

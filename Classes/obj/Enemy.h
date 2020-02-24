@@ -10,6 +10,7 @@ public:
 	Enemy();
 	~Enemy();
 	Unit* createUnit()override;
+	void Init()override;
 	void Update(float frame)override;
 	void SetTimeUpFlag(bool flag)override;
 	void SetJumpSpeed(float speed)override;

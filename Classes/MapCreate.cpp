@@ -1,21 +1,16 @@
 #include "MapCreate.h"
 #include "obj/Enemy.h"
-#include "item/HpItem.h"
-#include "item/NormalItem.h"
+#include "item/PointUpItem.h"
+#include "item/SpeedUpItem.h"
 #include "EnemyCreate.h"
-#include "ItemCreate.h"
+#include "ItemGenerate.h"
 #include "debug/_DebugConOut.h"
-#define PL_SIZE_X 34
+#define PL_SIZE_X 34.0f
 USING_NS_CC;
-
-cocos2d::Node * MapCreate::createMap()
-{
-	return MapCreate::create();
-}
 
 MapCreate::MapCreate()
 {
-	mapSize = Vec2(0, 0);
+	mapSize = Vec2(0.0f, 0.0f);
 	setMapFlag = false;
 }
 
@@ -23,40 +18,49 @@ MapCreate::~MapCreate()
 {
 }
 
+cocos2d::Node * MapCreate::createMap()
+{
+	return MapCreate::create();
+}
+
 void MapCreate::Init(cocos2d::Layer * layer)
 {
 	director = Director::getInstance();
-	auto mapA = TMXTiledMap::create("image/Environment/mapA.tmx");
-	mapA->setName("map");
-	mapA->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-	mapA->setPosition(0, 0);
-	layer->addChild(mapA, 1);
-	map.push_back(mapA);
-	auto mapB = TMXTiledMap::create("image/Environment/mapB.tmx");
-	mapB->setName("map");
-	mapB->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-	mapB->setPosition(mapA->getContentSize().width, 1000);
-	layer->addChild(mapB, 1);
-	map.push_back(mapB);
-	auto mapC = TMXTiledMap::create("image/Environment/mapC.tmx");
-	mapC->setName("map");
-	mapC->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-	mapC->setPosition(mapB->getContentSize().width, 1000);
-	layer->addChild(mapC, 1);
-	map.push_back(mapC);
+	auto MapAdd = [this](std::string name, Vec2 position, Layer* layer) 
+	{
+		auto tileMap = TMXTiledMap::create("image/Environment/" + name + ".tmx");
+		tileMap->setName("map");
+		tileMap->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+		tileMap->setPosition(position);
+		layer->addChild(tileMap, 1);
+		map.emplace(name, tileMap);
+		mapName.emplace_back(name);
+	};
+	MapAdd("mapA", Vec2(0.0f, 0.0f), layer);
+	MapAdd("mapB", Vec2(map["mapA"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapC", Vec2(map["mapB"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapD", Vec2(map["mapC"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapE", Vec2(map["mapD"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapF", Vec2(map["mapE"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapG", Vec2(map["mapF"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapH", Vec2(map["mapG"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapI", Vec2(map["mapH"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapJ", Vec2(map["mapI"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapK", Vec2(map["mapJ"]->getContentSize().width, 1000.0f), layer);
+	MapAdd("mapL", Vec2(map["mapK"]->getContentSize().width, 1000.0f), layer);
 
-	nowMap = mapA;
-	nextMap = mapB;
+	nowMap = map["mapA"];
+	nextMap = map["mapB"];
 
 	enemyNow = EnemyCreate::create();
 	enemyNow->setName("EnemyCreate");
 	layer->addChild(enemyNow, 2);
-	itemNow = ItemCreate::create();
+	itemNow = ItemGenerate::create();
 	layer->addChild(itemNow, 2);
 
 	enemyNext = EnemyCreate::create();
 	layer->addChild(enemyNext, 2);
-	itemNext = ItemCreate::create();
+	itemNext = ItemGenerate::create();
 	layer->addChild(itemNext, 2);
 
 	this->layer = layer;
@@ -69,7 +73,10 @@ void MapCreate::update(float flam)
 	{
 		return;
 	}
-	if ((director->getRunningScene()->getDefaultCamera()->getPosition().x > nextMap->getPosition().x + PL_SIZE_X / 2) && setMapFlag)
+	auto cameraPos = director->getRunningScene()->getDefaultCamera()->getPosition();
+	auto visibleSize = director->getVisibleSize();
+	auto a = nextMap->getPosition().x;
+	if ((cameraPos.x > nextMap->getPosition().x) && setMapFlag)
 	{
 		//Collision用オフセット
 		mapSize.width += nowMap->getMapSize().width;
@@ -79,18 +86,18 @@ void MapCreate::update(float flam)
 		nowMap = s;
 		setMapFlag = false;
 	}
-	if (director->getRunningScene()->getDefaultCamera()->getPosition().x > nowMap->getPosition().x + (director->getVisibleSize().width / 2) && !setMapFlag)
+	if ((cameraPos.x > (nowMap->getPosition().x + (nowMap->getMapSize().width * nowMap->getTileSize().width)) - visibleSize.width / 2.0f) && !setMapFlag)
 	{
 		//次のマップを決める
 		while (10)
 		{
-			nextMap = map[cocos2d::random(0, (int)(map.size() - 1))];
+			nextMap = map[mapName.at(cocos2d::random(0, (int)(map.size() - 1)))];
 			if (nowMap != nextMap)
 			{
 				break;
 			}
 		}
-		nextMap->setPosition(nowMap->getPositionX() + nowMap->getContentSize().width, 0);
+		nextMap->setPosition(nowMap->getPositionX() + nowMap->getContentSize().width, 0.0f);
 		//次のマップのアイテム等配置しなおし
 		ReCreate(nextMap, layer);
 		setMapFlag = true;
@@ -118,7 +125,7 @@ EnemyCreate * MapCreate::GetEnemyCt()
 	return enemyNow;
 }
 
-ItemCreate * MapCreate::GetItemCt()
+ItemGenerate * MapCreate::GetItemCt()
 {
 	return itemNow;
 }
@@ -130,11 +137,10 @@ bool MapCreate::GetMapSetFlag()
 
 void MapCreate::ReCreate(cocos2d::TMXTiledMap * map, cocos2d::Layer* layer)
 {
-	itemNow->ClearList();
 	enemyNow->ClearList();
-	for (int y = 0; y < map->getMapSize().height; y++)
+	for (float y = 0; y < map->getMapSize().height; y++)
 	{
-		for (int x = 0; x < map->getMapSize().width; x++)
+		for (float x = 0; x < map->getMapSize().width; x++)
 		{
 			auto lay = map->getLayer("ground");
 			auto tile = lay->getTileGIDAt(cocos2d::Vec2(x, y));
@@ -155,10 +161,5 @@ void MapCreate::ReCreate(cocos2d::TMXTiledMap * map, cocos2d::Layer* layer)
 	}
 	//リストをもとに配置
 	enemyNow->Push(layer);
-	itemNow->Push(layer);
-}
-
-void MapCreate::NextSet()
-{
-
+	itemNow->CreateItem(layer);
 }

@@ -1,4 +1,4 @@
-#include "SoundMng.h"
+﻿#include "SoundMng.h"
 
 USING_NS_CC;
 
@@ -39,7 +39,6 @@ CkSound* SoundMng::SoundLoopPlay(const char * filename)
 void SoundMng::Update()
 {
 	CkUpdate();
-	//Sleep(30);
 }
 
 SoundMng::SoundMng()

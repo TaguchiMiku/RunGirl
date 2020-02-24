@@ -4,42 +4,21 @@
 
 USING_NS_CC;
 
-bool CheckList::operator()(Sprite & sp, actModule & module)
+bool CheckList::operator()(actModule & module)
 {
-	if (module.sprite->getName() == "Player")
+	auto unit = static_cast<Unit*>(module.sprite);
+	for (auto black : module.blackList)
 	{
-		auto player = static_cast<Player*>(module.sprite);
-		for (auto black : module.blackList)
+		if (black == unit->GetActState())
 		{
-			if (black == player->GetActState())
-			{
-				return false;
-			}
-		}
-		for (auto white : module.whiteList)
-		{
-			if (white == player->GetActState())
-			{
-				return true;
-			}
+			return false;
 		}
 	}
-	if (module.sprite->getName() == "Enemy")
+	for (auto white : module.whiteList)
 	{
-		auto enemy = static_cast<Enemy*>(module.sprite);
-		for (auto black : module.blackList)
+		if (white == unit->GetActState())
 		{
-			if (black == enemy->GetActState())
-			{
-				return false;
-			}
-		}
-		for (auto white : module.whiteList)
-		{
-			if (white == enemy->GetActState())
-			{
-				return true;
-			}
+			return true;
 		}
 	}
 

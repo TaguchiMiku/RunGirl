@@ -5,6 +5,6 @@ struct actModule;
 struct Falling
 {
 	//—‰ºˆ—
-	bool operator()(cocos2d::Sprite& sp, actModule& module);
+	bool operator()(actModule& module);
 };
 

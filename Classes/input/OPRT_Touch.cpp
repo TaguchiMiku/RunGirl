@@ -8,7 +8,7 @@ USING_NS_CC;
 
 OPRT_Touch::OPRT_Touch()
 {
-	touchPos = { 0, 0 };
+	touchPos = { 0.0f, 0.0f };
 	windowSize = Director::getInstance()->getVisibleSize();
 
 	data.key.first = EventKeyboard::KeyCode::KEY_NONE;
@@ -23,14 +23,13 @@ OPRT_Touch::OPRT_Touch(Node * nd)
 {
 	listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [this](Touch* touch, Event* event) {
-		//lpSoundMng.OnceSoundPlay("Resources/sound/jump2.ckb");
 		touchPos = touch->getLocation();
 		lpEffectMng.Play("starTap", touchPos, 1.0f, 2, false);
-		if (touchPos.x <= Director::getInstance()->getVisibleSize().width / 2)
+		if (touchPos.x <= Director::getInstance()->getVisibleSize().width / 2.0f)
 		{
 			key = EventKeyboard::KeyCode::KEY_A;
 		}
-		if (touchPos.x >= Director::getInstance()->getVisibleSize().width / 2)
+		else
 		{
 			key = EventKeyboard::KeyCode::KEY_S;
 		}

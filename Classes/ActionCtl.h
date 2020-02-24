@@ -4,8 +4,6 @@
 #include "Animation/AnimCtl.h"
 #include "input/OPRT_State.h"
 #include <map>
-#include <array>
-#include <list>
 
 enum INPUT_DATA{
 	FIRST,

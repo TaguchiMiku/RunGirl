@@ -28,7 +28,7 @@ struct input_data {
 
 struct OPRT_State : cocos2d::Node
 {
-	~OPRT_State();
+	~OPRT_State() {};
 	
 	virtual TYPE GetType() = 0;
 	virtual void Update() = 0;

@@ -1,16 +1,17 @@
-#include "ResultScene.h"
+ï»¿#include "ResultScene.h"
 #include "GameScene.h"
 #include "ui/clickUI.h"
 #include "Score.h"
 #include "ui/BackScroll.h"
 #include "sound/SoundMng.h"
+#include "sound/SoundSafeRelese.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
 #else
 #include "input/OPRT_Touch.h"
 #endif
-#define LOCAL_SPACE 100
-#define STRING_SIZE 35
+#define LOCAL_SPACE 100.0f
+#define STRING_SIZE 35.0f
 USING_NS_CC;
 
 ResultScene::ResultScene()
@@ -25,142 +26,7 @@ ResultScene::~ResultScene()
 	{
 		onExit();
 	}
-	if (sound)
-	{
-		sound->destroy();
-	}
-}
-
-void ResultScene::Init()
-{
-	allScore = score;
-	number = 0;
-	anser = 0;
-	time = 0;
-
-	// Še“¾“_“™‚ÌƒŒƒCƒ„[
-	auto bgBackLayer = Layer::create();
-	bgBackLayer->setName("BG_BACKGROUND");
-	this->addChild(bgBackLayer, BG_BACK);
-
-	candyLayer = Layer::create();
-	candyLayer->setName("CANDY_LAYER");
-	candyLayer->setVisible(false);
-	this->addChild(candyLayer, 1);
-
-	lightLayer = Layer::create();
-	lightLayer->setName("LIGHT_LAYER");
-	lightLayer->setVisible(false);
-	this->addChild(lightLayer, 2);
-
-	scoreLayer = Layer::create();
-	scoreLayer->setName("SCORE_LAYER");
-	scoreLayer->setVisible(false);
-	this->addChild(scoreLayer, 3);
-
-	clickUILayer = Layer::create();
-	clickUILayer->setName("CLICK_UI_LAYER");
-	clickUILayer->setVisible(false);
-	this->addChild(clickUILayer, 3);
-
-	visibleSize = Director::getInstance()->getVisibleSize();
-	//”wŒi’Ç‰Á
-	auto backGround1 = BackScroll::create();
-	if (backGround1 != nullptr)
-	{
-		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
-		backSrl.emplace_back(backGround1);
-	}
-	auto backGround2 = BackScroll::create();
-	if (backGround1 != nullptr)
-	{
-		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
-		backSrl.emplace_back(backGround2);
-	}
-	// ”–‚¢•”wŒi
-	Rect rect = Rect( 0, 0, 500, 500 );
-	auto blackBG = Sprite::create();
-	blackBG->setTextureRect( rect );
-	blackBG->setColor(Color3B(0.0f, 0.0f, 0.0f));
-	blackBG->setOpacity(128);
-	blackBG->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-    this->addChild(blackBG, 0);
-	// ƒŠƒUƒ‹ƒg•¶š
-	auto result = Sprite::create("image/Environment/Result.png");
-	result->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + 200));
-	result->setScale(0.7f, 0.7f);
-	this->addChild(result, 0);
-	// ƒLƒƒƒ“ƒfƒB[ƒAƒCƒRƒ“
-	auto candy = Sprite::create("image/Sprites/item/bonus1.png");
-	candy->setPosition(Vec2(visibleSize.width / 2 - LOCAL_SPACE, visibleSize.height / 2 + 100));
-	candy->setScale(0.7f, 0.7f);
-	candyLayer->addChild(candy, 0);
-	// ˆîÈƒAƒCƒRƒ“
-	auto light = Sprite::create("image/Sprites/item/lightning.png");
-	light->setPosition(Vec2(visibleSize.width / 2 - LOCAL_SPACE, visibleSize.height / 2 + 10));
-	light->setScale(0.5f, 0.5f);
-	lightLayer->addChild(light, 0);
-	// ~•\‹L
-	auto closs1 = Sprite::create("image/Sprites/item/peke.png");
-	closs1->setPosition(Vec2(visibleSize.width / 2 - LOCAL_SPACE / 3, visibleSize.height / 2 + 100));
-	candyLayer->addChild(closs1, 0);
-	auto closs2 = Sprite::create("image/Sprites/item/peke.png");
-	closs2->setPosition(Vec2(visibleSize.width / 2 - LOCAL_SPACE / 3, visibleSize.height / 2 + 10));
-	lightLayer->addChild(closs2, 0);
-
-	//‰æ‘œ“Ç‚İ‚İi”š‰æ‘œƒŠƒXƒgj
-	for (int num = 0; num < 10; num++)
-	{
-		numList[num] = "image/Sprites/numberC/_number_0" + std::to_string(num) + ".png";
-	}
-	//•\¦‚·‚éÀ•WƒŠƒXƒg
-	for (int j = 0; j < 3; j++)
-	{
-		rankPos[j] = Vec2(visibleSize.width / 2 + STRING_SIZE + STRING_SIZE * j, visibleSize.height / 2 + 100);
-		rankPos2[j] = Vec2(visibleSize.width / 2 + STRING_SIZE + STRING_SIZE * j, visibleSize.height / 2 + 10);
-	}
-	//•`‰æ‚·‚éƒXƒvƒ‰ƒCƒgî•ñƒŠƒXƒg(1‚ÌˆÊ‚©‚ç‡‚É)
-	for (int rank = 0; rank < 3; rank++)
-	{
-		numberSpList[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
-		numberSpList[rank]->setScale(0.3f, 0.3f);
-		numberSpList[rank]->setPosition(rankPos[2 - rank]);
-		candyLayer->addChild(numberSpList[rank], 1);
-		numberSpListL[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
-		numberSpListL[rank]->setScale(0.3f, 0.3f);
-		numberSpListL[rank]->setPosition(rankPos2[2 - rank]);
-		lightLayer->addChild(numberSpListL[rank], 1);
-	}
-	ItemCount();
-	//ƒXƒRƒA•\¦
-	auto scoreSp = Sprite::create("image/Environment/Score.png");
-	scoreSp->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 - STRING_SIZE - STRING_SIZE / 2));
-	scoreSp->setScale(0.2f, 0.2f);
-	scoreLayer->addChild(scoreSp, 0);
-
-	scorePtr = Score::createScore();
-	visibleSize = Director::getInstance()->getVisibleSize();
-	scorePtr->setScale(1.5f, 1.5f);
-	scorePtr->setPosition(Vec2(visibleSize.width / 2 - STRING_SIZE * 3 + 15, -this->getPosition().y - Director::getInstance()->getVisibleSize().height + STRING_SIZE * 2 + visibleSize.height / 2 - 100));
-	scoreLayer->addChild(scorePtr, 0);
-	scorePtr->Init(scoreLayer);
-	scorePtr->DrawScore();
-
-	//ƒNƒŠƒbƒNUI•\¦
-	click = clickUI::createClick();
-	if (click != nullptr)
-	{
-		Size visibleSize = Director::getInstance()->getVisibleSize();
-		click->Init(Vec2(visibleSize.width / 2, visibleSize.height / 2 - 200), Vec2(0.5f, 0.5f), clickUILayer);
-	}
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	oprt_state.reset(new OPRT_Key(this));
-#else
-	oprt_state.reset(new OPRT_Touch(this));
-#endif
-	sound = lpSoundMng.SoundLoopPlay("sound/ResultScene.ckb");
-	this->setName("Result");
-	this->scheduleUpdate();
+	SoundSafeRelese()(sound);
 }
 
 cocos2d::Scene * ResultScene::createScene()
@@ -168,9 +34,192 @@ cocos2d::Scene * ResultScene::createScene()
 	return ResultScene::create();
 }
 
+void ResultScene::Init()
+{
+	allScore = score;
+	number = 0;
+	anser = 0;
+	time = 0.0f;
+
+	// ãƒ©ãƒ ãƒ€ã¨ç¯„å›²foræ–‡
+	// å„å¾—ç‚¹ç­‰ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼
+	auto bgBackLayer = Layer::create();
+	bgBackLayer->setName("BG_BACKGROUND");
+	this->addChild(bgBackLayer, BG_BACK);
+
+	auto LayerAdd = [this](std::string name, bool visible, float second)
+	{
+		auto layer = Layer::create();
+		layer->setName(name);
+		layer->setVisible(visible);
+		this->addChild(layer, 1);
+		resutLayer.emplace(name, std::make_pair(layer, second));
+	};
+
+	LayerAdd("RESULT_LAYER", false, 0.0f);
+	LayerAdd("CANDY_LAYER", false, 1.0f);
+	LayerAdd("LIGHT_LAYER", false, 2.0f);
+	LayerAdd("SCORE_LAYER", false, 3.0f);
+	LayerAdd("CLICK_UI_LAYER", false, 3.5f);
+
+	visibleSize = Director::getInstance()->getVisibleSize();
+	//èƒŒæ™¯è¿½åŠ 
+	auto backGround1 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround1->Init("Clouds_4", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
+		backSrl.emplace_back(backGround1);
+	}
+	auto backGround2 = BackScroll::create();
+	if (backGround1 != nullptr)
+	{
+		backGround2->Init("Clouds_3", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+		backSrl.emplace_back(backGround2);
+	}
+	// è–„ã„é»’èƒŒæ™¯
+	Rect rect = Rect( 0.0f, 0.0f, 500.0f, 500.0f );
+	auto blackBG = Sprite::create();
+	blackBG->setTextureRect( rect );
+	blackBG->setColor(Color3B(0.0f, 0.0f, 0.0f));
+	blackBG->setOpacity(128);
+	blackBG->setPosition(visibleSize.width / 2.0f, visibleSize.height / 2.0f);
+    this->addChild(blackBG, 0);
+
+	auto SpriteAdd = [this](std::string fileName, Vec2 position, Vec2 scale, Layer* layer)
+	{
+		auto sp = Sprite::create(fileName);
+		sp->setPosition(position);
+		sp->setScale(scale.x, scale.y);
+		layer->addChild(sp, 0);
+	};
+
+	// ãƒªã‚¶ãƒ«ãƒˆè¡¨ç¤ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	SpriteAdd("image/Environment/Result.png", Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f + 200.0f), Vec2(0.7f, 0.7f), resutLayer["RESULT_LAYER"].first);
+	SpriteAdd("image/Sprites/item/bonus1.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE, visibleSize.height / 2.0f + 100.0f), Vec2(0.7f, 0.7f), resutLayer["CANDY_LAYER"].first);
+	SpriteAdd("image/Sprites/item/lightning.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE, visibleSize.height / 2.0f + 10.0f), Vec2(0.5f, 0.5f), resutLayer["LIGHT_LAYER"].first);
+	SpriteAdd("image/Sprites/item/peke.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE / 3.0f, visibleSize.height / 2.0f + 100.0f), Vec2(1.0f, 1.0f), resutLayer["CANDY_LAYER"].first);
+	SpriteAdd("image/Sprites/item/peke.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE / 3.0f, visibleSize.height / 2.0f + 10.0f), Vec2(1.0f, 1.0f), resutLayer["LIGHT_LAYER"].first);
+
+	//ç”»åƒèª­ã¿è¾¼ã¿ï¼ˆæ•°å­—ç”»åƒãƒªã‚¹ãƒˆï¼‰
+	for (int num = 0; num < 10; num++)
+	{
+		numList[num] = "image/Sprites/numberC/_number_0" + std::to_string(num) + ".png";
+	}
+	//è¡¨ç¤ºã™ã‚‹åº§æ¨™ãƒªã‚¹ãƒˆ
+	for (float j = 0; j < 3.0f; j++)
+	{
+		rankPos[j] = Vec2(visibleSize.width / 2.0f + STRING_SIZE + STRING_SIZE * j, visibleSize.height / 2.0f + 100.0f);
+		rankPos2[j] = Vec2(visibleSize.width / 2.0f + STRING_SIZE + STRING_SIZE * j, visibleSize.height / 2.0f + 10.0f);
+	}
+	//æç”»ã™ã‚‹ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæƒ…å ±ãƒªã‚¹ãƒˆ(1ã®ä½ã‹ã‚‰é †ã«)
+	for (int rank = 0; rank < 3; rank++)
+	{
+		numberSpList[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
+		numberSpList[rank]->setScale(0.3f, 0.3f);
+		numberSpList[rank]->setPosition(rankPos[2 - rank]);
+		resutLayer["CANDY_LAYER"].first->addChild(numberSpList[rank], 1);
+		numberSpListL[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
+		numberSpListL[rank]->setScale(0.3f, 0.3f);
+		numberSpListL[rank]->setPosition(rankPos2[2 - rank]);
+		resutLayer["LIGHT_LAYER"].first->addChild(numberSpListL[rank], 1);
+	}
+	ItemCount();
+	//ã‚¹ã‚³ã‚¢è¡¨ç¤º
+	auto scoreSp = Sprite::create("image/Environment/Score.png");
+	scoreSp->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f - STRING_SIZE - STRING_SIZE / 2.0f));
+	scoreSp->setScale(0.2f, 0.2f);
+	resutLayer["SCORE_LAYER"].first->addChild(scoreSp, 0);
+
+	visibleSize = Director::getInstance()->getVisibleSize();
+
+	scorePtr = Score::createScore();
+	scorePtr->setScale(1.5f, 1.5f);
+	scorePtr->setPosition(Vec2(visibleSize.width / 2.0f - STRING_SIZE * 3.0f + 15.0f, -this->getPosition().y - Director::getInstance()->getVisibleSize().height + STRING_SIZE * 2.0f + visibleSize.height / 2.0f - 100.0f));
+	resutLayer["SCORE_LAYER"].first->addChild(scorePtr, 0);
+	scorePtr->Init(resutLayer["SCORE_LAYER"].first);
+	scorePtr->DrawScore();
+
+	//ã‚¯ãƒªãƒƒã‚¯UIè¡¨ç¤º
+	click = ClickUI::createClick();
+	if (click != nullptr)
+	{
+		Size visibleSize = Director::getInstance()->getVisibleSize();
+		click->Init(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f - 200.0f), Vec2(0.5f, 0.5f), resutLayer["CLICK_UI_LAYER"].first);
+	}
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	oprt_state.reset(new OPRT_Key(this));
+#else
+	oprt_state.reset(new OPRT_Touch(this));
+#endif
+
+	sound = lpSoundMng.SoundLoopPlay("sound/ResultScene.ckb");
+
+	this->setName("Result");
+	this->scheduleUpdate();
+}
+
+void ResultScene::update(float delta)
+{
+	lpSoundMng.Update();
+	oprt_state->Update();
+
+	for (auto bg : backSrl)
+	{
+		if (bg != nullptr)
+		{
+			bg->ScrBackSet(visibleSize / 2.0f);
+		}
+	}
+
+	data = oprt_state->GetData();
+	auto CheckClick = [this](EventKeyboard::KeyCode key)
+	{
+		if (data.key.first != key &&
+			data.key.second == key)
+		{
+			NextScene();
+		}
+	};
+	CheckClick(EventKeyboard::KeyCode::KEY_A);
+	CheckClick(EventKeyboard::KeyCode::KEY_S);
+
+	// çµæœã‚’é †ã«è¡¨ç¤ºã•ã›ã¦ã„ã
+	time += delta;
+	for (auto layer : resutLayer)
+	{
+		if (time > layer.second.second)
+		{
+			layer.second.first->setVisible(true);
+		}
+	}
+}
+
+// æ¬¡ã®ã‚·ãƒ¼ãƒ³ã¸é·ç§»ã•ã›ã‚‹
+bool ResultScene::NextScene()
+{
+	auto scene = TitleScene::createScene();
+	if (scene != nullptr)
+	{
+		TransitionFade* fade = TransitionFade::create(1.0f, scene, Color3B::WHITE);
+		auto director = cocos2d::Director::getInstance();
+		if (fade != nullptr)
+		{
+			director->replaceScene(fade);
+		}
+		else
+		{
+			// TransitionFadeBLã®createã§å¤±æ•—ã—ãŸå ´åˆã¯ãã®ã¾ã¾sceneã‚’replaceã™ã‚‹
+			director->replaceScene(scene);
+		}
+		return true;
+	}
+	// ã‚¢ã‚µãƒ¼ãƒˆå‡ºã™
+	return false;
+}
+
+// ã‚¢ã‚¤ãƒ†ãƒ å–å¾—æ•°ã‚’è¡¨ç¤º
 void ResultScene::ItemCount()
 {
-	// ƒAƒCƒeƒ€æ“¾”‚Ì•\¦
 	int cnt = 1;
 	anser = scorePtr->GetCandy();
 	for (auto numSp : numberSpList)
@@ -198,58 +247,3 @@ void ResultScene::ItemCount()
 	}
 }
 
-void ResultScene::update(float flam)
-{
-	lpSoundMng.Update();
-	auto data = oprt_state->GetData();
-	oprt_state->Update();
-
-	for (auto bg : backSrl)
-	{
-		if (bg != nullptr)
-		{
-			bg->ScrBackSet(visibleSize / 2);
-		}
-	}
-	// ‡‚É•\¦‚³‚¹‚Ä‚¢‚­
-	time += flam;
-	if (time > 1)
-	{
-		candyLayer->setVisible(true);
-	}
-	if (time > 2)
-	{
-		lightLayer->setVisible(true);
-	}
-	if (time > 3)
-	{
-		scoreLayer->setVisible(true);
-	}
-	if (time > 3.5f)
-	{
-		clickUILayer->setVisible(true);
-	}
-
-	if (data.key.first != EventKeyboard::KeyCode::KEY_A &&
-		data.key.second == EventKeyboard::KeyCode::KEY_A)
-	{
-		NextScene();
-	}
-	if (data.key.first != EventKeyboard::KeyCode::KEY_S &&
-		data.key.second == EventKeyboard::KeyCode::KEY_S)
-	{
-		NextScene();
-	}
-
-}
-
-void ResultScene::NextScene()
-{
-	auto scene = TitleScene::createScene();
-	TransitionFade* fade = TransitionFade::create(1.0f, scene, Color3B::WHITE);
-	if (scene != nullptr)
-	{
-		auto director = cocos2d::Director::getInstance();
-		director->replaceScene(fade);
-	}
-}

@@ -6,7 +6,7 @@ class Player;
 struct CheckCollision
 {
 	//タイルチップとの当たり判定
-	bool operator()(cocos2d::Sprite& sp, actModule& module);
+	bool operator()(actModule& module);
 private:
 	cocos2d::Director* director;
 	cocos2d::TMXTiledMap* map;

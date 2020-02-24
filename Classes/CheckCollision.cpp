@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
+bool CheckCollision::operator()(actModule& module)
 {
 	//DirectorからTMXTiledMapの情報を取得
 	director = cocos2d::Director::getInstance();
@@ -15,7 +15,12 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 	{
 		return false;
 	}
+
 	auto mapMng = (MapCreate*)director->getRunningScene()->getChildByName("BG_BACKGROUND")->getChildByName("mapMng");
+	if (mapMng == nullptr)
+	{
+		return false;
+	}
 	map = mapMng->GetMap();
 
 	//取得したTMXTiledMapの情報内のTMXLayer型のレイヤー情報を取得
@@ -24,18 +29,18 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 	uint32_t tile;
 	for (auto col : module.offset)
 	{
-		col = Vec2((floor(sp.getPosition().x - mapMng->GetMapSize().width * map->getTileSize().width) + col.x + module.velocity.x), floor(sp.getPosition().y + col.y + module.velocity.y));
+		col = Vec2((floor(module.sprite->getPosition().x - mapMng->GetMapSize().width * map->getTileSize().width) + col.x + module.velocity.x), floor(module.sprite->getPosition().y + col.y + module.velocity.y));
 		//現在の座標をマス目単位になおす
-		tileX = col.x / map->getTileSize().width;
+		tileX = static_cast<int>(col.x / map->getTileSize().width);
 		if (tileX > 0)
 		{
 			//現在のプレイヤーの座標がどのマップか判定する。その際に難マップめかが必要
 			tileX %= (int)map->getMapSize().width;
 		}
-		tileY = (map->getMapSize().height) - (col.y / map->getTileSize().height);
+		tileY = (int)(map->getMapSize().height) - (col.y / map->getTileSize().height);
 		//画面の範囲外まで移動していたら進まないようにする
-		if ((tileX < 0 || tileX >= map->getMapSize().width)
-			|| tileY < 0 || tileY >= map->getMapSize().height)
+		if ((tileX < 0 || tileX >= (int)(map->getMapSize().width))
+			|| tileY < 0 || tileY >= (int)(map->getMapSize().height))
 		{
 			if (mapMng->GetMapSetFlag() && module.action != ACT::FALL)
 			{
@@ -47,7 +52,7 @@ bool CheckCollision::operator()(cocos2d::Sprite& sp, actModule& module)
 			}
 		}
 		//引数で指定したマス目の情報をtileに入れる
-		tile = lay->getTileGIDAt(cocos2d::Vec2(tileX, tileY));
+		tile = lay->getTileGIDAt(cocos2d::Vec2((float)tileX, (float)tileY));
 		if (tile)
 		{
 			properties = map->getPropertiesForGID(tile).asValueMap();

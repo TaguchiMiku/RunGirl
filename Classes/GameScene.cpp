@@ -25,8 +25,8 @@
 #include "GameScene.h"
 #include "obj/Player.h"
 #include "obj/Enemy.h"
-#include "item/HpItem.h"
-#include "item/NormalItem.h"
+#include "item/PointUpItem.h"
+#include "item/SpeedUpItem.h"
 #include "Score.h"
 #include "ui/BackScroll.h"
 #include "ui/Attack.h"
@@ -34,12 +34,13 @@
 #include "ui/TimerMng.h"
 #include "MapCreate.h"
 #include "EnemyCreate.h"
-#include "ItemCreate.h"
+#include "ItemGenerate.h"
 #include "sound/SoundMng.h"
+#include "ResultScene.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "debug/_DebugConOut.h"
 #endif
-#define COUNT_DOWN_SECOND 3		// ゲーム開始までのカウントダウン(秒)
+#define COUNT_DOWN_SECOND 3.0f		// ゲーム開始までのカウントダウン(秒)
 
 #pragma execution_charactor_set("utf-8");
 
@@ -68,9 +69,8 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool GameScene::init()
 {
-#if (_DEBUG &&CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (_DEBUG && CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	_DebugConOut::GetInstance();
-#else
 #endif
     //////////////////////////////
     // 1. super init first
@@ -78,7 +78,6 @@ bool GameScene::init()
     {
         return false;
     }
-	this->setName("Game");
 
 	cocos2d::Size visibleSize = Director::getInstance()->getVisibleSize();
 	cocos2d::Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -98,20 +97,21 @@ bool GameScene::init()
 
 	//UI用カメラ追加
 	auto screenSize = Director::getInstance()->getWinSize();
-	auto camera = Camera::createOrthographic(screenSize.width, screenSize.height, -768, 768);
+	auto camera = Camera::createOrthographic(screenSize.width, screenSize.height, -768.0f, 768.0f);
 	this->addChild(camera);
 	camera->setCameraFlag(CameraFlag::USER1);
 	camera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
 	camera->setRotation3D(Vec3(0.0f, 0.0f, 0.0f));
 	camera->setDepth(0.0f);
+
 	//UIレイヤー
 	auto uiLayer = Layer::create();
-	this->addChild(uiLayer, UI);
 	uiLayer->setName("UI_LAYER");
+	this->addChild(uiLayer, UI);
 
 	//スコア表示初期化
 	score = Score::createScore();
-	score->setPosition(Vec2(origin.x + visibleSize.width - 200, 40));
+	score->setPosition(Vec2(origin.x + visibleSize.width - 200.0f, 40.0f));
 	score->ResetScore();
 	score->setName("Score");
 	this->addChild(score, 0);
@@ -138,58 +138,39 @@ bool GameScene::init()
 	auto tilemap = map->GetMap();
 	map->ReCreate(tilemap, plLayer);
 
-	auto a = Director::getInstance()->getRunningScene();
-
 	//背景追加
-	auto backGround1 = BackScroll::create();
-	auto scale = 1.0f;
-	if (backGround1 != nullptr)
+	auto BackGroundSet = [this](std::string fileName, Vec2 position, Vec2 scale, Layer * layer, float speed)
 	{
-		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.05f);
-		backSrl.emplace_back(backGround1);
-	}
-	auto backGround2 = BackScroll::create();
-	if (backGround1 != nullptr)
-	{
-		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.1f);
-		backSrl.emplace_back(backGround2);
-	}
-	auto backGround3 = BackScroll::create();
-	if (backGround3 != nullptr)
-	{
-		backGround3->Init("Clouds_2", Vec2(0, 0), Vec2(scale, scale), bgBackLayer, 0.2f);
-		backSrl.emplace_back(backGround3);
-	}
-	auto backGround4 = BackScroll::create();
-	if (backGround1 != nullptr)
-	{
-		backGround4->Init("Clouds_1", Vec2(0, 100), Vec2(scale, scale), bgBackLayer, 0.5f);
-		backSrl.emplace_back(backGround4);
-	}
+		auto bg = BackScroll::create();
+		if (bg != nullptr)
+		{
+			bg->Init(fileName, position, scale, layer, speed);
+			backSrl.emplace_back(bg);
+		}
+	};
+	BackGroundSet("Clouds_4", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
+	BackGroundSet("Clouds_3", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+	BackGroundSet("Clouds_2", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
+	BackGroundSet("Clouds_1", Vec2(0.0f, 100.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
 
 	attack = Attack::createAttack();
 	if (attack != nullptr)
 	{
-		attack->Init(Vec2(player->getPosition().x + 10, player->getPosition().y), Vec2(1.0f, 1.0f), plLayer);
+		attack->Init(Vec2(player->getPosition().x + 10.0f, player->getPosition().y), Vec2(1.0f, 1.0f), plLayer);
 	}
 	
 	/*auto tapEfk = lpEffectMng.Play("starTap", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, false);
 	plLayer->addChild(tapEfk, 1);*/
 	lpAnimCtl.AddAnimation("Fx", "glow", 0.05f);
 
-	scaleX = 1;
 	onceFlag = true;
 	timeUpFlag = false;
 	gameFlag = false;
-	time = 0;
+	time = 0.0f;
 
+	this->setName("Game");
 	this->scheduleUpdate();
     return true;
-}
-
-void GameScene::menuCloseCallback(Ref* pSender)
-{
-    Director::getInstance()->end();
 }
 
 void GameScene::update(float delta)
@@ -197,23 +178,26 @@ void GameScene::update(float delta)
 	if (!gameFlag)
 	{
 		time += delta;
-		if (time >= COUNT_DOWN_SECOND + 1)
+		if (time >= COUNT_DOWN_SECOND + 1.0f)
 		{
-			time = 0;
+			time = 0.0f;
 			gameFlag = true;
 		}
 		return;
 	}
+
 	lpSoundMng.Update();
 	if (lpEffectMng.GetEffectManager() != nullptr)
 	{
 		lpEffectMng.GetEffectManager()->update();
 	}
+
 	if (player == nullptr)
 	{
 		return;
 	}
 	player->Update(delta);
+
 	for (auto bg : backSrl)
 	{
 		if (bg != nullptr)
@@ -237,10 +221,10 @@ void GameScene::update(float delta)
 	}
 	if (attack != nullptr && score != nullptr)
 	{
-		enemyCt = map->GetEnemyCt();
+		enGenerate = map->GetEnemyCt();
 		itemCt = map->GetItemCt();
 		// プレイヤーとの判定
-		enemyCt->Update(delta, player, score);
+		enGenerate->Update(delta, player, score);
 		itemCt->Update(delta, player, score);
 	}
 }
@@ -248,8 +232,11 @@ void GameScene::update(float delta)
 void GameScene::NextScene(float millsecond)
 {
 	auto scene = ResultScene::createScene();
-	auto director = cocos2d::Director::getInstance();
-	director->replaceScene(scene);
+	if (scene != nullptr)
+	{
+		auto director = cocos2d::Director::getInstance();
+		director->replaceScene(scene);
+	}
 }
 
 void GameScene::visitor(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)

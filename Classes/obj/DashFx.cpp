@@ -1,6 +1,6 @@
 #include "DashFx.h"
 #include "../Animation/AnimCtl.h"
-#define LIMIT 1
+#define DASH_FX_LIMIT 1.0f
 
 USING_NS_CC;
 
@@ -11,14 +11,18 @@ DashFx * DashFx::createDash()
 
 DashFx::DashFx()
 {
-	time = 0.0f;
-	this->scheduleUpdate();
+	Init();
 }
 
 
 DashFx::~DashFx()
 {
-	int a = 0;
+}
+
+void DashFx::Init()
+{
+	time = 0.0f;
+	this->scheduleUpdate();
 }
 
 void DashFx::SetAddAnim(std::string fileName)
@@ -30,7 +34,7 @@ void DashFx::SetAddAnim(std::string fileName)
 void DashFx::update(float delta)
 {
 	time += delta;
-	if (time > LIMIT)
+	if (time > DASH_FX_LIMIT)
 	{
 		this->removeFromParentAndCleanup(true);
 	}

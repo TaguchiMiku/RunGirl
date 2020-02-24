@@ -6,6 +6,6 @@ struct actModule;
 struct Jumping
 {
 	//ƒWƒƒƒ“ƒvˆ—
-	bool operator()(cocos2d::Sprite& sp, actModule& module);
+	bool operator()(actModule& module);
 };
 

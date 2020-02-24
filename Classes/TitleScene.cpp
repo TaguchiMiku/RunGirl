@@ -4,6 +4,7 @@
 #include "ui/TitleNameMove.h"
 #include "ui/BackScroll.h"
 #include "sound/SoundMng.h"
+#include "sound/SoundSafeRelese.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
 #else
@@ -24,69 +25,7 @@ TitleScene::~TitleScene()
 	{
 		onExit();
 	}
-	if (sound)
-	{
-		sound->destroy();
-		sound = nullptr;
-	}
-}
-
-void TitleScene::Init()
-{
-	auto bgBackLayer = Layer::create();
-	bgBackLayer->setName("BG_BACKGROUND");
-	this->addChild(bgBackLayer, BG_BACK);
-
-	//背景追加
-	auto backGround1 = BackScroll::create();
-	if (backGround1 != nullptr)
-	{
-		backGround1->Init("Clouds_4", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
-		backSrl.emplace_back(backGround1);
-	}
-	auto backGround2 = BackScroll::create();
-	if (backGround1 != nullptr)
-	{
-		backGround2->Init("Clouds_3", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
-		backSrl.emplace_back(backGround2);
-	}
-	auto backGround3 = BackScroll::create();
-	if (backGround3 != nullptr)
-	{
-		backGround3->Init("Clouds_2", Vec2(0, 0), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
-		backSrl.emplace_back(backGround3);
-	}
-	auto backGround4 = BackScroll::create();
-	if (backGround1 != nullptr)
-	{
-		backGround4->Init("Clouds_1", Vec2(0, 100), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
-		backSrl.emplace_back(backGround4);
-	}
-
-
-	visibleSize = Director::getInstance()->getVisibleSize();
-
-	//タイトル表示＋演出準備
-	titleName = TitleNameMove::create();
-	if (titleName != nullptr)
-	{
-		titleName->Init(Vec2(visibleSize.width / 2, visibleSize.height / 2), Vec2(1.05f, 1.02f), bgBackLayer);
-	}
-
-	//クリックUI表示
-	click = clickUI::createClick();
-	if (click != nullptr)
-	{
-		click->Init(Vec2(visibleSize.width / 2, 100), Vec2(0.5f, 0.5f), bgBackLayer);
-	}
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	oprt_state.reset(new OPRT_Key(this));
-#else
-	oprt_state.reset(new OPRT_Touch(this));
-#endif
-	sound = lpSoundMng.SoundLoopPlay("sound/TitleScene.ckb");
-	this->setName("Title");
-	this->scheduleUpdate();
+	SoundSafeRelese()(sound);
 }
 
 cocos2d::Scene * TitleScene::createScene()
@@ -94,40 +33,100 @@ cocos2d::Scene * TitleScene::createScene()
 	return TitleScene::create();
 }
 
-void TitleScene::update(float flam)
+void TitleScene::Init()
+{
+	// レイヤー追加
+	auto bgBackLayer = Layer::create();
+	bgBackLayer->setName("BG_BACKGROUND");
+	this->addChild(bgBackLayer, BG_BACK);
+
+	//背景追加
+	auto BackGroundSet = [this](std::string fileName, Vec2 position, Vec2 scale, Layer * layer, float speed) 
+	{
+		auto bg = BackScroll::create();
+		if (bg != nullptr)
+		{
+			bg->Init(fileName, position, scale, layer, speed);
+			backSrl.emplace_back(bg);
+		}
+	};
+	BackGroundSet("Clouds_4", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
+	BackGroundSet("Clouds_3", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+	BackGroundSet("Clouds_2", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
+	BackGroundSet("Clouds_1", Vec2(0.0f, 100.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
+
+	visibleSize = Director::getInstance()->getVisibleSize();
+
+	//タイトル表示＋演出準備
+	auto titleName = TitleNameMove::create();
+	if (titleName != nullptr)
+	{
+		titleName->Init(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f), Vec2(1.05f, 1.02f), bgBackLayer);
+	}
+
+	//クリックUI表示
+	click = ClickUI::createClick();
+	if (click != nullptr)
+	{
+		click->Init(Vec2(visibleSize.width / 2.0f, 100.0f), Vec2(0.5f, 0.5f), bgBackLayer);
+	}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	oprt_state.reset(new OPRT_Key(this));
+#else
+	oprt_state.reset(new OPRT_Touch(this));
+#endif
+
+	sound = lpSoundMng.SoundLoopPlay("sound/TitleScene.ckb");
+
+	this->setName("Title");
+	this->scheduleUpdate();
+}
+
+void TitleScene::update(float delta)
 {
 	lpSoundMng.Update();
-	auto data = oprt_state->GetData();
 	oprt_state->Update();
 
 	for (auto bg : backSrl)
 	{
 		if (bg != nullptr)
 		{
-			bg->ScrBackSet(visibleSize / 2);
+			bg->ScrBackSet(visibleSize / 2.0f);
 		}
 	}
 
-	if (data.key.first != EventKeyboard::KeyCode::KEY_A &&
-		data.key.second == EventKeyboard::KeyCode::KEY_A)
+	data = oprt_state->GetData();
+	auto CheckClick = [this](EventKeyboard::KeyCode key)
 	{
-		NextScene();
-	}
-	if (data.key.first != EventKeyboard::KeyCode::KEY_S &&
-		data.key.second == EventKeyboard::KeyCode::KEY_S)
-	{
-		NextScene();
-	}
-	
+		if (data.key.first != key &&
+			data.key.second == key)
+		{
+			NextScene();
+		}
+	};
+	CheckClick(EventKeyboard::KeyCode::KEY_A);
+	CheckClick(EventKeyboard::KeyCode::KEY_S);
 }
 
-void TitleScene::NextScene()
+bool TitleScene::NextScene()
 {
 	auto scene = GameScene::createScene();
-	TransitionFadeBL* fade = TransitionFadeBL::create(1.0f, scene);
 	if (scene != nullptr)
 	{
+		TransitionFadeBL* fade = TransitionFadeBL::create(1.0f, scene);
 		auto director = cocos2d::Director::getInstance();
-		director->replaceScene(fade);
+		if (fade != nullptr)
+		{
+			director->replaceScene(fade);
+		}
+		else
+		{
+			// TransitionFadeBLのcreateで失敗した場合はそのままsceneをreplaceする
+			director->replaceScene(scene);
+		}
+		return true;
 	}
+	// アサート出す
+	return false;
 }

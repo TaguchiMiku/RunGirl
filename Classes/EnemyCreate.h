@@ -6,12 +6,13 @@ class Player;
 class Attack;
 class Score;
 class Enemy;
+
 class EnemyCreate : public cocos2d::Node
 {
 public:
-	EnemyCreate* createEnemyC();
 	EnemyCreate();
 	~EnemyCreate();
+	EnemyCreate* createEnemyC();
 
 	void AddCreateList(cocos2d::TMXTiledMap * map, cocos2d::Vec2 tile);
 	void Push(cocos2d::Layer* layer);
@@ -22,7 +23,7 @@ public:
 	CREATE_FUNC(EnemyCreate);
 private:
 	std::vector<cocos2d::Vec2> sponeList;//敵スポーン座標リスト
-	std::vector<Enemy*> enSpList;		//敵スプライトリスト
+	std::vector<Enemy*> enSpList;		 //敵スプライトリスト
 	cocos2d::Rect plRect;
 };
 

@@ -19,7 +19,8 @@ public:
 	Player();
 	~Player();
 	Unit* createUnit()override;
-	void Update(float delta)override;				//毎フレーム更新関数
+	void Init()override;
+	void Update(float delta)override;
 	void SetTimeUpFlag(bool flag)override;
 	void SetJumpSpeed(float speed)override;
 	float GetJumpSpeed()override;
@@ -45,5 +46,4 @@ private:
 	float dashFxTime;
 	float velocityX;
 	bool slowlyFlag;
-	Score* score;
 };

@@ -4,9 +4,10 @@
 class DashFx : public cocos2d::Sprite
 {
 public:
-	static DashFx* createDash();			//ÉNÉâÉXÇê∂ê¨
 	DashFx();
 	~DashFx();
+	static DashFx* createDash();
+	void Init();
 	void SetAddAnim(std::string fileName);
 	void update(float delta);
 	CREATE_FUNC(DashFx);

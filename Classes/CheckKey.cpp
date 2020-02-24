@@ -4,15 +4,7 @@
 
 USING_NS_CC;
 
-bool CheckKey::operator()(Sprite& sp, actModule& module)
+bool CheckKey::operator()(actModule& module)
 {
-	if ((module.nowKey != module.oldKey) && (module.nowKey == module.keyCode))
-	{
-		return true;
-	}
-	if ((module.nowKey == module.oldKey) && (module.nowKey == module.keyCode))
-	{
-		return true;
-	}
-	return false;
+	return (module.nowKey == module.keyCode);
 }

@@ -3,21 +3,21 @@
 
 USING_NS_CC;
 
-clickUI * clickUI::createClick()
+ClickUI * ClickUI::createClick()
 {
-	return clickUI::create();
+	return ClickUI::create();
 }
 
-clickUI::clickUI()
+ClickUI::ClickUI()
 {
 	time = 0;
 }
 
-clickUI::~clickUI()
+ClickUI::~ClickUI()
 {
 }
 
-void clickUI::Init(cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::Layer* layer)
+void ClickUI::Init(cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::Layer* layer)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	setTexture("image/Environment/pushA.png");
@@ -38,7 +38,7 @@ void clickUI::Init(cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::Layer* 
 	this->scheduleUpdate();
 }
 
-void clickUI::update(float delta)
+void ClickUI::update(float delta)
 {
 	//点滅動作
 	time += delta;

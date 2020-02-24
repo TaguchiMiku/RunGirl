@@ -3,7 +3,7 @@
 #include <list>
 
 struct actModule;
-using functionModule = std::function<bool(cocos2d::Sprite&, actModule&)>;
+using functionModule = std::function<bool(actModule&)>;
 
 enum class ACT{
 	IDLE,
@@ -22,7 +22,7 @@ struct actModule
 	cocos2d::Sprite* sprite;
 	cocos2d::Vec2 velocity;					//ベクトル
 	bool reverce;							//左右反転フラグ
-	std::string animName;							//アニメーション種類
+	std::string animName;					//アニメーション種類
 	cocos2d::EventKeyboard::KeyCode keyCode;//キーコード
 	cocos2d::EventKeyboard::KeyCode nowKey; //キーコード
 	cocos2d::EventKeyboard::KeyCode oldKey;	//キーコード

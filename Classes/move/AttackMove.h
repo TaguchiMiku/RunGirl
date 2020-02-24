@@ -5,7 +5,7 @@ struct actModule;
 struct AttackMove
 {
 	//UŒ‚ˆ—
-	bool operator()(cocos2d::Sprite& sp, actModule& module);
+	bool operator()(actModule& module);
 };
 
 

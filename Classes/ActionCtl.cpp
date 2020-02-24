@@ -85,7 +85,7 @@ void ActionCtl::MoveModule(input_data data, float delta)
 		bool rtnFlg = true;
 		for (auto actList : module.act)
 		{
-			if (!actList.operator()(*module.sprite, module))
+			if (!actList.operator()(module))
 			{
 				rtnFlg = false;
 				return rtnFlg;
@@ -149,7 +149,7 @@ void ActionCtl::MoveModule(input_data data, float delta)
 					}
 				}
 			}
-			map.second.runAction(*map.second.sprite, map.second);
+			map.second.runAction(map.second);
 			// 上記でattackFlagが書き換わるため、もう一度判断して処理する
 			if (unit->GetAttackFlag())
 			{

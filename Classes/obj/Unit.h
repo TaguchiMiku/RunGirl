@@ -5,10 +5,11 @@
 class Unit : public cocos2d::Sprite
 {
 public:
-	~Unit();
+	~Unit() {};
 	virtual void SetTimeUpFlag(bool flag) = 0;
 	virtual Unit* createUnit() = 0;
-	virtual void Update(float delta) = 0;				//毎フレーム更新関数
+	virtual void Init() = 0;
+	virtual void Update(float delta) = 0;
 	virtual void SetJumpSpeed(float speed) = 0;
 	virtual float GetJumpSpeed() = 0;
 	virtual void SetActState(ACT action) = 0;
@@ -20,10 +21,10 @@ public:
 	virtual float GetVelocityX() = 0;
 
 protected:
-	ACT nowAction;
-	float jumpSpeed;
-	bool attackFlag;
-	bool accelFlag;
-	bool timeUpFlag;
+	ACT nowAction;		// 現在の動き
+	float jumpSpeed;	// ジャンプ速度
+	bool attackFlag;	// 攻撃するフラグ
+	bool accelFlag;		// 加速するフラグ
+	bool timeUpFlag;	// タイムアップフラグ
 };
 

@@ -5,7 +5,7 @@
 #include "Score.h"
 #include "CheckCollision.h"
 #include "sound/SoundMng.h"
-#define START_MOVE_DISTANCE 500		// “G‚ª“®‚­‚Æ”»’f‚·‚éƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
+#define START_MOVE_DISTANCE 500.0f		// “G‚ª“®‚­‚Æ”»’f‚·‚éƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
 
 USING_NS_CC;
 
@@ -44,10 +44,10 @@ void OPRT_Enemy::Update()
 			}
 			enemy->SetDeathFlag(true);
 			score->AddScore(100);
-			attack->setPosition(Vec2(player->getPosition().x + 50, player->getPosition().y));
+			attack->setPosition(Vec2(player->getPosition().x + 50.0f, player->getPosition().y));
 			lpAnimCtl.RunAnimation(attack, "Fx-impact", 1, 0);
 		}
-		else
+		else if(player->getPosition().x < enemy->getPosition().x)
 		{
 			score->AddScore(-10);
 			player->SetSlowlyFlag(true);
@@ -56,11 +56,11 @@ void OPRT_Enemy::Update()
 
 	//ƒWƒƒƒ“ƒv
 	actModule actLeft;
-	actLeft.velocity = Vec2(-5, 0);
+	actLeft.velocity = Vec2(-5.0f, 0);
 	actLeft.sprite = enemy;
-	actLeft.offset.emplace_back(Vec2(-30, 15));
-	actLeft.offset.emplace_back(Vec2(-30, -14));
-	if (!CheckCollision()(*enemy, actLeft) && enemy->GetActState() == ACT::LEFT)
+	actLeft.offset.emplace_back(Vec2(-30.0f, 15.0f));
+	actLeft.offset.emplace_back(Vec2(-30.0f, -14.0f));
+	if (!CheckCollision()(actLeft) && enemy->GetActState() == ACT::LEFT)
 	{
 		jumpFlag = true;
 	}

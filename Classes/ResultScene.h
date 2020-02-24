@@ -1,25 +1,30 @@
-#pragma once
+ï»¿#pragma once
 #include "cocos2d.h"
 #include "TitleScene.h"
+#include <array>
+#include <map>
 
-class clickUI;
+class ClickUI;
 class Score;
 class BackScroll;
+
 class ResultScene : public cocos2d::Scene
 {
 public:
 	ResultScene();
 	~ResultScene();
-	void Init();
-	CREATE_FUNC(ResultScene);
 	static cocos2d::Scene* createScene();
-	void ItemCount();
-	void update(float flam);
-	void NextScene();
+	void Init();
+	void update(float delta);
+	bool NextScene();						// æ¬¡ã®ã‚·ãƒ¼ãƒ³ã¸é·ç§»ã•ã›ã‚‹
+	void ItemCount();						// ã‚¢ã‚¤ãƒ†ãƒ å–å¾—æ•°ã‚’è¡¨ç¤º
+	CREATE_FUNC(ResultScene);
 
 private:
 	std::unique_ptr<OPRT_State> oprt_state;
-	clickUI* click;
+	ClickUI* click;
+	CkSound* sound;
+	input_data data;
 	std::vector<BackScroll*> backSrl;
 	Score* scorePtr;
 	cocos2d::Size visibleSize;
@@ -27,15 +32,11 @@ private:
 	std::array<cocos2d::Sprite*, 3> numberSpList;
 	std::array<cocos2d::Sprite*, 3> numberSpListL;
 	std::array<std::string, 10> numList;
-	std::array<cocos2d::Vec2, 3> rankPos;	// ƒLƒƒƒ“ƒfƒB[ŒÂ”•\¦—p@ˆÊ‚ÌƒŠƒXƒg
-	std::array<cocos2d::Vec2, 3> rankPos2;  // ˆîÈŒÂ”•\¦—p@ˆÊ‚ÌƒŠƒXƒg
-	cocos2d::Layer* candyLayer;
-	cocos2d::Layer* lightLayer;
-	cocos2d::Layer* scoreLayer;
-	cocos2d::Layer* clickUILayer;
+	std::array<cocos2d::Vec2, 3> rankPos;	// ã‚­ãƒ£ãƒ³ãƒ‡ã‚£ãƒ¼å€‹æ•°è¡¨ç¤ºç”¨ã€€ä½ã®ãƒªã‚¹ãƒˆ
+	std::array<cocos2d::Vec2, 3> rankPos2;  // ç¨²å¦»å€‹æ•°è¡¨ç¤ºç”¨ã€€ä½ã®ãƒªã‚¹ãƒˆ
+	std::map<std::string, std::pair<cocos2d::Layer*, float>> resutLayer;
 	int number;
 	int anser;
 	float time;
-	CkSound* sound;
 };
 

@@ -4,5 +4,5 @@
 struct actModule;
 struct CheckList
 {
-	bool operator()(cocos2d::Sprite& sp, actModule& module);
+	bool operator()(actModule& module);
 };

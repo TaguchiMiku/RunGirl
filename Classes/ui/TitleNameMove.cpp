@@ -31,13 +31,14 @@ void TitleNameMove::Init(cocos2d::Vec2 position, cocos2d::Vec2 scale, cocos2d::L
 
 void TitleNameMove::update(float delta)
 {
-	/*time += delta;
+	time += delta;
 	if (time >= 1 / 20 && getPosition().x >= position.x)
 	{
 		setPosition(getPosition().x - speed, getPosition().y);
 		if (speed > 0)
 		{
-			speed--;
+			//‚·‚Á‚Æ“ü‚é“®‚«EaseIn
+			speed -= delta;
 		}
-	}*/
+	}
 }

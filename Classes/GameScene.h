@@ -30,7 +30,6 @@
 #include <memory>
 #include <vector>
 #include <utility>
-#include "ResultScene.h"
 
 //zOrderの番号を動的に変える際に順番が分からなくならないようにするために
 //enumで順番を作っておき、それで指定する
@@ -54,24 +53,21 @@ class CountDown;
 class TimerMng;
 class MapCreate;
 class EnemyCreate;
-class ItemCreate;
+class ItemGenerate;
+
 class GameScene : public cocos2d::Scene
 {
 public:
 	~GameScene();
     static cocos2d::Scene* createScene();
-
     virtual bool init();
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
-    
-    // implement the "static create()" method manually
-    CREATE_FUNC(GameScene);
 	void update(float delta);
 	void NextScene(float millsecond);
 	void visitor(cocos2d::Renderer *renderer,
 				 const cocos2d::Mat4& parentTransform,
 				 uint32_t parentFlags);
+	CREATE_FUNC(GameScene);
+
 private:
 	Player* player;
 	Enemy* enemy;
@@ -79,21 +75,12 @@ private:
 	CountDown* cntDwn;
 	MapCreate* map;
 	TimerMng* timer;
-	EnemyCreate* enemyCt;
-	ItemCreate* itemCt;
+	EnemyCreate* enGenerate;
+	ItemGenerate* itemCt;
 	efk::EffectEmitter* effect;
 	efk::EffectEmitter* tapEffect;
-
-	cocos2d::Sprite* collSpr;
-	cocos2d::Rect plRect;
-	cocos2d::Rect eneRect;
-	cocos2d::Rect atkRect;
-	cocos2d::Node* hpBar;
 	std::vector<BackScroll*> backSrl;
 	Attack* attack;
-	float after;
-	float before;
-	float scaleX;
 	bool timeUpFlag;
 	bool onceFlag;
 	bool gameFlag;

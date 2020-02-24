@@ -15,7 +15,6 @@ FxGlow::FxGlow()
 	lpAnimCtl.AddAnimation("Fx", "glow", 0.1f);
 }
 
-
 FxGlow::~FxGlow()
 {
 }
