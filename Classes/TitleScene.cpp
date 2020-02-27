@@ -61,14 +61,14 @@ void TitleScene::Init()
 	auto titleName = TitleNameMove::create();
 	if (titleName != nullptr)
 	{
-		titleName->Init(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f), Vec2(1.05f, 1.02f), bgBackLayer);
+		titleName->Init(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f), Vec2(1.5f, 1.5f), bgBackLayer);
 	}
 
 	//クリックUI表示
 	click = ClickUI::createClick();
 	if (click != nullptr)
 	{
-		click->Init(Vec2(visibleSize.width / 2.0f, 100.0f), Vec2(0.5f, 0.5f), bgBackLayer);
+		click->Init(Vec2(visibleSize.width / 2.0f, 200.0f), Vec2(1.0f, 1.0f), bgBackLayer);
 	}
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

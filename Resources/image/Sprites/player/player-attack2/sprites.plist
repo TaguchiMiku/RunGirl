@@ -7,20 +7,6 @@
 			<key>player-attack2-1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,59},{42,58}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{42,58}}</string>
-				<key>sourceSize</key>
-				<string>{42,58}</string>
-			</dict>
-
-			<key>player-attack2-2.png</key>
-			<dict>
-				<key>frame</key>
 				<string>{{0,0},{44,58}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
@@ -39,7 +25,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{64,128}</string>
+			<string>{64,64}</string>
 			<key>textureFileName</key>
 			<string>sprites.png</string>
 			</dict>

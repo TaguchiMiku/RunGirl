@@ -33,4 +33,5 @@ private:
 	cocos2d::Action* plNowAct;
 	cocos2d::Action* enNowAct;	
 	Unit* unit;
+	float time;
 };

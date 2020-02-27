@@ -30,14 +30,15 @@ bool CheckCollision::operator()(actModule& module)
 	for (auto col : module.offset)
 	{
 		col = Vec2((floor(module.sprite->getPosition().x - mapMng->GetMapSize().width * map->getTileSize().width) + col.x + module.velocity.x), floor(module.sprite->getPosition().y + col.y + module.velocity.y));
-		//現在の座標をマス目単位になおす
+		// 座標をマス目単位になおす
 		tileX = static_cast<int>(col.x / map->getTileSize().width);
 		if (tileX > 0)
 		{
-			//現在のプレイヤーの座標がどのマップか判定する。その際に難マップめかが必要
+			// 座標が何マップ目か判定する
 			tileX %= (int)map->getMapSize().width;
 		}
 		tileY = (int)(map->getMapSize().height) - (col.y / map->getTileSize().height);
+
 		//画面の範囲外まで移動していたら進まないようにする
 		if ((tileX < 0 || tileX >= (int)(map->getMapSize().width))
 			|| tileY < 0 || tileY >= (int)(map->getMapSize().height))
@@ -51,8 +52,10 @@ bool CheckCollision::operator()(actModule& module)
 				return false;
 			}
 		}
+
 		//引数で指定したマス目の情報をtileに入れる
 		tile = lay->getTileGIDAt(cocos2d::Vec2((float)tileX, (float)tileY));
+
 		if (tile)
 		{
 			properties = map->getPropertiesForGID(tile).asValueMap();
@@ -62,6 +65,7 @@ bool CheckCollision::operator()(actModule& module)
 				return false;
 			}
 		}
+
 	}
 	return true;
 }

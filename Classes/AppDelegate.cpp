@@ -25,6 +25,7 @@
 #include "AppDelegate.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "ResultScene.h"
 #include <cricket-1.6.7/inc/ck/ck.h>
 #include "sound/SoundMng.h"
 
@@ -47,10 +48,10 @@ extern "C" {
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(1024, 576);
-static cocos2d::Size smallResolutionSize  = cocos2d::Size(480,  320);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
-static cocos2d::Size largeResolutionSize  = cocos2d::Size(2048, 1536);
+////static cocos2d::Size designResolutionSize = cocos2d::Size(1024, 576);
+////static cocos2d::Size smallResolutionSize  = cocos2d::Size(480,  320);
+////static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
+////static cocos2d::Size largeResolutionSize  = cocos2d::Size(2048, 1536);
 static cocos2d::Size fullSize = cocos2d::Size(1920, 1080);
 
 AppDelegate::AppDelegate()
@@ -93,13 +94,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     // turn on display FPS
-    director->setDisplayStats(false);
+    director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
+    glview->setDesignResolutionSize(fullSize/*designResolutionSize*/.width, fullSize/*designResolutionSize*/.height, ResolutionPolicy::SHOW_ALL);
     register_all_packages();
 
 	lpEffectMng.Init();

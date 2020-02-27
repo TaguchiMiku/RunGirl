@@ -11,6 +11,8 @@
 #include "CheckList.h"
 #include "CheckCollision.h"
 //#include "debug/_DebugConOut.h"
+#define KickTime 0.5f
+
 #pragma execution_charactor_set("utf-8");
 
 USING_NS_CC;
@@ -21,6 +23,7 @@ ActionCtl::ActionCtl()
 	plNowAct = nullptr;
 	enNowAct = nullptr;
 	unit = nullptr;
+	time = 0.0f;
 }
 
 
@@ -33,10 +36,12 @@ bool ActionCtl::AddModule(std::string str, actModule& module)
 	mapAct.emplace(str, std::move(module));
 	if (str == "右移動")
 	{
+
 		mapAct[str].act.emplace_back(CheckCollision());
 		mapAct[str].act.emplace_back(CheckList());
 		mapAct[str].runAction = MoveLR();
 	}
+
 	if (str == "左移動")
 	{
 		mapAct[str].act.emplace_back(CheckCollision());
@@ -78,6 +83,7 @@ bool ActionCtl::AddModule(std::string str, actModule& module)
 
 void ActionCtl::MoveModule(input_data data, float delta)
 {
+
 	/*チェックリストを全て回しす
 	  全部true		 = trueを返す
 	  1つでもfalse	 = falseを返す*/
@@ -97,12 +103,18 @@ void ActionCtl::MoveModule(input_data data, float delta)
 	//mapに登録しているアクション分回す
 	if (unit != nullptr)
 	{
+		// 攻撃アクション時
 		if (unit->GetAttackFlag())
 		{
+			time += delta;
 			if (unit->getNumberOfRunningActionsByTag(static_cast<int>(ACT_TAG::ATTACK)) <= 0)
 			{
-				unit->stopAllActions();
-				unit->SetAttackFlag(false);
+				if (time > KickTime)
+				{
+					time = 0.0f;
+					unit->stopAllActions();
+					unit->SetAttackFlag(false);
+				}
 			}
 		}	
 	}
@@ -150,14 +162,15 @@ void ActionCtl::MoveModule(input_data data, float delta)
 				}
 			}
 			map.second.runAction(map.second);
-			// 上記でattackFlagが書き換わるため、もう一度判断して処理する
+
+			// 上記runAction関数内でattackFlagが書き換わるため、もう一度判断して処理する
 			if (unit->GetAttackFlag())
 			{
 				if (unit->getNumberOfRunningActionsByTag(static_cast<int>(ACT_TAG::ATTACK)) > 0)
 				{
 					return;
 				}
-				if ((map.second.animName == "player-attack" && animName == "player-run") || (animName != "player-attack"))
+				if ((map.second.animName == "player-attack2" && animName == "player-run") || (animName != "player-attack2"))
 				{
 					if (plNowAct != nullptr)
 					{
@@ -166,7 +179,7 @@ void ActionCtl::MoveModule(input_data data, float delta)
 				}
 				if (map.first == "攻撃")
 				{
-					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, 1, static_cast<int>(ACT_TAG::ATTACK));
+					plNowAct = lpAnimCtl.RunAnimation(map.second.sprite, map.second.animName, 0, static_cast<int>(ACT_TAG::ATTACK));
 					animName = map.second.animName;
 				}
 			}

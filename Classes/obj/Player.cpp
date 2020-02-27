@@ -62,7 +62,6 @@ void Player::Init()
 	time = 0.0f;
 	dashFxTime = 0.0f;
 	this->setName("Player");
-	//lpSoundMng.Init();
 // プラットフォーム別に入力クラス（操作の仕方）を切り替える
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	oprt_state.reset(new OPRT_Key(this));
@@ -80,6 +79,8 @@ void Player::Update(float delta)
 	{
 		return;
 	}
+
+	//TRACE("%f\n", getPositionX());
 
 	// 加速する時間
 	if (accelFlag)
@@ -110,35 +111,40 @@ void Player::Update(float delta)
 	// ダッシュエフェクト生成
 	if (nowAction == ACT::RIGHT || nowAction == ACT::ATTACK)
 	{
-		dashFxTime += delta;
-		if (!accelFlag)
+		auto dashFxSet = [](std::string animName, Vec2 position, Vec2 scale)
 		{
-			if (dashFxTime > 0.25f)
+			auto dash = DashFx::createDash();
+			dash->SetAddAnim(animName);
+			dash->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+			dash->setPosition(position);
+			dash->setScale(scale.x, scale.y);
+			auto layer = static_cast<Layer*>(Director::getInstance()->getRunningScene()->getChildByName("plLayer"));
+			layer->addChild(dash, 2);
+		};
+
+		dashFxTime += delta;
+		if (attackFlag)
+		{
+			if (dashFxTime > 0.07f)
 			{
 				dashFxTime = 0.0f;
-				auto dash = DashFx::createDash();
-				dash->SetAddAnim("dash-b");
-				dash->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-				dash->setPosition(Vec2(getPosition().x - 20.0f, getPosition().y - getContentSize().height / 2.0f - 3.0f));
-				//dash->setName("dash");//同じ名前で付けているので複数取れるから注意
-				dash->setScale(1.0f, 1.0f);
-				auto layer = static_cast<Layer*>(Director::getInstance()->getRunningScene()->getChildByName("plLayer"));
-				layer->addChild(dash, 2);
+				dashFxSet("dash-a", Vec2(getPosition().x - 30.0f, getPosition().y - getContentSize().height / 2.0f - 2), Vec2(2.0f, 2.0f));
 			}
 		}
-		if (accelFlag)
+		else if (accelFlag)
 		{
 			if (dashFxTime > 0.1f)
 			{
 				dashFxTime = 0.0f;
-				auto dash = DashFx::createDash();
-				dash->SetAddAnim("dash-a");
-				dash->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-				dash->setPosition(Vec2(getPosition().x - 20.0f, getPosition().y - getContentSize().height / 2.0f));
-				//dash->setName("dash");
-				dash->setScale(1.0f, 1.0f);
-				auto layer = static_cast<Layer*>(Director::getInstance()->getRunningScene()->getChildByName("plLayer"));
-				layer->addChild(dash, 2);
+				dashFxSet("dash-a", Vec2(getPosition().x - 20.0f, getPosition().y - getContentSize().height / 2.0f), Vec2(1.0f, 1.0f));
+			}
+		}
+		else
+		{
+			if (dashFxTime > 0.25f)
+			{
+				dashFxTime = 0.0f;
+				dashFxSet("dash-b", Vec2(getPosition().x - 20.0f, getPosition().y - getContentSize().height / 2.0f - 3.0f), Vec2(1.0f, 1.0f));
 			}
 		}
 	}

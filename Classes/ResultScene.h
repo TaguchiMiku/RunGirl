@@ -34,7 +34,7 @@ private:
 	std::array<std::string, 10> numList;
 	std::array<cocos2d::Vec2, 3> rankPos;	// キャンディー個数表示用　位のリスト
 	std::array<cocos2d::Vec2, 3> rankPos2;  // 稲妻個数表示用　位のリスト
-	std::map<std::string, std::pair<cocos2d::Layer*, float>> resutLayer;
+	std::map<std::string, std::pair<cocos2d::Layer*, float>> resultLayer;
 	int number;
 	int anser;
 	float time;

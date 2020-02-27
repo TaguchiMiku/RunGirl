@@ -39,9 +39,9 @@ private:
 	void AddActData();
 
 	std::unique_ptr<CameraCtl> cameraCtl;
-	std::unique_ptr<OPRT_State> oprt_state;	//入力クラスのメンバーを呼ぶ用のポインター
+	std::unique_ptr<OPRT_State> oprt_state;
 	std::unique_ptr<ActionCtl> actCtl;
-	input_data data;						//入力されたデータを取り出す変数
+	input_data data;	// 入力されたデータを取り出す変数
 	float time;
 	float dashFxTime;
 	float velocityX;

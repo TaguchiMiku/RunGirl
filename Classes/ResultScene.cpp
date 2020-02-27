@@ -10,8 +10,9 @@
 #else
 #include "input/OPRT_Touch.h"
 #endif
-#define LOCAL_SPACE 100.0f
-#define STRING_SIZE 35.0f
+#define LOCAL_SPACE 170.0f
+#define STRING_SIZE 60.0f
+
 USING_NS_CC;
 
 ResultScene::ResultScene()
@@ -53,7 +54,7 @@ void ResultScene::Init()
 		layer->setName(name);
 		layer->setVisible(visible);
 		this->addChild(layer, 1);
-		resutLayer.emplace(name, std::make_pair(layer, second));
+		resultLayer.emplace(name, std::make_pair(layer, second));
 	};
 
 	LayerAdd("RESULT_LAYER", false, 0.0f);
@@ -77,7 +78,7 @@ void ResultScene::Init()
 		backSrl.emplace_back(backGround2);
 	}
 	// 薄い黒背景
-	Rect rect = Rect( 0.0f, 0.0f, 500.0f, 500.0f );
+	Rect rect = Rect( 0.0f, 0.0f, 800.0f, 800.0f );
 	auto blackBG = Sprite::create();
 	blackBG->setTextureRect( rect );
 	blackBG->setColor(Color3B(0.0f, 0.0f, 0.0f));
@@ -94,11 +95,11 @@ void ResultScene::Init()
 	};
 
 	// リザルト表示用スプライト
-	SpriteAdd("image/Environment/Result.png", Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f + 200.0f), Vec2(0.7f, 0.7f), resutLayer["RESULT_LAYER"].first);
-	SpriteAdd("image/Sprites/item/bonus1.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE, visibleSize.height / 2.0f + 100.0f), Vec2(0.7f, 0.7f), resutLayer["CANDY_LAYER"].first);
-	SpriteAdd("image/Sprites/item/lightning.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE, visibleSize.height / 2.0f + 10.0f), Vec2(0.5f, 0.5f), resutLayer["LIGHT_LAYER"].first);
-	SpriteAdd("image/Sprites/item/peke.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE / 3.0f, visibleSize.height / 2.0f + 100.0f), Vec2(1.0f, 1.0f), resutLayer["CANDY_LAYER"].first);
-	SpriteAdd("image/Sprites/item/peke.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE / 3.0f, visibleSize.height / 2.0f + 10.0f), Vec2(1.0f, 1.0f), resutLayer["LIGHT_LAYER"].first);
+	SpriteAdd("image/Environment/Result.png", Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f + 300.0f), Vec2(1.0f, 1.0f), resultLayer["RESULT_LAYER"].first);
+	SpriteAdd("image/Sprites/item/bonus1.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE, visibleSize.height / 2.0f + 130.0f), Vec2(1.0f, 1.0f), resultLayer["CANDY_LAYER"].first);
+	SpriteAdd("image/Sprites/item/lightning.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE, visibleSize.height / 2.0f - 15.0f), Vec2(0.8f, 0.8f), resultLayer["LIGHT_LAYER"].first);
+	SpriteAdd("image/Sprites/item/peke.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE / 3.0f, visibleSize.height / 2.0f + 130.0f), Vec2(1.3f, 1.3f), resultLayer["CANDY_LAYER"].first);
+	SpriteAdd("image/Sprites/item/peke.png", Vec2(visibleSize.width / 2.0f - LOCAL_SPACE / 3.0f, visibleSize.height / 2.0f - 15.0f), Vec2(1.3f, 1.3f), resultLayer["LIGHT_LAYER"].first);
 
 	//画像読み込み（数字画像リスト）
 	for (int num = 0; num < 10; num++)
@@ -108,35 +109,35 @@ void ResultScene::Init()
 	//表示する座標リスト
 	for (float j = 0; j < 3.0f; j++)
 	{
-		rankPos[j] = Vec2(visibleSize.width / 2.0f + STRING_SIZE + STRING_SIZE * j, visibleSize.height / 2.0f + 100.0f);
-		rankPos2[j] = Vec2(visibleSize.width / 2.0f + STRING_SIZE + STRING_SIZE * j, visibleSize.height / 2.0f + 10.0f);
+		rankPos[j] = Vec2(visibleSize.width / 2.0f + STRING_SIZE + STRING_SIZE * j, visibleSize.height / 2.0f + 130.0f);
+		rankPos2[j] = Vec2(visibleSize.width / 2.0f + STRING_SIZE + STRING_SIZE * j, visibleSize.height / 2.0f - 15.0f);
 	}
 	//描画するスプライト情報リスト(1の位から順に)
 	for (int rank = 0; rank < 3; rank++)
 	{
 		numberSpList[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
-		numberSpList[rank]->setScale(0.3f, 0.3f);
+		numberSpList[rank]->setScale(0.5f, 0.5f);
 		numberSpList[rank]->setPosition(rankPos[2 - rank]);
-		resutLayer["CANDY_LAYER"].first->addChild(numberSpList[rank], 1);
+		resultLayer["CANDY_LAYER"].first->addChild(numberSpList[rank], 1);
 		numberSpListL[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
-		numberSpListL[rank]->setScale(0.3f, 0.3f);
+		numberSpListL[rank]->setScale(0.5f, 0.5f);
 		numberSpListL[rank]->setPosition(rankPos2[2 - rank]);
-		resutLayer["LIGHT_LAYER"].first->addChild(numberSpListL[rank], 1);
+		resultLayer["LIGHT_LAYER"].first->addChild(numberSpListL[rank], 1);
 	}
 	ItemCount();
 	//スコア表示
 	auto scoreSp = Sprite::create("image/Environment/Score.png");
 	scoreSp->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f - STRING_SIZE - STRING_SIZE / 2.0f));
-	scoreSp->setScale(0.2f, 0.2f);
-	resutLayer["SCORE_LAYER"].first->addChild(scoreSp, 0);
+	scoreSp->setScale(0.4f, 0.4f);
+	resultLayer["SCORE_LAYER"].first->addChild(scoreSp, 0);
 
 	visibleSize = Director::getInstance()->getVisibleSize();
 
 	scorePtr = Score::createScore();
-	scorePtr->setScale(1.5f, 1.5f);
-	scorePtr->setPosition(Vec2(visibleSize.width / 2.0f - STRING_SIZE * 3.0f + 15.0f, -this->getPosition().y - Director::getInstance()->getVisibleSize().height + STRING_SIZE * 2.0f + visibleSize.height / 2.0f - 100.0f));
-	resutLayer["SCORE_LAYER"].first->addChild(scorePtr, 0);
-	scorePtr->Init(resutLayer["SCORE_LAYER"].first);
+	auto diff = -(visibleSize.height - STRING_SIZE * 2);		// 補正（Scoreクラス側でずらしているため）
+	scorePtr->setPosition(Vec2(visibleSize.width / 2.0f - STRING_SIZE * 3.0f + 27.0f, diff + visibleSize.height / 2.0f - 230.0f));
+	resultLayer["SCORE_LAYER"].first->addChild(scorePtr, 0);
+	scorePtr->Init(resultLayer["SCORE_LAYER"].first, STRING_SIZE, Vec2(0.5f, 0.5f));
 	scorePtr->DrawScore();
 
 	//クリックUI表示
@@ -144,7 +145,7 @@ void ResultScene::Init()
 	if (click != nullptr)
 	{
 		Size visibleSize = Director::getInstance()->getVisibleSize();
-		click->Init(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f - 200.0f), Vec2(0.5f, 0.5f), resutLayer["CLICK_UI_LAYER"].first);
+		click->Init(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f - 300.0f), Vec2(1.0f, 1.0f), resultLayer["CLICK_UI_LAYER"].first);
 	}
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	oprt_state.reset(new OPRT_Key(this));
@@ -185,7 +186,7 @@ void ResultScene::update(float delta)
 
 	// 結果を順に表示させていく
 	time += delta;
-	for (auto layer : resutLayer)
+	for (auto layer : resultLayer)
 	{
 		if (time > layer.second.second)
 		{

@@ -22,7 +22,7 @@ Score::~Score()
 {
 }
 
-void Score::Init(cocos2d::Layer * layer)
+void Score::Init(cocos2d::Layer * layer, float strSize, Vec2 scale)
 {
 	//画像読み込み（数字画像リスト）
 	for (int num = 0; num < 10; num++)
@@ -32,13 +32,13 @@ void Score::Init(cocos2d::Layer * layer)
 	//表示する座標リスト
 	for (int j = 0; j < 6; j++)
 	{
-		rankPos[j] = Vec2(this->getPosition().x + 35 * j, this->getPosition().y + Director::getInstance()->getVisibleSize().height - STRING_SIZE * 2);
+		rankPos[j] = Vec2(this->getPosition().x + strSize * j, this->getPosition().y + Director::getInstance()->getVisibleSize().height - STRING_SIZE * 2);
 	}
 	//描画するスプライト情報リスト(1の位から順に)
 	for (int rank = 0; rank < 6; rank++)
 	{
 		numberSpList[rank] = Sprite::create("image/Sprites/numberC/_number_00.png");
-		numberSpList[rank]->setScale(0.3f, 0.3f);
+		numberSpList[rank]->setScale(scale.x, scale.y);
 		numberSpList[rank]->setPosition(rankPos[5 - rank]);
 		layer->addChild(numberSpList[rank], 1);
 	}

@@ -8,7 +8,7 @@ public:
 	static Score* createScore();			//ÉNÉâÉXÇê∂ê¨
 	Score();
 	~Score();
-	void Init(cocos2d::Layer* layer);
+	void Init(cocos2d::Layer* layer, float strSize, cocos2d::Vec2 scale);
 	void AddScore(int point);
 	void AddCandy(int point);
 	void AddLight(int point);

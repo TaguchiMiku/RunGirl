@@ -25,6 +25,7 @@
 #include "GameScene.h"
 #include "obj/Player.h"
 #include "obj/Enemy.h"
+#include "obj/KickFx.h"
 #include "item/PointUpItem.h"
 #include "item/SpeedUpItem.h"
 #include "Score.h"
@@ -115,7 +116,7 @@ bool GameScene::init()
 	score->ResetScore();
 	score->setName("Score");
 	this->addChild(score, 0);
-	score->Init(uiLayer);
+	score->Init(uiLayer, 35.0f, Vec2(0.3f, 0.3f));
 	score->DrawScore();
 
 	timer = TimerMng::createTimer();
@@ -130,6 +131,10 @@ bool GameScene::init()
 	//Player追加
 	player = Player::create();
 	plLayer->addChild(player, PLAYER);
+
+	kickFx = KickFx::createKick();
+	kickFx->Init("kick2", Vec2(0, 0), Vec2(1.0f, 1.0f), plLayer);
+	kickFx->setOpacity(0);
 
 	map = MapCreate::create();
 	map->Init(bgBackLayer);
@@ -149,9 +154,9 @@ bool GameScene::init()
 		}
 	};
 	BackGroundSet("Clouds_4", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
-	BackGroundSet("Clouds_3", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
-	BackGroundSet("Clouds_2", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
-	BackGroundSet("Clouds_1", Vec2(0.0f, 100.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
+	//BackGroundSet("Clouds_3", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+	//BackGroundSet("Clouds_2", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
+	//BackGroundSet("Clouds_1", Vec2(0.0f, 100.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
 
 	attack = Attack::createAttack();
 	if (attack != nullptr)
@@ -177,6 +182,8 @@ void GameScene::update(float delta)
 {
 	if (!gameFlag)
 	{
+		Camera* camera;
+		camera->getDefaultCamera()->setPosition3D(Vec3(player->getPosition().x + 200, player->getPosition().y, 500.0f));
 		time += delta;
 		if (time >= COUNT_DOWN_SECOND + 1.0f)
 		{
@@ -197,6 +204,7 @@ void GameScene::update(float delta)
 		return;
 	}
 	player->Update(delta);
+	kickFx->Update(player);
 
 	for (auto bg : backSrl)
 	{

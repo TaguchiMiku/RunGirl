@@ -14,5 +14,6 @@ private:
 	float time;
 	cocos2d::Vec2 position;
 	float speed;
+	bool moveFlag;
 };
 

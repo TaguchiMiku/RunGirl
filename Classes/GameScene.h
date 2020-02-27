@@ -54,6 +54,7 @@ class TimerMng;
 class MapCreate;
 class EnemyCreate;
 class ItemGenerate;
+class KickFx;
 
 class GameScene : public cocos2d::Scene
 {
@@ -81,6 +82,7 @@ private:
 	efk::EffectEmitter* tapEffect;
 	std::vector<BackScroll*> backSrl;
 	Attack* attack;
+	KickFx* kickFx;
 	bool timeUpFlag;
 	bool onceFlag;
 	bool gameFlag;
