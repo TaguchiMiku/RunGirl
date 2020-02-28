@@ -73,6 +73,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(JAVA_HOME)\include;$(JAVA_HOME)\include\win32;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -150,9 +151,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Classes\actData.cpp" />
     <ClCompile Include="..\Classes\ActionCtl.cpp" />
-    <ClCompile Include="..\Classes\actModule.cpp" />
     <ClCompile Include="..\Classes\Animation\AnimCtl.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\CameraCtl.cpp" />
@@ -169,12 +168,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GameScene.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_Enemy.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_Key.cpp" />
-    <ClCompile Include="..\Classes\input\OPRT_State.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_Touch.cpp" />
-    <ClCompile Include="..\Classes\ItemCreate.cpp" />
+    <ClCompile Include="..\Classes\ItemGenerate.cpp" />
     <ClCompile Include="..\Classes\item\FxGlow.cpp" />
-    <ClCompile Include="..\Classes\item\HpItem.cpp" />
-    <ClCompile Include="..\Classes\item\NormalItem.cpp" />
+    <ClCompile Include="..\Classes\item\PointUpItem.cpp" />
+    <ClCompile Include="..\Classes\item\SpeedUpItem.cpp" />
     <ClCompile Include="..\Classes\MapCreate.cpp" />
     <ClCompile Include="..\Classes\move\AttackMove.cpp" />
     <ClCompile Include="..\Classes\move\EnemyLR.cpp" />
@@ -185,8 +183,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\move\MoveLR.cpp" />
     <ClCompile Include="..\Classes\obj\DashFx.cpp" />
     <ClCompile Include="..\Classes\obj\Enemy.cpp" />
+    <ClCompile Include="..\Classes\obj\KickFx.cpp" />
     <ClCompile Include="..\Classes\obj\Player.cpp" />
-    <ClCompile Include="..\Classes\obj\Unit.cpp" />
     <ClCompile Include="..\Classes\ResultScene.cpp" />
     <ClCompile Include="..\Classes\Score.cpp" />
     <ClCompile Include="..\Classes\sound\SoundMng.cpp" />
@@ -200,7 +198,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Classes\actData.h" />
     <ClInclude Include="..\Classes\ActionCtl.h" />
     <ClInclude Include="..\Classes\actModule.h" />
     <ClInclude Include="..\Classes\Animation\AnimCtl.h" />
@@ -221,10 +218,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\input\OPRT_Key.h" />
     <ClInclude Include="..\Classes\input\OPRT_State.h" />
     <ClInclude Include="..\Classes\input\OPRT_Touch.h" />
-    <ClInclude Include="..\Classes\ItemCreate.h" />
+    <ClInclude Include="..\Classes\ItemGenerate.h" />
     <ClInclude Include="..\Classes\item\FxGlow.h" />
-    <ClInclude Include="..\Classes\item\HpItem.h" />
-    <ClInclude Include="..\Classes\item\NormalItem.h" />
+    <ClInclude Include="..\Classes\item\Item.h" />
+    <ClInclude Include="..\Classes\item\PointUpItem.h" />
+    <ClInclude Include="..\Classes\item\SpeedUpItem.h" />
     <ClInclude Include="..\Classes\MapCreate.h" />
     <ClInclude Include="..\Classes\move\AttackMove.h" />
     <ClInclude Include="..\Classes\move\EnemyLR.h" />
@@ -235,11 +233,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\move\MoveLR.h" />
     <ClInclude Include="..\Classes\obj\DashFx.h" />
     <ClInclude Include="..\Classes\obj\Enemy.h" />
+    <ClInclude Include="..\Classes\obj\KickFx.h" />
     <ClInclude Include="..\Classes\obj\Player.h" />
     <ClInclude Include="..\Classes\obj\Unit.h" />
     <ClInclude Include="..\Classes\ResultScene.h" />
     <ClInclude Include="..\Classes\Score.h" />
     <ClInclude Include="..\Classes\sound\SoundMng.h" />
+    <ClInclude Include="..\Classes\sound\SoundSafeRelese.h" />
     <ClInclude Include="..\Classes\TitleScene.h" />
     <ClInclude Include="..\Classes\ui\Attack.h" />
     <ClInclude Include="..\Classes\ui\BackScroll.h" />

@@ -22,9 +22,6 @@
     <Filter Include="src\check">
       <UniqueIdentifier>{b9ae4b39-78eb-4d62-af2a-dd097505525a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\mapCreate">
-      <UniqueIdentifier>{3ea7e621-d255-4b57-982b-715411cf1184}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\UI">
       <UniqueIdentifier>{55f8384f-41e7-40a1-badd-5d6b4f17ee7e}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="src\sound">
       <UniqueIdentifier>{95cf12b9-31f1-4bdb-bffd-ea19473f3978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\map&amp;objCreate">
+      <UniqueIdentifier>{3ea7e621-d255-4b57-982b-715411cf1184}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,23 +81,14 @@
     <ClCompile Include="..\Classes\ResultScene.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\actData.cpp">
-      <Filter>src\action</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\EnemyCreate.cpp">
-      <Filter>src\mapCreate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ItemCreate.cpp">
-      <Filter>src\mapCreate</Filter>
+      <Filter>src\map&amp;objCreate</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MapCreate.cpp">
-      <Filter>src\mapCreate</Filter>
+      <Filter>src\map&amp;objCreate</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Score.cpp">
       <Filter>src\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\actModule.cpp">
-      <Filter>src\action</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\move\AttackMove.cpp">
       <Filter>src\action</Filter>
@@ -138,17 +129,8 @@
     <ClCompile Include="..\Classes\input\OPRT_Key.cpp">
       <Filter>src\input</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\input\OPRT_State.cpp">
-      <Filter>src\input</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\input\OPRT_Touch.cpp">
       <Filter>src\input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\item\HpItem.cpp">
-      <Filter>src\item</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\item\NormalItem.cpp">
-      <Filter>src\item</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\obj\Enemy.cpp">
       <Filter>src\obj</Filter>
@@ -177,9 +159,6 @@
     <ClCompile Include="..\Classes\sound\SoundMng.cpp">
       <Filter>src\sound</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\obj\Unit.cpp">
-      <Filter>src\obj</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\input\OPRT_Enemy.cpp">
       <Filter>src\input</Filter>
     </ClCompile>
@@ -193,6 +172,18 @@
       <Filter>src\item</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\obj\DashFx.cpp">
+      <Filter>src\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\item\SpeedUpItem.cpp">
+      <Filter>src\item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\item\PointUpItem.cpp">
+      <Filter>src\item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ItemGenerate.cpp">
+      <Filter>src\map&amp;objCreate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\obj\KickFx.cpp">
       <Filter>src\obj</Filter>
     </ClCompile>
   </ItemGroup>
@@ -227,17 +218,11 @@
     <ClInclude Include="..\Classes\ResultScene.h">
       <Filter>src\scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\actData.h">
-      <Filter>src\action</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\EnemyCreate.h">
-      <Filter>src\mapCreate</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ItemCreate.h">
-      <Filter>src\mapCreate</Filter>
+      <Filter>src\map&amp;objCreate</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MapCreate.h">
-      <Filter>src\mapCreate</Filter>
+      <Filter>src\map&amp;objCreate</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Score.h">
       <Filter>src\UI</Filter>
@@ -290,12 +275,6 @@
     <ClInclude Include="..\Classes\input\OPRT_Touch.h">
       <Filter>src\input</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\item\HpItem.h">
-      <Filter>src\item</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\item\NormalItem.h">
-      <Filter>src\item</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\obj\Enemy.h">
       <Filter>src\obj</Filter>
     </ClInclude>
@@ -339,6 +318,24 @@
       <Filter>src\item</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\obj\DashFx.h">
+      <Filter>src\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\sound\SoundSafeRelese.h">
+      <Filter>src\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\item\SpeedUpItem.h">
+      <Filter>src\item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\item\PointUpItem.h">
+      <Filter>src\item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ItemGenerate.h">
+      <Filter>src\map&amp;objCreate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\item\Item.h">
+      <Filter>src\item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\obj\KickFx.h">
       <Filter>src\obj</Filter>
     </ClInclude>
   </ItemGroup>
