@@ -37,6 +37,7 @@ void Enemy::Init()
 	accelFlag = false;
 	attackFlag = false;
 	timeUpFlag = false;
+	bigModeFlag = false;
 	velocityX = -3.0f;
 	AddActData();
 
@@ -128,6 +129,16 @@ void Enemy::SetMoveFlag(bool flag)
 float Enemy::GetVelocityX()
 {
 	return velocityX;
+}
+
+void Enemy::SetBigModeFlag(bool flag)
+{
+	bigModeFlag = flag;
+}
+
+bool Enemy::GetBigModeFlag()
+{
+	return bigModeFlag;
 }
 
 void Enemy::AddActData()

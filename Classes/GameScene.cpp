@@ -154,9 +154,9 @@ bool GameScene::init()
 		}
 	};
 	BackGroundSet("Clouds_4", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.05f);
-	//BackGroundSet("Clouds_3", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
-	//BackGroundSet("Clouds_2", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
-	//BackGroundSet("Clouds_1", Vec2(0.0f, 100.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
+	BackGroundSet("Clouds_3", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.1f);
+	BackGroundSet("Clouds_2", Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.2f);
+	BackGroundSet("Clouds_1", Vec2(0.0f, 100.0f), Vec2(1.0f, 1.0f), bgBackLayer, 0.5f);
 
 	attack = Attack::createAttack();
 	if (attack != nullptr)
@@ -164,8 +164,6 @@ bool GameScene::init()
 		attack->Init(Vec2(player->getPosition().x + 10.0f, player->getPosition().y), Vec2(1.0f, 1.0f), plLayer);
 	}
 	
-	/*auto tapEfk = lpEffectMng.Play("starTap", Vec2(player->getPosition().x + 20, player->getPosition().y - 110), 20, 1.0f, false);
-	plLayer->addChild(tapEfk, 1);*/
 	lpAnimCtl.AddAnimation("Fx", "glow", 0.05f);
 
 	onceFlag = true;
@@ -182,8 +180,8 @@ void GameScene::update(float delta)
 {
 	if (!gameFlag)
 	{
-		Camera* camera;
-		camera->getDefaultCamera()->setPosition3D(Vec3(player->getPosition().x + 200, player->getPosition().y, 500.0f));
+		//Camera* camera;
+		//camera->getDefaultCamera()->setPosition3D(Vec3(player->getPosition().x + 200, player->getPosition().y, 500.0f));
 		time += delta;
 		if (time >= COUNT_DOWN_SECOND + 1.0f)
 		{

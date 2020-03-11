@@ -14,9 +14,6 @@ private:
 	cocos2d::Vec2 pos;
 	cocos2d::Size visibleSize;
 	Player* player;
-
-	int tileX;
-	int tileY;
 	cocos2d::ValueMap properties;
 };
 

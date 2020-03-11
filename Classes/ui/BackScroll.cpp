@@ -20,56 +20,38 @@ BackScroll::~BackScroll()
 
 void BackScroll::Init(std::string fileName, Vec2 position, Vec2 scale, Layer * layer, float speed)
 {
-	layer->addChild(this, 0);
 	sclSpeed = speed;
 	//背景A
-	backA = Sprite::create();
-	backA->setTexture("image/Environment/Layers/" + fileName + ".png");
-	backA->setName("backA");
+	backA = Sprite::create("image/Environment/Layers/Clouds_4_2.png"/* + fileName + ".png"*/);
 	backA->setScale(scale.x, scale.y);
 	backA->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 	backA->setPosition(0, 0);
 	layer->addChild(backA, 0);
-
 	//背景B
-	backB = Sprite::create();
-	backB->setTexture("image/Environment/Layers/" + fileName + ".png");
-	backB->setName("backB");
+	backB = Sprite::create("image/Environment/Layers/Clouds_4_2.png"/* + fileName + ".png"*/);
 	backB->setScale(scale.x, scale.y);
 	backB->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-	backB->setPosition(backA->getContentSize().width, 0);
+	backB->setPosition(backA->getContentSize().width / 2.0f, 0);
 	layer->addChild(backB, 0);
 
+	layer->addChild(this, 0);
 	this->scheduleUpdate();
 }
 
 void BackScroll::update(float delta)
 {
-	/*backA->setPositionX(backA->getPositionX() - sclSpeed);
-	backB->setPositionX(backA->getPositionX() + backA->getContentSize().width);*/
-
-	//TRACE("%f\n", backA->getPositionX());
-	//TRACE("%f\n", backB->getPositionX());
-
-	if (scrSetFlag) {
-		// 背景Aが画面左外に出きった場合、背景Aを背景Bの右隣に移す
-		backA->setPositionX(backB->getPositionX() + backB->getContentSize().width);
-		TRACE("移動開始\n");
-		
-		// 背景AとBの変数を入れ替える
-		auto s = backB;
-		backB = backA;
-		backA = s;
-		scrSetFlag = false;
-	}
+	backA->setPositionX(backA->getPositionX() - sclSpeed);
+	backB->setPositionX(backB->getPositionX() - sclSpeed);
 }
 
 void BackScroll::ScrBackSet(Vec2 position)
 {
-	TRACE("%f\n", backB->getPositionX()-(position.x - visibleSize.x / 2));
-	if (backB->getPositionX() < position.x - visibleSize.x / 2)
+	if (position.x > (backA->getPositionX() + backA->getContentSize().width))
 	{
-		TRACE("切り替えスイッチON\n");
-		scrSetFlag = true;
+		backA->setPositionX(backB->getPositionX() + backB->getContentSize().width / 2.0f);
+	}
+	if (position.x > (backB->getPositionX() + backB->getContentSize().width))
+	{
+		backB->setPositionX(backA->getPositionX() + backA->getContentSize().width / 2.0f);
 	}
 }

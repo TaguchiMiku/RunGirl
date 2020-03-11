@@ -5,6 +5,7 @@
 
 class EnemyCreate;
 class ItemGenerate;
+class StageObjCreate;
 class MapCreate : public cocos2d::Node
 {
 public:
@@ -20,13 +21,14 @@ public:
 	ItemGenerate* GetItemCt();
 	bool GetMapSetFlag();
 
+	void PutSprite(cocos2d::TMXTiledMap* map);
 	void ReCreate(cocos2d::TMXTiledMap* map, cocos2d::Layer* layer);
 	CREATE_FUNC(MapCreate);
 private:
-	cocos2d::TMXTiledMap* nowMap;
-	cocos2d::TMXTiledMap* nextMap;
+	cocos2d::TMXTiledMap* nowMap;		// 現在表示されているマップ
+	cocos2d::TMXTiledMap* nextMap;		// 次に表示する予定のマップ
 	std::map<std::string, cocos2d::TMXTiledMap*> map;
-	std::vector<std::string> mapName;
+	std::vector<std::string> mapName;	// マップの登録名前リスト
 	cocos2d::Size mapSize;
 	cocos2d::Director* director;
 	EnemyCreate* enemyNow;
@@ -34,6 +36,7 @@ private:
 	EnemyCreate* enemyNext;
 	ItemGenerate* itemNext;
 	bool setMapFlag;
+	bool setObjFlag;
 	cocos2d::Layer* layer;
 };
 

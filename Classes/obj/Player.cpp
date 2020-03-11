@@ -59,8 +59,10 @@ void Player::Init()
 	attackFlag = false;
 	timeUpFlag = false;
 	slowlyFlag = false;
+	bigModeFlag = false;
 	time = 0.0f;
 	dashFxTime = 0.0f;
+	candyCnt = 0;
 	this->setName("Player");
 // プラットフォーム別に入力クラス（操作の仕方）を切り替える
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -81,12 +83,12 @@ void Player::Update(float delta)
 	}
 
 	//TRACE("%f\n", getPositionX());
-
+	auto score = static_cast<Score*>(Director::getInstance()->getRunningScene()->getChildByName("Score"));
 	// 加速する時間
-	if (accelFlag)
+	if (accelFlag && !bigModeFlag)
 	{
-		auto score = static_cast<Score*>(Director::getInstance()->getRunningScene()->getChildByName("Score"));
 		score->AddScore(50);
+
 		time += delta;
 		velocityX = 10.0f;
 		if (time >= 3.0f)
@@ -96,7 +98,7 @@ void Player::Update(float delta)
 			accelFlag = false;
 		}
 	}
-	if (slowlyFlag)
+	if (slowlyFlag && !bigModeFlag)
 	{
 		time += delta;
 		velocityX = 2.0f;
@@ -105,6 +107,27 @@ void Player::Update(float delta)
 			time = 0.0f;
 			velocityX = 5.0f;
 			slowlyFlag = false;
+		}
+	}
+
+	if (((score->GetCandy() - candyCnt) % 20 == 0) && (score->GetCandy() != 0) && (!bigModeFlag))
+	{
+		setScale(3.0f, 3.0f);
+		setPosition(Vec2(getPosition().x, getPosition().y + (getContentSize().height / 2.0f * 3)));
+		bigModeFlag = true;
+	}
+	if (bigModeFlag)
+	{
+		candyCnt = score->GetCandy();
+		time += delta;
+		velocityX = 20.0f;
+		if (time >= 7.0f)
+		{
+			TRACE("巨大化終了\n");
+			time = 0.0f;
+			velocityX = 5.0f;
+			setScale(1.0f, 1.0f);
+			bigModeFlag = false;
 		}
 	}
 
@@ -150,6 +173,7 @@ void Player::Update(float delta)
 	}
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	//DEBUG_DrawRect("plBox", getPosition(), Vec2(-16.0f * 3.0f, 22.0f * 3.0f + 4.0f), Vec2(17.0f * 3.0f, -27.0f * 3.0f + 4.0f), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
 	//DEBUG_DrawRect("plBox", getPosition(), Vec2(-16.0f, 22.0f), Vec2(17.0f, -27.0f), Color4F(1.0f, 1.0f, 1.0f, 1.0f));
 #endif
 	// input処理とaction処理
@@ -204,6 +228,16 @@ void Player::SetAttackFlag(bool flag)
 bool Player::GetAttackFlag()
 {
 	return attackFlag;
+}
+
+void Player::SetBigModeFlag(bool flag)
+{
+	bigModeFlag = flag;
+}
+
+bool Player::GetBigModeFlag()
+{
+	return bigModeFlag;
 }
 
 void Player::SetSlowlyFlag(bool flag)

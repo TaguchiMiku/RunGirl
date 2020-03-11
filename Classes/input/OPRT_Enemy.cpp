@@ -35,7 +35,7 @@ void OPRT_Enemy::Update()
 
 	if (plRect.intersectsRect(enRect))
 	{
-		if (player->GetAttackFlag())
+		if (player->GetAttackFlag() || player->GetBigModeFlag())
 		{
 			//UŒ‚Žž‚É“G‚É“–‚½‚Á‚½‚çŽ€–Sƒtƒ‰ƒO‚ð—§‚Ä‚é
 			if (!enemy->GetDeathFlag())

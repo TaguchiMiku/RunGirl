@@ -5,6 +5,8 @@
 #include "ui/BackScroll.h"
 #include "sound/SoundMng.h"
 #include "sound/SoundSafeRelese.h"
+
+#include "Glass.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "input/OPRT_Key.h"
 #else
@@ -70,6 +72,9 @@ void TitleScene::Init()
 	{
 		click->Init(Vec2(visibleSize.width / 2.0f, 200.0f), Vec2(1.0f, 1.0f), bgBackLayer);
 	}
+
+	auto glass = Glass::create();
+	this->addChild(glass, 0);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	oprt_state.reset(new OPRT_Key(this));

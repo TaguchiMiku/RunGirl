@@ -186,6 +186,12 @@
     <ClCompile Include="..\Classes\obj\KickFx.cpp">
       <Filter>src\obj</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Glass.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StageObjCreate.cpp">
+      <Filter>src\map&amp;objCreate</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -337,6 +343,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\obj\KickFx.h">
       <Filter>src\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Glass.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StageObjCreate.h">
+      <Filter>src\map&amp;objCreate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,8 @@ public:
 	void SetAttackFlag(bool flag)override;
 	bool GetAttackFlag()override;
 	float GetVelocityX()override;
+	void SetBigModeFlag(bool flag)override;
+	bool GetBigModeFlag()override;
 	void SetDeathFlag(bool flag);
 	bool GetDeathFlag();
 	void SetMoveFlag(bool flag);

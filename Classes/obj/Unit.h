@@ -19,6 +19,8 @@ public:
 	virtual void SetAttackFlag(bool flag) = 0;
 	virtual bool GetAttackFlag() = 0;
 	virtual float GetVelocityX() = 0;
+	virtual void SetBigModeFlag(bool flag) = 0;
+	virtual bool GetBigModeFlag() = 0;
 
 protected:
 	ACT nowAction;		// 現在の動き
@@ -26,5 +28,6 @@ protected:
 	bool attackFlag;	// 攻撃するフラグ
 	bool accelFlag;		// 加速するフラグ
 	bool timeUpFlag;	// タイムアップフラグ
+	bool bigModeFlag;	// 巨大化用フラグ
 };
 

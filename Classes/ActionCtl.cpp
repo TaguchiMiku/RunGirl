@@ -124,10 +124,25 @@ void ActionCtl::MoveModule(input_data data, float delta)
 		map.second.nowKey = data.key.first;
 		map.second.oldKey = data.key.second;
 		unit = static_cast<Unit*>(map.second.sprite);
+
+		if (unit->getName() == "Player")
+		{
+			if (unit->GetBigModeFlag())
+			{
+				int cnt = 0;
+				auto offset_ptr = map.second.offset.begin();
+				for (auto offset : map.second.offset)
+				{
+					// 4.0fは3倍にした際に生じたずれの補正数値である
+					(*offset_ptr) = Vec2(offset.x * 3.0f, offset.y * 3.0f + 4.0f);
+					offset_ptr++;
+				}
+			}
+		}
+
 		if (CheckModule(map.second))
 		{
 			// キャラのスピードに合ったアニメーションを再生させる
-			// 今はべたで書いているが後で書き直す
 			if (map.second.action == ACT::RIGHT && unit->getName() == "Player")
 			{
 				if (unit->GetAccelFlag())

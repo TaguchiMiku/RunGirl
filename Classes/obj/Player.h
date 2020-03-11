@@ -12,7 +12,6 @@ enum TUPLE_INFO {
 	ANIMATE
 };
 
-class Score;
 class Player : public Unit
 {
 public:
@@ -31,8 +30,11 @@ public:
 	void SetAttackFlag(bool flag)override;
 	bool GetAttackFlag()override;
 	float GetVelocityX()override;
+	void SetBigModeFlag(bool flag)override;
+	bool GetBigModeFlag()override;
 	void SetSlowlyFlag(bool flag);
 	bool GetSlowlyFlag();
+
 	CREATE_FUNC(Player);
 
 private:
@@ -44,6 +46,7 @@ private:
 	input_data data;	// 入力されたデータを取り出す変数
 	float time;
 	float dashFxTime;
-	float velocityX;
-	bool slowlyFlag;
+	float velocityX;	// 進む速度
+	bool slowlyFlag;	// 速度減少用フラグ
+	int candyCnt;		// 数えたキャンディの数
 };

@@ -100,7 +100,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
-    glview->setDesignResolutionSize(fullSize/*designResolutionSize*/.width, fullSize/*designResolutionSize*/.height, ResolutionPolicy::SHOW_ALL);
+	glview->setDesignResolutionSize(fullSize.width, fullSize.height, ResolutionPolicy::SHOW_ALL);
     register_all_packages();
 
 	lpEffectMng.Init();

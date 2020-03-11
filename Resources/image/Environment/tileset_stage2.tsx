@@ -4,21 +4,25 @@
  <tile id="0">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="1">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="2">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="3">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="4">
@@ -34,21 +38,25 @@
  <tile id="6">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="7">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="8">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="9">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="12">
@@ -94,21 +102,25 @@
  <tile id="20">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="21">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="22">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="23">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="24">
@@ -119,21 +131,25 @@
  <tile id="26">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="27">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="28">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="29">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="32">
@@ -179,51 +195,61 @@
  <tile id="40">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="41">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="42">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="43">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="44">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="45">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="46">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="47">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="48">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="49">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="52">
@@ -259,51 +285,61 @@
  <tile id="60">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="61">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="62">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="63">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="64">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="65">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="66">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="67">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="68">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="69">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="72">
@@ -339,21 +375,25 @@
  <tile id="80">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="81">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="82">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="83">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="84">
@@ -399,21 +439,25 @@
  <tile id="100">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="101">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="102">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="103">
   <properties>
    <property name="col" type="int" value="1"/>
+   <property name="sprite" value="ground"/>
   </properties>
  </tile>
  <tile id="104">
@@ -554,6 +598,84 @@
  <tile id="155">
   <properties>
    <property name="col" type="int" value="1"/>
+  </properties>
+ </tile>
+ <tile id="160">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="arrow"/>
+  </properties>
+ </tile>
+ <tile id="161">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="arrow2"/>
+  </properties>
+ </tile>
+ <tile id="162">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="arrow3"/>
+  </properties>
+ </tile>
+ <tile id="163">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="earth"/>
+  </properties>
+ </tile>
+ <tile id="164">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="square"/>
+  </properties>
+ </tile>
+ <tile id="165">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="square2"/>
+  </properties>
+ </tile>
+ <tile id="166">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="surface3"/>
+  </properties>
+ </tile>
+ <tile id="167">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="surface4"/>
+  </properties>
+ </tile>
+ <tile id="168">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="surface5"/>
+  </properties>
+ </tile>
+ <tile id="169">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="surface6"/>
+  </properties>
+ </tile>
+ <tile id="170">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="surface7"/>
+  </properties>
+ </tile>
+ <tile id="171">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="surface8"/>
+  </properties>
+ </tile>
+ <tile id="172">
+  <properties>
+   <property name="col" type="int" value="0"/>
+   <property name="sprite" value="surface9"/>
   </properties>
  </tile>
  <tile id="200">

@@ -4,6 +4,7 @@
 #include "item/SpeedUpItem.h"
 #include "EnemyCreate.h"
 #include "ItemGenerate.h"
+#include "StageObjCreate.h"
 #include "debug/_DebugConOut.h"
 #define PL_SIZE_X 34.0f
 USING_NS_CC;
@@ -12,6 +13,7 @@ MapCreate::MapCreate()
 {
 	mapSize = Vec2(0.0f, 0.0f);
 	setMapFlag = false;
+	setObjFlag = true;
 }
 
 MapCreate::~MapCreate()
@@ -73,22 +75,25 @@ void MapCreate::update(float flam)
 	{
 		return;
 	}
+
 	auto cameraPos = director->getRunningScene()->getDefaultCamera()->getPosition();
 	auto visibleSize = director->getVisibleSize();
-	auto a = nextMap->getPosition().x;
 	if ((cameraPos.x > nextMap->getPosition().x) && setMapFlag)
 	{
-		//Collision用オフセット
+		// Collision用オフセット
 		mapSize.width += nowMap->getMapSize().width;
-		//背景AとBの変数を入れ替える
+		// 次のマップを現在のマップである変数に入れる
 		auto s = nextMap;
 		nextMap = nowMap;
 		nowMap = s;
 		setMapFlag = false;
+		// tilemapに配置してある画像を単体のスプライトにし、元々表示されてある画像を非表示にする
+		nowMap->getLayer("ground")->setVisible(false);
+		PutSprite(nowMap);
 	}
 	if ((cameraPos.x > (nowMap->getPosition().x + (nowMap->getMapSize().width * nowMap->getTileSize().width)) - visibleSize.width / 2.0f) && !setMapFlag)
 	{
-		//次のマップを決める
+		// 次のマップを決める
 		while (10)
 		{
 			nextMap = map[mapName.at(cocos2d::random(0, (int)(map.size() - 1)))];
@@ -98,7 +103,7 @@ void MapCreate::update(float flam)
 			}
 		}
 		nextMap->setPosition(nowMap->getPositionX() + nowMap->getContentSize().width, 0.0f);
-		//次のマップのアイテム等配置しなおし
+		// 次のマップのアイテム等配置しなおし
 		ReCreate(nextMap, layer);
 		setMapFlag = true;
 	}
@@ -135,6 +140,34 @@ bool MapCreate::GetMapSetFlag()
 	return setMapFlag;
 }
 
+void MapCreate::PutSprite(cocos2d::TMXTiledMap* map)
+{
+	// スプライトを置いていく
+	TRACE("スプライトを置いていく\n");
+	auto mapFullSize = map->getMapSize();
+	auto tileSize = map->getTileSize();
+	for (int y = 0; y < static_cast<int>(mapFullSize.height); y++)
+	{
+		for (int x = 0; x < static_cast<int>(mapFullSize.width); x++)
+		{
+			auto lay = map->getLayer("special");
+			auto tile = lay->getTileGIDAt(cocos2d::Vec2(x, y));
+			if (tile)
+			{
+				auto properties = map->getPropertiesForGID(tile).asValueMap();
+				auto spName = properties.at("sprite").asString();
+				if (spName != "ground")
+				{
+					// スプライト生成
+					auto stageObj = StageObjCreate::createStageObj();
+					auto a = x * tileSize.width + this->mapSize.width;
+					stageObj->Init(spName, Vec2(x * tileSize.width + this->mapSize.width * tileSize.width, tileSize.height * (mapFullSize.height - 1.0f - y)), Vec2(0.25f, 0.25f), layer);
+				}
+			}
+		}
+	}
+}
+
 void MapCreate::ReCreate(cocos2d::TMXTiledMap * map, cocos2d::Layer* layer)
 {
 	enemyNow->ClearList();
@@ -149,7 +182,7 @@ void MapCreate::ReCreate(cocos2d::TMXTiledMap * map, cocos2d::Layer* layer)
 				auto properties = map->getPropertiesForGID(tile).asValueMap();
 				if (properties.at("col").asInt() == 2)
 				{
-					//敵スポーン座標
+					// 敵スポーン座標
 					enemyNow->AddCreateList(map, Vec2(x, y));
 				}
 				else
@@ -159,7 +192,7 @@ void MapCreate::ReCreate(cocos2d::TMXTiledMap * map, cocos2d::Layer* layer)
 			}
 		}
 	}
-	//リストをもとに配置
+	// リストをもとに配置
 	enemyNow->Push(layer);
 	itemNow->CreateItem(layer);
 }
